@@ -1,0 +1,49 @@
+* {
+    transition: ease .1s
+}
+
+body {
+    background: #333;
+    color: #EEE
+}
+
+#container {
+    width: 500px;
+    height: 500px;;
+    position: relative;
+    background: #333;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#map {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-gap: 3px;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+}
+
+#map div {
+    background: #666;
+    border-radius: 10px
+}
+
+.active {
+    background: yellow !important;
+    transition: ease .1s
+}
+
+.inactive {
+    background: #666 !important;
+    transition: ease .1s
+}
+
+#output {
+    margin: 0 auto;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+}
