@@ -65,5 +65,61 @@ function setActive() {
         activeGridId = gridArray.findIndex(x => x.className == 'active')
         current = gridArray[activeGridId]
         output.innerHTML = 'You are in room #' + activeGridId
+
+        let roomDescArray = [
+            ['Description of room 0'],
+            ['Description of room 1'],
+            ['Description of room 2'],
+            ['Description of room 3'],
+            ['Description of room 4'],
+            ['Description of room 5'],
+            ['Description of room 6'],
+            ['Description of room 7'],
+            ['Description of room 8'],
+            ['Description of room 9'],
+            ['Description of room 10'],
+            ['Description of room 11'],
+            ['Description of room 12'],
+            ['Description of room 13'],
+            ['Description of room 14'],
+            ['Description of room 15'],
+            ['Description of room 16'],
+            ['Description of room 17'],
+            ['Description of room 18'],
+            ['Description of room 19'],
+            ['Description of room 20'],
+            ['Description of room 21'],
+            ['Description of room 22'],
+            ['Description of room 23'],
+            ['Description of room 24'],
+            ['Description of room 25'],
+            ['Description of room 26'],
+            ['Description of room 27'],
+            ['Description of room 28'],
+            ['Description of room 29'],
+            ['Description of room 30'],
+            ['Description of room 31'],
+            ['Description of room 32'],
+            ['Description of room 33'],
+            ['Description of room 34'],
+            ['Description of room 35'],
+            ['Description of room 36'],
+            ['Description of room 37'],
+            ['Description of room 38'],
+            ['Description of room 39'],
+            ['Description of room 40'],
+            ['Description of room 41'],
+            ['Description of room 42'],
+            ['Description of room 43'],
+            ['Description of room 44'],
+            ['Description of room 45'],
+            ['Description of room 46'],
+            ['Description of room 47'],
+            ['Description of room 48']
+        ]
+
+        let roomDesc = roomDescArray[activeGridId]
+        output.innerHTML = 'You are in room # ' + activeGridId + '<p>' + roomDesc +'</p>'
+        //console.log(roomDesc)
     })
 }
