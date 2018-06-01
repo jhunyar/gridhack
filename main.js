@@ -1,3 +1,8 @@
+/*
+    G R I D H A C K
+    A javascript game by David Babb, James Hunyar and Nicholas Motyl
+*/
+
 // Sets all divs as inactive except current active div
 function setActive() {
     var grids = document.getElementById('map').getElementsByTagName('div')
