@@ -18,6 +18,11 @@ function setActive() {
         var right = gridArray[activeGridId+1]
         var up = gridArray[activeGridId-7]
         var down = gridArray[activeGridId+7]
+        var visibleRight = gridArray[activeGridId+1]
+        var visibleTopLeft = gridArray[activeGridId-8]
+        var visibleTopRight = gridArray[activeGridId-6]
+        var visibleBotRight = gridArray[activeGridId+6]
+        var visitbleBotLeft = gridArray[activeGridId+8]
         var moveLeft = e.keyCode == '37'
         var moveUp = e.keyCode == '38'
         var moveRight = e.keyCode == '39'
@@ -37,6 +42,15 @@ function setActive() {
                 return false
             } else {
                 left.className = 'active'
+                current.className = 'inactive'
+                activeGridId = gridArray.findIndex(x => x.className == 'active')
+                var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
+                visibleArray.forEach((grid,index,gridArray) => {
+                    grid.className = 'visible'
+                })
+                console.log(visibleArray)
+                
+                
             }
         } else if (moveRight) {
             if (rightwall.includes(activeGridId+1)) {
@@ -44,6 +58,13 @@ function setActive() {
                 return false
             } else {
                 right.className = 'active'
+                current.className = 'inactive'
+                activeGridId = gridArray.findIndex(x => x.className == 'active')
+                var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
+                visibleArray.forEach((grid,index,gridArray) => {
+                    grid.className = 'visible'
+                })
+                console.log(visibleArray)
             }
         } else if (moveUp) {
             if (topwall.includes(activeGridId-7)) {
@@ -51,6 +72,13 @@ function setActive() {
                 return false
             } else {
                 up.className = 'active'
+                current.className = 'inactive'
+                activeGridId = gridArray.findIndex(x => x.className == 'active')
+                var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
+                visibleArray.forEach((grid,index,gridArray) => {
+                    grid.className = 'visible'
+                })
+                console.log(visibleArray)
             }
         } else if (moveDown) {
             if (bottomwall.includes(activeGridId+7)) {
@@ -58,11 +86,16 @@ function setActive() {
                 return false
             } else {
                 down.className = 'active'
+                current.className = 'inactive'
+                activeGridId = gridArray.findIndex(x => x.className == 'active')
+                var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
+                visibleArray.forEach((grid,index,gridArray) => {
+                    grid.className = 'visible'
+                })
+                console.log(visibleArray)
             }
         }
-        current.className = 'inactive'
-        // we now need to redefine the activeGridId again to make sure it's correct after the move
-        activeGridId = gridArray.findIndex(x => x.className == 'active')
+        
         current = gridArray[activeGridId]
         output.innerHTML = 'You are in room #' + activeGridId
 
