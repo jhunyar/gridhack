@@ -18,11 +18,6 @@ function setActive() {
         var right = gridArray[activeGridId+1]
         var up = gridArray[activeGridId-7]
         var down = gridArray[activeGridId+7]
-        var visibleRight = gridArray[activeGridId+1]
-        var visibleTopLeft = gridArray[activeGridId-8]
-        var visibleTopRight = gridArray[activeGridId-6]
-        var visibleBotRight = gridArray[activeGridId+6]
-        var visitbleBotLeft = gridArray[activeGridId+8]
         var moveLeft = e.keyCode == '37'
         var moveUp = e.keyCode == '38'
         var moveRight = e.keyCode == '39'
@@ -96,7 +91,6 @@ function setActive() {
             }
         }
         
-        current = gridArray[activeGridId]
         output.innerHTML = 'You are in room #' + activeGridId
 
         let roomDescArray = [
