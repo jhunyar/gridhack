@@ -27,6 +27,7 @@ function setActive() {
         var topwall = [-7, -6, -5, -4, -3, -2, -1, 0]
         var bottomwall = [49, 50, 51, 52, 53, 54, 55]
         var output = document.getElementById('output')
+        var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
@@ -39,13 +40,10 @@ function setActive() {
                 left.className = 'active'
                 current.className = 'inactive'
                 activeGridId = gridArray.findIndex(x => x.className == 'active')
-                var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
                 visibleArray.forEach((grid,index,gridArray) => {
                     grid.className = 'visible'
                 })
-                console.log(visibleArray)
-                
-                
+                console.log(visibleArray) 
             }
         } else if (moveRight) {
             if (rightwall.includes(activeGridId+1)) {
@@ -55,7 +53,6 @@ function setActive() {
                 right.className = 'active'
                 current.className = 'inactive'
                 activeGridId = gridArray.findIndex(x => x.className == 'active')
-                var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
                 visibleArray.forEach((grid,index,gridArray) => {
                     grid.className = 'visible'
                 })
@@ -69,7 +66,6 @@ function setActive() {
                 up.className = 'active'
                 current.className = 'inactive'
                 activeGridId = gridArray.findIndex(x => x.className == 'active')
-                var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
                 visibleArray.forEach((grid,index,gridArray) => {
                     grid.className = 'visible'
                 })
@@ -83,7 +79,6 @@ function setActive() {
                 down.className = 'active'
                 current.className = 'inactive'
                 activeGridId = gridArray.findIndex(x => x.className == 'active')
-                var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
                 visibleArray.forEach((grid,index,gridArray) => {
                     grid.className = 'visible'
                 })
