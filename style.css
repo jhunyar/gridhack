@@ -35,13 +35,13 @@ body {
     background: yellow !important;
     transition: ease .1s
 }
+
 .visible {
     background: white !important;
-    transition: ease .1s
 }
+
 .inactive {
     background: #666 !important;
-    transition: ease .1s
 }
 
 #output {
