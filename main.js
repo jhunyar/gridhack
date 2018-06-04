@@ -61,6 +61,7 @@ function init() {
         var moveUp = e.keyCode == '38'
         var moveRight = e.keyCode == '39'
         var moveDown = e.keyCode == '40'
+        var look = e.keyCode == '76'
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
@@ -170,5 +171,9 @@ function init() {
         let roomDesc = roomDescArray[activeGridId]
 
         output.innerHTML = 'You are in room # ' + activeGridId + '<p>' + roomDesc +'</p>'
+
+        if (look) {
+            output.innerHTML += 'You see nothing of particular interest'
+        }
     })
 }
