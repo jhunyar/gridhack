@@ -5,6 +5,12 @@ function init() {
     var activeGrid = document.getElementById('active')
     var activeGridId = gridArray.findIndex(x => x.id == 'active')
     var visibleArray = [6,7,8,1,-1,-6,-7,-8]
+    var leftwall = [-1, 6, 13, 20, 27, 34, 41]
+    var rightwall = [7, 14, 21, 28, 35, 42, 49]
+    var topwall = [-7, -6, -5, -4, -3, -2, -1, 0]
+    var bottomwall = [49, 50, 51, 52, 53, 54, 55]
+    var walls = [leftwall, rightwall, topwall, bottomwall]
+    var output = document.getElementById('output')
 
     // a reusable function to clear the map of anything other than active and inactive grids
     function resetMap() {
@@ -24,9 +30,19 @@ function init() {
     function setVisible() {
         visibleArray.forEach(setVisible)
         function setVisible(grid) {
-            grids[activeGridId+grid].className = 'visible'
+            if (topwall.includes(activeGridId + grid)) {
+                return false
+            } else if (bottomwall.includes(activeGridId + grid)) {
+                return false
+            // } else if (leftwall.includes(activeGridId + grid)) {
+            //    return false
+            // } else if (rightwall.includes(activeGridId + grid)) {
+            //    return false
+            } else {
+                grids[activeGridId+grid].className = 'visible'
+            }
         }
-    }
+    }   
 
     // lets go ahead and reset the map to start fresh
     resetMap()
@@ -45,11 +61,6 @@ function init() {
         var moveUp = e.keyCode == '38'
         var moveRight = e.keyCode == '39'
         var moveDown = e.keyCode == '40'
-        var leftwall = [-1, 6, 13, 20, 27, 34, 41]
-        var rightwall = [7, 14, 21, 28, 35, 42, 49]
-        var topwall = [-7, -6, -5, -4, -3, -2, -1, 0]
-        var bottomwall = [49, 50, 51, 52, 53, 54, 55]
-        var output = document.getElementById('output')
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
@@ -62,7 +73,8 @@ function init() {
         if (moveLeft) {
             if (leftwall.includes(activeGridId-1)) {
                 output.innerHTML = ' You can\'t go that way!'
-                // return false
+                setVisible()
+                return false
             } else {
                 current.id = ''
                 left.id = 'active'
@@ -70,7 +82,8 @@ function init() {
         } else if (moveRight) {
             if (rightwall.includes(activeGridId+1)) {
                 output.innerHTML = ' You can\'t go that way!'
-                // return false
+                setVisible()
+                return false
             } else {
                 current.id = ''
                 right.id = 'active'
@@ -78,7 +91,8 @@ function init() {
         } else if (moveUp) {
             if (topwall.includes(activeGridId-7)) {
                 output.innerHTML = ' You can\'t go that way!'
-                // return false
+                setVisible()
+                return false
             } else {
                 current.id = ''
                 up.id = 'active'
@@ -86,7 +100,8 @@ function init() {
         } else if (moveDown) {
             if (bottomwall.includes(activeGridId+7)) {
                 output.innerHTML = ' You can\'t go that way!'
-                // return false
+                setVisible()
+                return false
             } else {
                 current.id = ''
                 down.id = 'active'
