@@ -1,24 +1,12 @@
-// Sets all divs as inactive except current active div
-function setActive() {
+function setMap() {
+    // define variables we'll be using throughout the game
     var grids = document.getElementById('map').getElementsByTagName('div')
     var gridArray = Array.from(grids)
     var activeGrid = document.getElementById('active')
     var activeGridId = gridArray.findIndex(x => x.id == 'active')
     var visibleArray = [6,7,8,1,-1,-6,-7,-8]
-    
-    gridArray.forEach((grid, index, gridArray) => {
-        if ( grid.id != 'active' ) {
-            grid.className = 'inactive'
-        }
-    })
 
-    function setVisible() {
-        visibleArray.forEach(setVisible)
-        function setVisible(grid) {
-            grids[activeGridId+grid].className = 'visible'
-        }
-    }
-
+    // a reusable function to clear the map of anything other than active and inactive
     function resetMap() {
         gridArray.forEach((grid, index, gridArray) => {
             if ( grid.id != 'active' ) {
@@ -27,15 +15,27 @@ function setActive() {
         })
     }
 
+    // a reusable function to reset the value of the activeGridId variable
     function setActive() {
         activeGridId = gridArray.findIndex(x => x.id == 'active')
     }
 
+    // a reusable function to set all grids adjacent to activeGridId to be visible 
+    function setVisible() {
+        visibleArray.forEach(setVisible)
+        function setVisible(grid) {
+            grids[activeGridId+grid].className = 'visible'
+        }
+    }
+
+    // lets go ahead and reset the map to start fresh
+    resetMap()
+
+    // lets also set up our visible grids since we already know our active grid (we start with one manually set as active)
     setVisible()
 
+    // the movement handler itself
     document.addEventListener('keydown', function(e) {
-        // we need to redefine activeGridId every time the key is pressed
-        // let activeGridId = gridArray.findIndex(x => x.id == 'active')
         var current = gridArray[activeGridId]
         var left = gridArray[activeGridId-1]
         var right = gridArray[activeGridId+1]
@@ -51,12 +51,14 @@ function setActive() {
         var bottomwall = [49, 50, 51, 52, 53, 54, 55]
         var output = document.getElementById('output')
 
+        // we need to reset the map on every key action to clear any of the visible grids from the last movement
         resetMap()
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
 
+        // conditional movement rules to determine which grid we need to set as active and which we need to clear
         if (moveLeft) {
             if (leftwall.includes(activeGridId-1)) {
                 output.innerHTML = ' You can\'t go that way!'
@@ -90,13 +92,13 @@ function setActive() {
                 down.id = 'active' 
             }
         }
+        // everything after this point happens regardless of which direction the user enters
         
+        // first of all, set our new active grid to wherever we moved
         setActive()
+
+        // now set the visible grids based on that new active grid
         setVisible()
-
-        activeGridId = gridArray.findIndex(x => x.id == 'active')
-
-        output.innerHTML = 'You are in room #' + activeGridId
 
         let roomDescArray = [
             ['Description of room 0'],
@@ -151,7 +153,7 @@ function setActive() {
         ]
 
         let roomDesc = roomDescArray[activeGridId]
+        
         output.innerHTML = 'You are in room # ' + activeGridId + '<p>' + roomDesc +'</p>'
-        //console.log(roomDesc)
     })
 }
