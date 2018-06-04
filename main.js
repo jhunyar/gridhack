@@ -2,17 +2,40 @@
 function setActive() {
     var grids = document.getElementById('map').getElementsByTagName('div')
     var gridArray = Array.from(grids)
-    var activeGrid = document.getElementsByClassName('active')[0]
-    var activeGridId = gridArray.findIndex(x => x.className == 'active')
+    var activeGrid = document.getElementById('active')
+    var activeGridId = gridArray.findIndex(x => x.id == 'active')
+    var visibleArray = [6,7,8,1,-1,-6,-7,-8]
+    
     gridArray.forEach((grid, index, gridArray) => {
-        if ( grid.className != 'active' ) {
+        if ( grid.id != 'active' ) {
             grid.className = 'inactive'
         }
     })
 
+    function setVisible() {
+        visibleArray.forEach(setVisible)
+        function setVisible(grid) {
+            grids[activeGridId+grid].className = 'visible'
+        }
+    }
+
+    function resetMap() {
+        gridArray.forEach((grid, index, gridArray) => {
+            if ( grid.id != 'active' ) {
+                grid.className = 'inactive'
+            }
+        })
+    }
+
+    function setActive() {
+        activeGridId = gridArray.findIndex(x => x.id == 'active')
+    }
+
+    setVisible()
+
     document.addEventListener('keydown', function(e) {
         // we need to redefine activeGridId every time the key is pressed
-        let activeGridId = gridArray.findIndex(x => x.className == 'active')
+        // let activeGridId = gridArray.findIndex(x => x.id == 'active')
         var current = gridArray[activeGridId]
         var left = gridArray[activeGridId-1]
         var right = gridArray[activeGridId+1]
@@ -27,7 +50,9 @@ function setActive() {
         var topwall = [-7, -6, -5, -4, -3, -2, -1, 0]
         var bottomwall = [49, 50, 51, 52, 53, 54, 55]
         var output = document.getElementById('output')
-        var visibleArray = [[activeGridId+1],[activeGridId+6],[activeGridId+7],[activeGridId+8],[activeGridId-1],[activeGridId-6],[activeGridId-7],[activeGridId-8]]
+
+        resetMap()
+
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
@@ -37,55 +62,40 @@ function setActive() {
                 output.innerHTML = ' You can\'t go that way!'
                 return false
             } else {
-                left.className = 'active'
-                current.className = 'inactive'
-                activeGridId = gridArray.findIndex(x => x.className == 'active')
-                visibleArray.forEach((grid,index,gridArray) => {
-                    grid.className = 'visible'
-                })
-                console.log(visibleArray) 
+                current.id = ''
+                left.id = 'active'
             }
         } else if (moveRight) {
             if (rightwall.includes(activeGridId+1)) {
                 output.innerHTML = ' You can\'t go that way!'
                 return false
             } else {
-                right.className = 'active'
-                current.className = 'inactive'
-                activeGridId = gridArray.findIndex(x => x.className == 'active')
-                visibleArray.forEach((grid,index,gridArray) => {
-                    grid.className = 'visible'
-                })
-                console.log(visibleArray)
+                current.id = ''
+                right.id = 'active'
             }
         } else if (moveUp) {
             if (topwall.includes(activeGridId-7)) {
                 output.innerHTML = ' You can\'t go that way!'
                 return false
             } else {
-                up.className = 'active'
-                current.className = 'inactive'
-                activeGridId = gridArray.findIndex(x => x.className == 'active')
-                visibleArray.forEach((grid,index,gridArray) => {
-                    grid.className = 'visible'
-                })
-                console.log(visibleArray)
+                current.id = ''
+                up.id = 'active'
             }
         } else if (moveDown) {
             if (bottomwall.includes(activeGridId+7)) {
                 output.innerHTML = ' You can\'t go that way!'
                 return false
             } else {
-                down.className = 'active'
-                current.className = 'inactive'
-                activeGridId = gridArray.findIndex(x => x.className == 'active')
-                visibleArray.forEach((grid,index,gridArray) => {
-                    grid.className = 'visible'
-                })
-                console.log(visibleArray)
+                current.id = ''
+                down.id = 'active' 
             }
         }
         
+        setActive()
+        setVisible()
+
+        activeGridId = gridArray.findIndex(x => x.id == 'active')
+
         output.innerHTML = 'You are in room #' + activeGridId
 
         let roomDescArray = [
