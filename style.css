@@ -31,7 +31,7 @@ body {
     border-radius: 10px
 }
 
-.active {
+#active {
     background: yellow !important;
     transition: ease .1s
 }
