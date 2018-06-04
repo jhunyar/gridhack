@@ -4,10 +4,10 @@ function init() {
     var gridArray = Array.from(grids)
     var activeGrid = document.getElementById('active')
     var activeGridId = gridArray.findIndex(x => x.id == 'active')
-    var visibleArray = [6,7,8,1,-1,-6,-7,-8]
+    var visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
     var leftwall = [-1, 6, 13, 20, 27, 34, 41]
     var rightwall = [7, 14, 21, 28, 35, 42, 49]
-    var topwall = [-7, -6, -5, -4, -3, -2, -1, 0]
+    var topwall = [-7, -6, -5, -4, -3, -2, -1]
     var bottomwall = [49, 50, 51, 52, 53, 54, 55]
     var walls = [leftwall, rightwall, topwall, bottomwall]
     var output = document.getElementById('output')
