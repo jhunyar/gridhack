@@ -1,4 +1,4 @@
-function setMap() {
+function init() {
     // define variables we'll be using throughout the game
     var grids = document.getElementById('map').getElementsByTagName('div')
     var gridArray = Array.from(grids)
@@ -6,7 +6,7 @@ function setMap() {
     var activeGridId = gridArray.findIndex(x => x.id == 'active')
     var visibleArray = [6,7,8,1,-1,-6,-7,-8]
 
-    // a reusable function to clear the map of anything other than active and inactive
+    // a reusable function to clear the map of anything other than active and inactive grids
     function resetMap() {
         gridArray.forEach((grid, index, gridArray) => {
             if ( grid.id != 'active' ) {
@@ -51,18 +51,18 @@ function setMap() {
         var bottomwall = [49, 50, 51, 52, 53, 54, 55]
         var output = document.getElementById('output')
 
-        // we need to reset the map on every key action to clear any of the visible grids from the last movement
-        resetMap()
-
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
+
+        // we need to reset the map on every key action to clear any of the visible grids from the last movement
+        resetMap()
 
         // conditional movement rules to determine which grid we need to set as active and which we need to clear
         if (moveLeft) {
             if (leftwall.includes(activeGridId-1)) {
                 output.innerHTML = ' You can\'t go that way!'
-                return false
+                // return false
             } else {
                 current.id = ''
                 left.id = 'active'
@@ -70,7 +70,7 @@ function setMap() {
         } else if (moveRight) {
             if (rightwall.includes(activeGridId+1)) {
                 output.innerHTML = ' You can\'t go that way!'
-                return false
+                // return false
             } else {
                 current.id = ''
                 right.id = 'active'
@@ -78,7 +78,7 @@ function setMap() {
         } else if (moveUp) {
             if (topwall.includes(activeGridId-7)) {
                 output.innerHTML = ' You can\'t go that way!'
-                return false
+                // return false
             } else {
                 current.id = ''
                 up.id = 'active'
@@ -86,10 +86,10 @@ function setMap() {
         } else if (moveDown) {
             if (bottomwall.includes(activeGridId+7)) {
                 output.innerHTML = ' You can\'t go that way!'
-                return false
+                // return false
             } else {
                 current.id = ''
-                down.id = 'active' 
+                down.id = 'active'
             }
         }
         // everything after this point happens regardless of which direction the user enters
@@ -153,7 +153,7 @@ function setMap() {
         ]
 
         let roomDesc = roomDescArray[activeGridId]
-        
+
         output.innerHTML = 'You are in room # ' + activeGridId + '<p>' + roomDesc +'</p>'
     })
 }
