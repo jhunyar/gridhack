@@ -31,14 +31,17 @@ body {
     border-radius: 10px
 }
 
-.active {
+#active {
     background: yellow !important;
     transition: ease .1s
 }
 
+.visible {
+    background: #999 !important;
+}
+
 .inactive {
     background: #666 !important;
-    transition: ease .1s
 }
 
 #output {

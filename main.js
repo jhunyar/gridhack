@@ -1,18 +1,58 @@
-// Sets all divs as inactive except current active div
-function setActive() {
-    var grids = document.getElementById('map').getElementsByTagName('div')
-    var gridArray = Array.from(grids)
-    var activeGrid = document.getElementsByClassName('active')[0]
-    var activeGridId = gridArray.findIndex(x => x.className == 'active')
-    gridArray.forEach((grid, index, gridArray) => {
-        if ( grid.className != 'active' ) {
-            grid.className = 'inactive'
-        }
-    })
+function init() {
+    // define variables we'll be using throughout the game
+    const grids = document.getElementById('map').getElementsByTagName('div')
+    const gridArray = Array.from(grids)
+    let activeGrid = document.getElementById('active')
+    let activeGridId = gridArray.findIndex(x => x.id == 'active')
+    const visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
+    const leftwall = [-1, 6, 13, 20, 27, 34, 41]
+    const rightCol = [6,13,20,27,34,41,48]
+    const leftCol = [0,7,14,21,28,35,42]
+    const rightwall = [7, 14, 21, 28, 35, 42, 49]
+    const topwall = [-8, -7, -6, -5, -4, -3, -2, -1]
+    const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
+    const output = document.getElementById('output')
 
+    // a reusable function to clear the map of anything other than active and inactive grids
+    function resetMap() {
+        gridArray.forEach((grid, index, gridArray) => {
+            if ( grid.id != 'active' ) {
+                grid.className = 'inactive'
+            }
+        })
+    }
+ 
+    // a reusable function to reset the value of the activeGridId variable
+    function setActive() {
+        activeGridId = gridArray.findIndex(x => x.id == 'active')
+    }
+
+    // a reusable function to set all grids adjacent to activeGridId to be visible 
+    function setVisible() {
+        visibleArray.forEach(setVisible)
+        function setVisible(grid) {            
+            if (rightCol.includes(activeGridId+grid) && leftCol.includes(activeGridId))  {
+                return false
+            } else if (leftCol.includes(activeGridId+grid) && rightCol.includes(activeGridId)) {
+                return false
+            } else if (topwall.includes(activeGridId + grid)) {
+                return false
+            } else if (bottomwall.includes(activeGridId + grid)) {
+                return false
+            } else {
+                grids[activeGridId+grid].className = 'visible'
+            }
+        }
+    }   
+
+    // lets go ahead and reset the map to start fresh
+    resetMap()
+
+    // lets also set up our visible grids since we already know our active grid (we start with one manually set as active)
+    setVisible()
+
+    // the movement handler itself
     document.addEventListener('keydown', function(e) {
-        // we need to redefine activeGridId every time the key is pressed
-        let activeGridId = gridArray.findIndex(x => x.className == 'active')
         var current = gridArray[activeGridId]
         var left = gridArray[activeGridId-1]
         var right = gridArray[activeGridId+1]
@@ -22,49 +62,60 @@ function setActive() {
         var moveUp = e.keyCode == '38'
         var moveRight = e.keyCode == '39'
         var moveDown = e.keyCode == '40'
-        var leftwall = [-1, 6, 13, 20, 27, 34, 41]
-        var rightwall = [7, 14, 21, 28, 35, 42, 49]
-        var topwall = [-7, -6, -5, -4, -3, -2, -1, 0]
-        var bottomwall = [49, 50, 51, 52, 53, 54, 55]
-        var output = document.getElementById('output')
+        var look = e.keyCode == '76'
+
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
 
+        // we need to reset the map on every key action to clear any of the visible grids from the last movement
+        resetMap()
+
+        // conditional movement rules to determine which grid we need to set as active and which we need to clear
         if (moveLeft) {
             if (leftwall.includes(activeGridId-1)) {
                 output.innerHTML = ' You can\'t go that way!'
+                setVisible()
                 return false
             } else {
-                left.className = 'active'
+                current.id = ''
+                left.id = 'active'
             }
         } else if (moveRight) {
             if (rightwall.includes(activeGridId+1)) {
                 output.innerHTML = ' You can\'t go that way!'
+                setVisible()
                 return false
             } else {
-                right.className = 'active'
+                current.id = ''
+                right.id = 'active'
             }
         } else if (moveUp) {
             if (topwall.includes(activeGridId-7)) {
                 output.innerHTML = ' You can\'t go that way!'
+                setVisible()
                 return false
             } else {
-                up.className = 'active'
+                current.id = ''
+                up.id = 'active'
             }
         } else if (moveDown) {
             if (bottomwall.includes(activeGridId+7)) {
                 output.innerHTML = ' You can\'t go that way!'
+                setVisible()
                 return false
             } else {
-                down.className = 'active'
+                current.id = ''
+                down.id = 'active'
             }
         }
-        current.className = 'inactive'
-        // we now need to redefine the activeGridId again to make sure it's correct after the move
-        activeGridId = gridArray.findIndex(x => x.className == 'active')
-        current = gridArray[activeGridId]
-        output.innerHTML = 'You are in room #' + activeGridId
+        // everything after this point happens regardless of which direction the user enters
+        
+        // first of all, set our new active grid to wherever we moved
+        setActive()
+
+        // now set the visible grids based on that new active grid
+        setVisible()
 
         let roomDescArray = [
             ['Description of room 0'],
@@ -119,7 +170,11 @@ function setActive() {
         ]
 
         let roomDesc = roomDescArray[activeGridId]
+
         output.innerHTML = 'You are in room # ' + activeGridId + '<p>' + roomDesc +'</p>'
-        //console.log(roomDesc)
+
+        if (look) {
+            output.innerHTML += 'You see nothing of particular interest'
+        }
     })
 }
