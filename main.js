@@ -9,6 +9,12 @@ function init() {
     var rightwall = [7, 14, 21, 28, 35, 42, 49]
     var topwall = [-7, -6, -5, -4, -3, -2, -1]
     var bottomwall = [49, 50, 51, 52, 53, 54, 55]
+
+    let leftColumn = [0,7,14,21,28,35,42]
+    let rightColumn = [6,13,20,27,34,41,48]
+    let leftWrap = [-8,-1,6]
+    let rightWrap = [-6,1,8]
+
     var walls = [leftwall, rightwall, topwall, bottomwall]
     var output = document.getElementById('output')
 
@@ -30,14 +36,12 @@ function init() {
     function setVisible() {
         visibleArray.forEach(setVisible)
         function setVisible(grid) {
-            if (topwall.includes(activeGridId + grid)) {
+            if (leftColumn.includes(activeGridId) && rightColumn.includes(activeGridId + grid)) {
+                return false
+            } else if (rightColumn.includes(activeGridId) && leftColumn.includes(activeGridId + grid)) {
                 return false
             } else if (bottomwall.includes(activeGridId + grid)) {
                 return false
-            // } else if (leftwall.includes(activeGridId + grid)) {
-            //    return false
-            // } else if (rightwall.includes(activeGridId + grid)) {
-            //    return false
             } else {
                 grids[activeGridId+grid].className = 'visible'
             }
