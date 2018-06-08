@@ -1,16 +1,17 @@
 function init() {
     // define variables we'll be using throughout the game
-    var grids = document.getElementById('map').getElementsByTagName('div')
-    var gridArray = Array.from(grids)
-    var activeGrid = document.getElementById('active')
-    var activeGridId = gridArray.findIndex(x => x.id == 'active')
-    var visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
-    var leftwall = [-1, 6, 13, 20, 27, 34, 41]
-    var rightwall = [7, 14, 21, 28, 35, 42, 49]
-    var topwall = [-7, -6, -5, -4, -3, -2, -1]
-    var bottomwall = [49, 50, 51, 52, 53, 54, 55]
-    var walls = [leftwall, rightwall, topwall, bottomwall]
-    var output = document.getElementById('output')
+    const grids = document.getElementById('map').getElementsByTagName('div')
+    const gridArray = Array.from(grids)
+    let activeGrid = document.getElementById('active')
+    let activeGridId = gridArray.findIndex(x => x.id == 'active')
+    const visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
+    const leftwall = [-1, 6, 13, 20, 27, 34, 41]
+    const rightCol = [6,13,20,27,34,41,48]
+    const leftCol = [0,7,14,21,28,35,42]
+    const rightwall = [7, 14, 21, 28, 35, 42, 49]
+    const topwall = [-7, -6, -5, -4, -3, -2, -1]
+    const bottomwall = [49, 50, 51, 52, 53, 54, 55]
+    const output = document.getElementById('output')
 
     // a reusable function to clear the map of anything other than active and inactive grids
     function resetMap() {
@@ -20,7 +21,7 @@ function init() {
             }
         })
     }
-
+ 
     // a reusable function to reset the value of the activeGridId variable
     function setActive() {
         activeGridId = gridArray.findIndex(x => x.id == 'active')
@@ -29,15 +30,15 @@ function init() {
     // a reusable function to set all grids adjacent to activeGridId to be visible 
     function setVisible() {
         visibleArray.forEach(setVisible)
-        function setVisible(grid) {
-            if (topwall.includes(activeGridId + grid)) {
+        function setVisible(grid) {            
+            if (rightCol.includes(activeGridId+grid) && leftCol.includes(activeGridId))  {
+                return false
+            } else if (leftCol.includes(activeGridId+grid) && rightCol.includes(activeGridId)) {
+                return false
+            } else if (topwall.includes(activeGridId + grid)) {
                 return false
             } else if (bottomwall.includes(activeGridId + grid)) {
                 return false
-            // } else if (leftwall.includes(activeGridId + grid)) {
-            //    return false
-            // } else if (rightwall.includes(activeGridId + grid)) {
-            //    return false
             } else {
                 grids[activeGridId+grid].className = 'visible'
             }
