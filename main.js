@@ -9,8 +9,8 @@ function init() {
     const rightCol = [6,13,20,27,34,41,48]
     const leftCol = [0,7,14,21,28,35,42]
     const rightwall = [7, 14, 21, 28, 35, 42, 49]
-    const topwall = [-7, -6, -5, -4, -3, -2, -1]
-    const bottomwall = [49, 50, 51, 52, 53, 54, 55]
+    const topwall = [-8, -7, -6, -5, -4, -3, -2, -1]
+    const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
     const output = document.getElementById('output')
 
     // a reusable function to clear the map of anything other than active and inactive grids
