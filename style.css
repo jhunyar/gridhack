@@ -44,9 +44,8 @@ body {
     background: #666 !important;
 }
 
-#output {
+#output, #alert {
     margin: 0 auto;
-    height: 30px;
     width: 100%;
     text-align: center;
 }
