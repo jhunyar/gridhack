@@ -245,15 +245,12 @@ function init() {
             status: grids[activeGridId].id 
         }
 
-        console.log(room)
-
         let roomDesc = roomDescArray[activeGridId]
 
         // output.innerHTML = 'You are in room # ' + activeGridId + '<p>' + roomDesc +'</p>'
 
         roomInfoName.innerHTML = `${room.id} - ${room.name}`
         roomInfoDesc.innerHTML = `"${room.description}".`
-
 
         if (look) {
             alert.innerHTML = 'You see nothing of particular interest'
