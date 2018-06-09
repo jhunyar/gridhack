@@ -135,107 +135,107 @@ function init() {
         // 42 43 44 45 46 47 48
 
         let roomDescArray = [
-            'Description of room 0',
-            'Description of room 1',
-            'Description of room 2',
-            'Description of room 3',
-            'Description of room 4',
-            'Description of room 5',
-            'Description of room 6',
-            'Description of room 7',
-            'Description of room 8',
-            'Description of room 9',
-            'Description of room 10',
-            'Description of room 11',
-            'Description of room 12',
-            'Description of room 13',
-            'Description of room 14',
-            'Description of room 15',
-            'Description of room 16',
-            'Description of room 17',
-            'Description of room 18',
-            'Description of room 19',
-            'Description of room 20',
-            'Description of room 21',
-            'Description of room 22',
-            'Description of room 23',
-            'Description of room 24',
-            'Description of room 25',
-            'Description of room 26',
-            'Description of room 27',
-            'Description of room 28',
-            'Description of room 29',
-            'Description of room 30',
-            'Description of room 31',
-            'Description of room 32',
-            'Description of room 33',
-            'Description of room 34',
-            'Description of room 35',
-            'Description of room 36',
-            'Description of room 37',
-            'Description of room 38',
-            'Description of room 39',
-            'Description of room 40',
-            'Description of room 41',
-            'Description of room 42',
-            'Description of room 43',
-            'Description of room 44',
-            'Description of room 45',
-            'Description of room 46',
-            'Description of room 47',
-            'Description of room 48'
+            'Description of room 0',    // 0
+            'Description of room 1',    // 1
+            'Description of room 2',    // 2
+            'Description of room 3',    // 3
+            'Description of room 4',    // 4
+            'Description of room 5',    // 5
+            'Description of room 6',    // 6
+            'Description of room 7',    // 7
+            'Description of room 8',    // 8
+            'Description of room 9',    // 9
+            'Description of room 10',   // 10
+            'Description of room 11',   // 11
+            'Description of room 12',   // 12
+            'Description of room 13',   // 13
+            'Description of room 14',   // 14
+            'Description of room 15',   // 15
+            'Description of room 16',   // 16
+            'Description of room 17',   // 17
+            'Description of room 18',   // 18
+            'Description of room 19',   // 19
+            'Description of room 20',   // 20
+            'Description of room 21',   // 21
+            'Description of room 22',   // 22
+            'Description of room 23',   // 23
+            'Description of room 24',   // 24
+            'Description of room 25',   // 25
+            'Description of room 26',   // 26
+            'Description of room 27',   // 27
+            'Description of room 28',   // 28
+            'Description of room 29',   // 29
+            'Description of room 30',   // 30
+            'Description of room 31',   // 31
+            'Description of room 32',   // 32
+            'Description of room 33',   // 33
+            'Description of room 34',   // 34
+            'Description of room 35',   // 35
+            'Description of room 36',   // 36
+            'Description of room 37',   // 37
+            'Description of room 38',   // 38
+            'Description of room 39',   // 39
+            'Description of room 40',   // 40
+            'Description of room 41',   // 41
+            'Description of room 42',   // 42
+            'Description of room 43',   // 43
+            'Description of room 44',   // 44
+            'Description of room 45',   // 45
+            'Description of room 46',   // 46
+            'Description of room 47',   // 47
+            'Description of room 48'    // 48
         ]
 
         let roomNameArray = [
-            'In the shadowed northwestern corner',
-            'Along the northern boundary',
-            'Along the northern boundary',
-            'Along the northern boundary',
-            'Along the northern boundary',
-            'Along the northern boundary',
-            'In the shadowed northeastern corner',
-            'Along the western boundary',
-            'Approaching the northwestern boundary',
-            'Approaching the northern boundary',
-            'Approaching the northern boundary',
-            'Approaching the northern boundary',
-            'Approaching the northeastern boundary',
-            'Along the eastern boundary',
-            'Along the western boundary',
-            'Approaching the western boundary',
-            'Venturing northwest from the center',
-            'Venturing north from the center',
-            'Venturing northeast from the center',
-            'Approaching the eastern boundary',
-            'Along the eastern boundary',
-            'Along the western boundary',
-            'Approaching the western boundary',
-            'Venturing west from the center',
-            'At the still center of the map',
-            'Venturing east from the center',
-            'Approaching the eastern boundary',
-            'Along the eastern boundary',
-            'Along the western boundary',
-            'Approaching the western boundary',
-            'Venturing southwest from the center',
-            'Venturing south from the center',
-            'Venturing southeast from the center',
-            'Approaching the eastern boundary',
-            'Along the eastern boundary',
-            'Along the western boundary',
-            'Approaching the southwestern boundary',
-            'Approaching the southern boundary',
-            'Approaching the southern boundary',
-            'Approaching the southern boundary',
-            'Approaching the southeastern boundary',
-            'Along the eastern boundary',
-            'In the shadowed southeastern corner',
-            'Along the southern boundary',
-            'Along the southern boundary',
-            'Along the southern boundary',
-            'Along the southern boundary',
-            'Along the southern boundary',
-            'In the shadowed southeastern corner'
+            'In the shadowed northwestern corner',      // 0
+            'Along the northern boundary',              // 1
+            'Along the northern boundary',              // 2
+            'Along the northern boundary',              // 3
+            'Along the northern boundary',              // 4
+            'Along the northern boundary',              // 5
+            'In the shadowed northeastern corner',      // 6
+            'Along the western boundary',               // 7
+            'Approaching the northwestern boundary',    // 8
+            'Approaching the northern boundary',        // 9
+            'Approaching the northern boundary',        // 10
+            'Approaching the northern boundary',        // 11
+            'Approaching the northeastern boundary',    // 12
+            'Along the eastern boundary',               // 13
+            'Along the western boundary',               // 14
+            'Approaching the western boundary',         // 15
+            'Venturing northwest from the center',      // 16
+            'Venturing north from the center',          // 17
+            'Venturing northeast from the center',      // 18
+            'Approaching the eastern boundary',         // 19
+            'Along the eastern boundary',               // 20
+            'Along the western boundary',               // 21
+            'Approaching the western boundary',         // 22
+            'Venturing west from the center',           // 23
+            'At the still center of the map',           // 24
+            'Venturing east from the center',           // 25
+            'Approaching the eastern boundary',         // 26
+            'Along the eastern boundary',               // 27
+            'Along the western boundary',               // 28
+            'Approaching the western boundary',         // 29
+            'Venturing southwest from the center',      // 30
+            'Venturing south from the center',          // 31
+            'Venturing southeast from the center',      // 32
+            'Approaching the eastern boundary',         // 33
+            'Along the eastern boundary',               // 34
+            'Along the western boundary',               // 35
+            'Approaching the southwestern boundary',    // 36
+            'Approaching the southern boundary',        // 37
+            'Approaching the southern boundary',        // 38
+            'Approaching the southern boundary',        // 39
+            'Approaching the southeastern boundary',    // 40
+            'Along the eastern boundary',               // 41
+            'In the shadowed southeastern corner',      // 42
+            'Along the southern boundary',              // 43
+            'Along the southern boundary',              // 44
+            'Along the southern boundary',              // 45
+            'Along the southern boundary',              // 46
+            'Along the southern boundary',              // 47
+            'In the shadowed southeastern corner'       // 48
         ]
 
         const room = {
