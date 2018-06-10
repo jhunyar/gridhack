@@ -15,6 +15,59 @@ function init() {
     const roomInfoName = document.getElementById('room-name')
     const roomInfoDesc = document.getElementById('room-desc')
     const alert = document.getElementById('alert')
+    const floor = document.getElementById('floor-type')
+
+    let rooms = new Array ( );
+    // rooms[x] = new Array ( 'Room name', 'Room description', 'Floor type')
+    rooms[0] = new Array ( 'In the shadowed northwestern corner', 'Description of room 0', 'Earth' );
+    rooms[1] = new Array ( 'Along the northern boundary', 'Description of room 1', 'Earth' );
+    rooms[2] = new Array ( 'Along the northern boundary', 'Description of room 2', 'Earth' );
+    rooms[3] = new Array ( 'Along the northern boundary', 'Description of room 3', 'Earth' );
+    rooms[4] = new Array ( 'Along the northern boundary', 'Description of room 4', 'Earth' );
+    rooms[5] = new Array ( 'Along the northern boundary', 'Description of room 5', 'Earth' );
+    rooms[6] = new Array ( 'In the shadowed northeastern corner', 'Description of room 6', 'Earth' );
+    rooms[7] = new Array ( 'Along the western boundary', 'Description of room 7', 'Earth' );
+    rooms[8] = new Array ( 'Approaching the northwestern boundary', 'Description of room 8', 'Earth' );
+    rooms[9] = new Array ( 'Approaching the northern boundary', 'Description of room 9', 'Earth' );
+    rooms[10] = new Array ( 'Approaching the northern boundary', 'Description of room 10', 'Earth' );
+    rooms[11] = new Array ( 'Approaching the northern boundary', 'Description of room 11', 'Earth' );
+    rooms[12] = new Array ( 'Approaching the northeastern boundary', 'Description of room 12', 'Earth' );
+    rooms[13] = new Array ( 'Along the eastern boundary', 'Description of room 13', 'Earth' );
+    rooms[14] = new Array ( 'Along the western boundary', 'Description of room 14', 'Earth' );
+    rooms[15] = new Array ( 'Approaching the western boundary', 'Description of room 15', 'Earth' );
+    rooms[16] = new Array ( 'Venturing northwest from the center', 'Description of room 16', 'Earth' );
+    rooms[17] = new Array ( 'Venturing north from the center', 'Description of room 17', 'Earth' );
+    rooms[18] = new Array ( 'Venturing northeast from the center', 'Description of room 18', 'Earth' );
+    rooms[19] = new Array ( 'Approaching the eastern boundary', 'Description of room 19', 'Earth' );
+    rooms[20] = new Array ( 'Along the eastern boundary', 'Description of room 20', 'Earth' );
+    rooms[21] = new Array ( 'Along the western boundary', 'Description of room 21', 'Earth' );
+    rooms[22] = new Array ( 'Approaching the western boundary', 'Description of room 22', 'Earth' );
+    rooms[23] = new Array ( 'Venturing west from the center', 'Description of room 23', 'Earth' );
+    rooms[24] = new Array ( 'At the still center of the map', 'Description of room 24', 'Earth' );
+    rooms[25] = new Array ( 'Venturing east from the center', 'Description of room 25', 'Earth' );
+    rooms[26] = new Array ( 'Approaching the eastern boundary', 'Description of room 26', 'Earth' );
+    rooms[27] = new Array ( 'Along the eastern boundary', 'Description of room 27', 'Earth' );
+    rooms[28] = new Array ( 'Along the western boundary', 'Description of room 28', 'Earth' );
+    rooms[29] = new Array ( 'Approaching the western boundary', 'Description of room 29', 'Earth' );
+    rooms[30] = new Array ( 'Venturing southwest from the center', 'Description of room 30', 'Earth' );
+    rooms[31] = new Array ( 'Venturing south from the center', 'Description of room 31', 'Earth' );
+    rooms[32] = new Array ( 'Venturing southeast from the center', 'Description of room 32', 'Earth' );
+    rooms[33] = new Array ( 'Approaching the eastern boundary', 'Description of room 33', 'Earth' );
+    rooms[34] = new Array ( 'Along the eastern boundary', 'Description of room 34', 'Earth' );
+    rooms[35] = new Array ( 'Along the western boundary', 'Description of room 35', 'Earth' );
+    rooms[36] = new Array ( 'Approaching the southwestern boundary', 'Description of room 36', 'Earth' );
+    rooms[37] = new Array ( 'Approaching the southern boundary', 'Description of room 37', 'Earth' );
+    rooms[38] = new Array ( 'Approaching the southern boundary', 'Description of room 38', 'Earth' );
+    rooms[39] = new Array ( 'Approaching the southern boundary', 'Description of room 39', 'Earth' );
+    rooms[40] = new Array ( 'Approaching the southeastern boundary', 'Description of room 40', 'Earth' );
+    rooms[41] = new Array ( 'Along the eastern boundary', 'Description of room 41', 'Earth' );
+    rooms[42] = new Array ( 'In the shadowed southeastern corner', 'Description of room 42', 'Earth' );
+    rooms[43] = new Array ( 'Along the southern boundary', 'Description of room 43', 'Earth' );
+    rooms[44] = new Array ( 'Along the southern boundary', 'Description of room 44', 'Earth' );
+    rooms[45] = new Array ( 'Along the southern boundary', 'Description of room 45', 'Earth' );
+    rooms[46] = new Array ( 'Along the southern boundary', 'Description of room 46', 'Earth' );
+    rooms[47] = new Array ( 'Along the southern boundary', 'Description of room 47', 'Earth' );
+    rooms[48] = new Array ( 'In the shadowed southeastern corner', 'Description of room 48', 'Earth' );
 
     // a reusable function to clear the map of anything other than active and inactive grids
     function resetMap() {
@@ -134,122 +187,15 @@ function init() {
         // 35 36 37 38 39 40 41
         // 42 43 44 45 46 47 48
 
-        let roomDescArray = [
-            'Description of room 0',    // 0
-            'Description of room 1',    // 1
-            'Description of room 2',    // 2
-            'Description of room 3',    // 3
-            'Description of room 4',    // 4
-            'Description of room 5',    // 5
-            'Description of room 6',    // 6
-            'Description of room 7',    // 7
-            'Description of room 8',    // 8
-            'Description of room 9',    // 9
-            'Description of room 10',   // 10
-            'Description of room 11',   // 11
-            'Description of room 12',   // 12
-            'Description of room 13',   // 13
-            'Description of room 14',   // 14
-            'Description of room 15',   // 15
-            'Description of room 16',   // 16
-            'Description of room 17',   // 17
-            'Description of room 18',   // 18
-            'Description of room 19',   // 19
-            'Description of room 20',   // 20
-            'Description of room 21',   // 21
-            'Description of room 22',   // 22
-            'Description of room 23',   // 23
-            'Description of room 24',   // 24
-            'Description of room 25',   // 25
-            'Description of room 26',   // 26
-            'Description of room 27',   // 27
-            'Description of room 28',   // 28
-            'Description of room 29',   // 29
-            'Description of room 30',   // 30
-            'Description of room 31',   // 31
-            'Description of room 32',   // 32
-            'Description of room 33',   // 33
-            'Description of room 34',   // 34
-            'Description of room 35',   // 35
-            'Description of room 36',   // 36
-            'Description of room 37',   // 37
-            'Description of room 38',   // 38
-            'Description of room 39',   // 39
-            'Description of room 40',   // 40
-            'Description of room 41',   // 41
-            'Description of room 42',   // 42
-            'Description of room 43',   // 43
-            'Description of room 44',   // 44
-            'Description of room 45',   // 45
-            'Description of room 46',   // 46
-            'Description of room 47',   // 47
-            'Description of room 48'    // 48
-        ]
-
-        let roomNameArray = [
-            'In the shadowed northwestern corner',      // 0
-            'Along the northern boundary',              // 1
-            'Along the northern boundary',              // 2
-            'Along the northern boundary',              // 3
-            'Along the northern boundary',              // 4
-            'Along the northern boundary',              // 5
-            'In the shadowed northeastern corner',      // 6
-            'Along the western boundary',               // 7
-            'Approaching the northwestern boundary',    // 8
-            'Approaching the northern boundary',        // 9
-            'Approaching the northern boundary',        // 10
-            'Approaching the northern boundary',        // 11
-            'Approaching the northeastern boundary',    // 12
-            'Along the eastern boundary',               // 13
-            'Along the western boundary',               // 14
-            'Approaching the western boundary',         // 15
-            'Venturing northwest from the center',      // 16
-            'Venturing north from the center',          // 17
-            'Venturing northeast from the center',      // 18
-            'Approaching the eastern boundary',         // 19
-            'Along the eastern boundary',               // 20
-            'Along the western boundary',               // 21
-            'Approaching the western boundary',         // 22
-            'Venturing west from the center',           // 23
-            'At the still center of the map',           // 24
-            'Venturing east from the center',           // 25
-            'Approaching the eastern boundary',         // 26
-            'Along the eastern boundary',               // 27
-            'Along the western boundary',               // 28
-            'Approaching the western boundary',         // 29
-            'Venturing southwest from the center',      // 30
-            'Venturing south from the center',          // 31
-            'Venturing southeast from the center',      // 32
-            'Approaching the eastern boundary',         // 33
-            'Along the eastern boundary',               // 34
-            'Along the western boundary',               // 35
-            'Approaching the southwestern boundary',    // 36
-            'Approaching the southern boundary',        // 37
-            'Approaching the southern boundary',        // 38
-            'Approaching the southern boundary',        // 39
-            'Approaching the southeastern boundary',    // 40
-            'Along the eastern boundary',               // 41
-            'In the shadowed southeastern corner',      // 42
-            'Along the southern boundary',              // 43
-            'Along the southern boundary',              // 44
-            'Along the southern boundary',              // 45
-            'Along the southern boundary',              // 46
-            'Along the southern boundary',              // 47
-            'In the shadowed southeastern corner'       // 48
-        ]
-
         const room = {
             id: activeGridId,
-            name: roomNameArray[activeGridId],
-            description: roomDescArray[activeGridId],
+            name: rooms[activeGridId][0],
+            description: rooms[activeGridId][1],
+            floorType: rooms[activeGridId][2],
             status: grids[activeGridId].id 
         }
 
-        let roomDesc = roomDescArray[activeGridId]
-
-        // output.innerHTML = 'You are in room # ' + activeGridId + '<p>' + roomDesc +'</p>'
-
-        roomInfoName.innerHTML = `${room.id} - ${room.name}`
+        roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floorType}`
         roomInfoDesc.innerHTML = `"${room.description}".`
 
         if (look) {
