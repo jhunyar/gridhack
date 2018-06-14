@@ -158,7 +158,6 @@ function init() {
             currentItem = items[randItem]
             item.chance = Math.floor(Math.random() * Math.floor(currentItem[3]))
 
-
             // conditional movement rules to determine which grid we need to set as active and which we need to clear
             if (moveLeft) {
                 if (leftwall.includes(activeGridId-1)) {
