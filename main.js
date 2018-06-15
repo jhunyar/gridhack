@@ -2,7 +2,6 @@ function init() {
     // define variables we'll be using throughout the game
     const grids = document.getElementById('map').getElementsByTagName('div')
     const gridArray = Array.from(grids)
-    let activeGrid = document.getElementById('active')
     let activeGridId = gridArray.findIndex(x => x.id == 'active')
     const visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
     const leftwall = [-1, 6, 13, 20, 27, 34, 41]
@@ -11,11 +10,9 @@ function init() {
     const rightwall = [7, 14, 21, 28, 35, 42, 49]
     const topwall = [-8, -7, -6, -5, -4, -3, -2, -1]
     const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
-    const output = document.getElementById('output')
     const roomInfoName = document.getElementById('room-name')
     const roomInfoDesc = document.getElementById('room-desc')
     const alert = document.getElementById('alert')
-    const floor = document.getElementById('floor-type')
 
     let rooms = []
     // rooms[x] = [ 'Room name', 'Room description', 'Floor type' ]
