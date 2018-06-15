@@ -71,24 +71,16 @@ function init() {
 
     let items = []
     // items[#] = [ 'name', 'description', 'type' rarity/100 ]
-    items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 5 ]
-    items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'tool', 8 ]
-    items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 4 ]
-    items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 3 ]
-    items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 50 ]
+    items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25 ]
+    items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'tool', 15 ]
+    items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 10 ]
+    items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 10 ]
+    items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75 ]
 
     let randItem = Math.floor(Math.random() * Math.floor(items.length))
 
     let currentItem = items[randItem]
     console.log(currentItem)
-
-    let item = {
-        name: currentItem[0],
-        description: currentItem[1],
-        type: currentItem[2],
-        rarity: currentItem[3],
-        chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
-    }
 
     // a reusable function to clear the map of aything other than active and inactive grids
     function resetMap() {
@@ -154,6 +146,15 @@ function init() {
             // we need to reset the map on every key action to clear any of the visible grids from the last movement
             resetMap()
             clearAlerts()
+
+            let item = {
+                name: currentItem[0],
+                description: currentItem[1],
+                type: currentItem[2],
+                rarity: currentItem[3],
+                chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
+            }
+
             randItem = Math.floor(Math.random() * Math.floor(items.length))
             currentItem = items[randItem]
             item.chance = Math.floor(Math.random() * Math.floor(currentItem[3]))
@@ -218,7 +219,8 @@ function init() {
                 name: rooms[activeGridId][0],
                 description: rooms[activeGridId][1],
                 floorType: rooms[activeGridId][2],
-                status: grids[activeGridId].id 
+                status: grids[activeGridId].id,
+                item: '' 
             }
 
             roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floorType} - Status: ${room.status}`
