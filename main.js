@@ -70,27 +70,15 @@ function init() {
     rooms[48] = [ 'In the shadowed southeastern corner', 'Description of room 48', 'Earth' ]
 
     let items = []
-    // items[#] = [ 'name', 'description', 'type' rarity/100 ]
-    items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 5 ]
-    items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'tool', 8 ]
-    items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 4 ]
-    items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 3 ]
-    items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 50 ]
+    // name, description, type, rarity, chance
+    items[0] = [ 'Breath Recycler', 'Provides breathable air for whoever wears it', 'Armour', 25]
+    items[1] = [ 'Floor Map', 'Reveals all tiles of the floor of the dugeon', 'Tool', 15]
+    items[2] = [ 'Healing Potion', 'Heals user 5HP', 'Potion', 10]
+    items[3] = [ 'Wooden Practice Sword', 'Wooden sword hits for 3HP', 'Weapon', 10]
+    items[4] = [ 'Spectral Chalice', 'Heals user to full HP and Heals all Afflictions', 'Potion', 75]
+    
 
-    let randItem = Math.floor(Math.random() * Math.floor(items.length))
-
-    let currentItem = items[randItem]
-    console.log(currentItem)
-
-    let item = {
-        name: currentItem[0],
-        description: currentItem[1],
-        type: currentItem[2],
-        rarity: currentItem[3],
-        chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
-    }
-
-    // a reusable function to clear the map of aything other than active and inactive grids
+    // a reusable function to clear the map of anything other than active and inactive grids
     function resetMap() {
         gridArray.forEach((grid, index, gridArray) => {
             if ( grid.id != 'active' ) {
@@ -139,11 +127,12 @@ function init() {
         const right = gridArray[activeGridId+1]
         const up = gridArray[activeGridId-7]
         const down = gridArray[activeGridId+7]
-        const moveLeft = e.keyCode == '37'
-        const moveUp = e.keyCode == '38'
-        const moveRight = e.keyCode == '39'
-        const moveDown = e.keyCode == '40'
-        const look = e.keyCode == '76'
+        
+        let moveLeft = e.keyCode == '37'
+        let moveUp = e.keyCode == '38'
+        let moveRight = e.keyCode == '39'
+        let moveDown = e.keyCode == '40'
+        let look = e.keyCode == '76'
 
         if (moveLeft || moveUp || moveRight || moveDown || look) {
 
@@ -154,10 +143,16 @@ function init() {
             // we need to reset the map on every key action to clear any of the visible grids from the last movement
             resetMap()
             clearAlerts()
-            randItem = Math.floor(Math.random() * Math.floor(items.length))
-            currentItem = items[randItem]
-            item.chance = Math.floor(Math.random() * Math.floor(currentItem[3]))
 
+            let randItem = Math.floor(Math.random() * Math.floor(items.length))
+            let currentItem = items[randItem]
+            let item = {
+                name: currentItem[0],
+                description: currentItem[1],
+                type: currentItem[2],
+                rarity: currentItem[3],
+                chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
+            }
 
             // conditional movement rules to determine which grid we need to set as active and which we need to clear
             if (moveLeft) {
@@ -219,22 +214,23 @@ function init() {
                 name: rooms[activeGridId][0],
                 description: rooms[activeGridId][1],
                 floorType: rooms[activeGridId][2],
-                status: grids[activeGridId].id 
+                status: grids[activeGridId].id
+             
             }
 
-            roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floorType} - Status: ${room.status}`
+            roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floorType}`
             roomInfoDesc.innerHTML = `"${room.description}".`
+
+            console.log(item.chance)
+            console.log(currentItem)
 
             if (look) {
                 alert.innerHTML = 'You see nothing of particular interest'
             }
-
-            console.log(currentItem)
-            console.log(item.chance)
-            
             if (item.chance == 1) {
                 roomInfoDesc.innerHTML += ` You found a ${item.name}. ${item.description}`
             }
         }
+        
     })
 }
