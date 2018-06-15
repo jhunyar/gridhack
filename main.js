@@ -2,7 +2,6 @@ function init() {
     // define variables we'll be using throughout the game
     const grids = document.getElementById('map').getElementsByTagName('div')
     const gridArray = Array.from(grids)
-    let activeGrid = document.getElementById('active')
     let activeGridId = gridArray.findIndex(x => x.id == 'active')
     const visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
     const leftwall = [-1, 6, 13, 20, 27, 34, 41]
@@ -11,11 +10,9 @@ function init() {
     const rightwall = [7, 14, 21, 28, 35, 42, 49]
     const topwall = [-8, -7, -6, -5, -4, -3, -2, -1]
     const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
-    const output = document.getElementById('output')
     const roomInfoName = document.getElementById('room-name')
     const roomInfoDesc = document.getElementById('room-desc')
     const alert = document.getElementById('alert')
-    const floor = document.getElementById('floor-type')
 
     let rooms = []
     // rooms[x] = [ 'Room name', 'Room description', 'Floor type' ]
@@ -70,15 +67,19 @@ function init() {
     rooms[48] = [ 'In the shadowed southeastern corner', 'Description of room 48', 'Earth' ]
 
     let items = []
-    // name, description, type, rarity, chance
-    items[0] = [ 'Breath Recycler', 'Provides breathable air for whoever wears it', 'Armour', 25]
-    items[1] = [ 'Floor Map', 'Reveals all tiles of the floor of the dugeon', 'Tool', 15]
-    items[2] = [ 'Healing Potion', 'Heals user 5HP', 'Potion', 10]
-    items[3] = [ 'Wooden Practice Sword', 'Wooden sword hits for 3HP', 'Weapon', 10]
-    items[4] = [ 'Spectral Chalice', 'Heals user to full HP and Heals all Afflictions', 'Potion', 75]
-    
+    // items[#] = [ 'name', 'description', 'type' rarity/100 ]
+    items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25 ]
+    items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'tool', 15 ]
+    items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 10 ]
+    items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 10 ]
+    items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75 ]
 
-    // a reusable function to clear the map of anything other than active and inactive grids
+    let randItem = Math.floor(Math.random() * Math.floor(items.length))
+
+    let currentItem = items[randItem]
+    console.log(currentItem)
+
+    // a reusable function to clear the map of aything other than active and inactive grids
     function resetMap() {
         gridArray.forEach((grid, index, gridArray) => {
             if ( grid.id != 'active' ) {
@@ -144,8 +145,6 @@ function init() {
             resetMap()
             clearAlerts()
 
-            let randItem = Math.floor(Math.random() * Math.floor(items.length))
-            let currentItem = items[randItem]
             let item = {
                 name: currentItem[0],
                 description: currentItem[1],
@@ -153,6 +152,10 @@ function init() {
                 rarity: currentItem[3],
                 chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
             }
+
+            randItem = Math.floor(Math.random() * Math.floor(items.length))
+            currentItem = items[randItem]
+            item.chance = Math.floor(Math.random() * Math.floor(currentItem[3]))
 
             // conditional movement rules to determine which grid we need to set as active and which we need to clear
             if (moveLeft) {
@@ -214,8 +217,8 @@ function init() {
                 name: rooms[activeGridId][0],
                 description: rooms[activeGridId][1],
                 floorType: rooms[activeGridId][2],
-                status: grids[activeGridId].id
-             
+                status: grids[activeGridId].id,
+                item: '' 
             }
 
             roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floorType}`
