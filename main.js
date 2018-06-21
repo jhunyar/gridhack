@@ -76,9 +76,6 @@ function init() {
 
     let randItem = Math.floor(Math.random() * Math.floor(items.length))
 
-    let currentItem = items[randItem]
-    console.log(currentItem)
-
     // a reusable function to clear the map of aything other than active and inactive grids
     function resetMap() {
         gridArray.forEach((grid, index, gridArray) => {
@@ -145,6 +142,8 @@ function init() {
             resetMap()
             clearAlerts()
 
+            let currentItem = items[randItem]
+
             let item = {
                 name: currentItem[0],
                 description: currentItem[1],
@@ -154,7 +153,6 @@ function init() {
             }
 
             randItem = Math.floor(Math.random() * Math.floor(items.length))
-            currentItem = items[randItem]
             item.chance = Math.floor(Math.random() * Math.floor(currentItem[3]))
 
             // conditional movement rules to determine which grid we need to set as active and which we need to clear
@@ -224,16 +222,13 @@ function init() {
             roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floorType}`
             roomInfoDesc.innerHTML = `"${room.description}".`
 
-            console.log(item.chance)
-            console.log(currentItem)
-
             if (look) {
                 alert.innerHTML = 'You see nothing of particular interest'
             }
             if (item.chance == 1) {
                 roomInfoDesc.innerHTML += ` You found a ${item.name}. ${item.description}`
+                console.log(currentItem)
             }
         }
-        
     })
 }
