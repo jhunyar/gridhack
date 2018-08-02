@@ -1,3 +1,12 @@
+// TODO:
+    // Create a createRoom function that creates all 49 tiles (divs)
+    // Create a setActive function that intially sets the middle tile as active
+    // Create a findItem function that, upon RNG item drop, adds it to the current tile's array/object
+    // Create an inventory UI
+    // Create inventory object/array
+    // Create a listener for 'g' that removes item from tile if present, and adds to inventory array
+        // Create a refreshInventory function that redraws the inventory(?)
+
 // lets go ahead and reset the map to start fresh
 resetMap()
 
