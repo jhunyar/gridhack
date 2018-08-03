@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -35,7 +34,7 @@
             <div></div>
             <div></div>
             <div></div>
-            <div class="active"></div>
+            <div id="active"></div>
             <div></div>
             <div></div>
             <div></div>
@@ -62,7 +61,15 @@
             <div></div>
         </div>
     </div>
-    <div id="output"></div>
-    <script>setActive();</script>
+    <div id="info">
+        <div id="output">
+            <p id="room-name"></p>
+            <p id="floor-type"></p>
+            <p id="room-desc"></p> 
+        </div>
+        <div id="alert"></div>
+    </div>
+    <script src="gridhack-functions.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 * {
-    transition: ease .1s
+    transition: ease .1s;
+    box-sizing: border-box
 }
 
 body {
@@ -14,7 +15,39 @@ body {
     background: #333;
     margin: 0 auto;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 20px
+}
+
+#info {
+    border: 1px solid yellow;
+    border-top: none;
+    border-bottom: none;
+    border-radius: 10px;
+    width: 500px;
+    height: 200px;
+    margin: 0 auto; 
+    position: relative;
+}
+
+#output, #alert {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    padding: 5px
+}
+
+#output {
+    border-radius: 10px 10px 0 0;
+    background: #222;
+    height: 140px
+}
+
+#alert {
+    border-top: 1px solid yellow;
+    border-radius: 0 0 10px 10px;
+    background: #111;
+    height: 60px;
+    text-align: center
 }
 
 #map {
@@ -23,7 +56,7 @@ body {
     grid-template-rows: repeat(7, 1fr);
     grid-gap: 3px;
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0; right: 0; bottom: 0; left: 0
 }
 
 #map div {
@@ -31,19 +64,15 @@ body {
     border-radius: 10px
 }
 
-.active {
+#active {
     background: yellow !important;
     transition: ease .1s
 }
 
-.inactive {
-    background: #666 !important;
-    transition: ease .1s
+.visible {
+    background: #999 !important;
 }
 
-#output {
-    margin: 0 auto;
-    height: 30px;
-    width: 100%;
-    text-align: center;
+.inactive {
+    background: #666 !important;
 }
