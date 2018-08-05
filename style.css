@@ -50,7 +50,7 @@ body {
     text-align: center
 }
 
-#map {
+#room {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(7, 1fr);
@@ -59,7 +59,7 @@ body {
     top: 0; right: 0; bottom: 0; left: 0
 }
 
-#map div {
+#room div {
     background: #666;
     border-radius: 10px
 }

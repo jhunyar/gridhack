@@ -1,7 +1,5 @@
 // define variables we'll be using throughout the game
-const grids = document.getElementById('map').getElementsByTagName('div')
-const gridArray = Array.from(grids)
-let activeGridId = gridArray.findIndex(x => x.id == 'active')
+let tiles, tileArray, activeTileId
 const visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
 const leftwall = [-1, 6, 13, 20, 27, 34, 41]
 const rightCol = [6,13,20,27,34,41,48]
@@ -12,6 +10,19 @@ const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
 const roomInfoName = document.getElementById('room-name')
 const roomInfoDesc = document.getElementById('room-desc')
 const alert = document.getElementById('alert')
+const room = document.getElementById('room')
+
+const buildRoom = () => {
+    let tileCount = 49
+    for (i = 0; i < tileCount; i++) {
+        const tile = document.createElement('div')
+        room.appendChild(tile)
+    }
+    room.childNodes[24].id = 'active'
+    tiles = room.getElementsByTagName('div')
+    tileArray = Array.from(tiles)
+    activeTileId = tileArray.findIndex(x => x.id == 'active')
+}
 
 let rooms = []
 // rooms[x] = [ 'Room name', 'Room description', 'Floor type' ]
@@ -75,30 +86,30 @@ items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflicti
 
 let randItem = Math.floor(Math.random() * Math.floor(items.length))
 
-// Clear the map of aything other than active and inactive grids
-const resetMap = () => {
-    gridArray.forEach((grid) => {
-        if ( grid.id != 'active' ) {
-            grid.className = 'inactive'
+// Clear the room of aything other than active and inactive tiles
+const resetRoom = () => {
+    tileArray.forEach((tile) => {
+        if ( tile.id != 'active' ) {
+            tile.className = 'inactive'
         }
     })
 }
 
-// Reset the value of the activeGridId variable
+// Reset the value of the activeTileId variable
 const setActive = () => {
-    activeGridId = gridArray.findIndex(x => x.id == 'active')
+    activeTileId = tileArray.findIndex(x => x.id == 'active')
 }
 
-// Set all grids adjacent to activeGridId to be visible 
-const setVisible = function (grid) {
-    visibleArray.forEach((grid) => {
-        if (rightCol.includes(activeGridId+grid) && leftCol.includes(activeGridId) 
-        || (leftCol.includes(activeGridId+grid) && rightCol.includes(activeGridId))
-        || topwall.includes(activeGridId + grid) 
-        || bottomwall.includes(activeGridId + grid)) {
+// Set all tiles adjacent to activeTileId to be visible 
+const setVisible = () => {
+    visibleArray.forEach((tile) => {
+        if (rightCol.includes(activeTileId+tile) && leftCol.includes(activeTileId) 
+        || (leftCol.includes(activeTileId+tile) && rightCol.includes(activeTileId))
+        || topwall.includes(activeTileId + tile) 
+        || bottomwall.includes(activeTileId + tile)) {
             return false
         } else {
-            grids[activeGridId+grid].className = 'visible'
+            tiles[activeTileId+tile].className = 'visible'
         }
     })
 }
