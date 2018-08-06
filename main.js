@@ -7,10 +7,11 @@
         // Create a refreshInventory function that redraws the inventory(?)
 // 
 
-buildRoom()
+// build floor elements
+buildFloor()
 
 // lets go ahead and reset the room to start fresh
-resetRoom()
+resetFloor()
 
 // lets also set up our visible tiles since we already know our active tile (we start with one manually set as active)
 setVisible()
@@ -28,29 +29,17 @@ document.addEventListener('keydown', function(e) {
     let moveRight = e.keyCode == '39'
     let moveDown = e.keyCode == '40'
     let look = e.keyCode == '76'
+    let get = e.keyCode == '71'
 
-    if (moveLeft || moveUp || moveRight || moveDown || look) {
+    if (moveLeft || moveUp || moveRight || moveDown || look || get) {
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
 
         // we need to reset the room on every key action to clear any of the visible tiles from the last movement
-        resetRoom()
+        resetFloor()
         clearAlerts()
-
-        let currentItem = items[randItem]
-
-        let item = {
-            name: currentItem[0],
-            description: currentItem[1],
-            type: currentItem[2],
-            rarity: currentItem[3],
-            chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
-        }
-
-        randItem = Math.floor(Math.random() * Math.floor(items.length))
-        item.chance = Math.floor(Math.random() * Math.floor(currentItem[3]))
 
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
         if (moveLeft) {
@@ -107,24 +96,26 @@ document.addEventListener('keydown', function(e) {
         // 35 36 37 38 39 40 41
         // 42 43 44 45 46 47 48
 
-        const room = {
-            id: activeTileId,
-            name: rooms[activeTileId][0],
-            description: rooms[activeTileId][1],
-            floorType: rooms[activeTileId][2],
-            status: tiles[activeTileId].id,
-            item: '' 
-        }
+        const room = floor.tiles[activeTileId]
 
-        roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floorType}`
-        roomInfoDesc.innerHTML = `"${room.description}".`
+        roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
+        roomInfoDesc.innerHTML = `"${room.desc}".`
 
         if (look) {
-            alert.innerHTML = 'You see nothing of particular interest'
+            if (room.item !== null) {
+                alert.innerHTML = `You see a ${room.item.name} here.`
+            } else {
+                alert.innerHTML = 'You see nothing of particular interest'
+            }
         }
-        if (item.chance == 1) {
-            roomInfoDesc.innerHTML += ` You found a ${item.name}. ${item.description}`
-            console.log(currentItem)
+        if (room.item !== null) {
+            roomInfoDesc.innerHTML += ` You found a ${room.item.name}. ${room.item.description}`
+            console.log(room.item)
+        }
+
+        if (get) {
+            getItem()
+            roomInfoDesc.innerHTML = `"${room.desc}".`
         }
     }
 })
