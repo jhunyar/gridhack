@@ -1,4 +1,4 @@
-let items = []
+const items = []
 // items[#] = [ 'name', 'description', 'type' rarity/100 ]
 items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25 ]
 items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'tool', 15 ]
@@ -71,12 +71,12 @@ const leftCol = [0,7,14,21,28,35,42]
 const rightwall = [7, 14, 21, 28, 35, 42, 49]
 const topwall = [-8, -7, -6, -5, -4, -3, -2, -1]
 const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
-const roomInfoName = document.getElementById('room-name')
-const roomInfoDesc = document.getElementById('room-desc')
-const alert = document.getElementById('alert')
-const room = document.getElementById('room')
+const roomInfoName = document.querySelector('#room-name')
+const roomInfoDesc = document.querySelector('#room-desc')
+const alert = document.querySelector('#alert')
+const room = document.querySelector('#room')
 
-const floor = {
+let floor = {
     number: 1,
     tiles: []
 }
