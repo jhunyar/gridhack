@@ -6,8 +6,6 @@ items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 10 ]
 items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 10 ]
 items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75 ]
 
-let inventory = []
-
 let rooms = []
 // rooms[x] = [ 'Room name', 'Room description', 'Floor type' ]
 rooms[0] = [ 'In the shadowed northwestern corner', 'Description of room 0', 'Earth' ]
@@ -75,10 +73,11 @@ const roomInfoName = document.querySelector('#room-name')
 const roomInfoDesc = document.querySelector('#room-desc')
 const alert = document.querySelector('#alert')
 const room = document.querySelector('#room')
+const inventoryEl = document.querySelector('#inventory')
 
 let floor = {
     number: 1,
-    tiles: []
+    tiles: [],
 }
 
 function Tile(id, name, desc, floor, item) {
@@ -89,7 +88,7 @@ function Tile(id, name, desc, floor, item) {
     this.item = item;
 }
 
-const buildFloor = () => {
+const buildTiles = () => {
     let tileCount = 49
     for (i = 0; i < tileCount; i++) {
         // Create the tile element and append it to the room
@@ -122,6 +121,22 @@ const buildFloor = () => {
     tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
     activeTileId = tileArray.findIndex(x => x.id == 'active')
+}
+
+const inventory = {
+    capacity: 14,
+    items: []
+}
+
+const buildInventory = () => {
+    inventoryEl.innerHTML = ''
+    inventory.items.forEach((item) => {
+        let itemEl = document.createElement('div')
+        let itemTextEl = document.createElement('p')
+        itemTextEl.textContent = item.name
+        itemEl.appendChild(itemTextEl)
+        inventoryEl.appendChild(itemEl)
+    })
 }
 
 // Clear the room of aything other than active and inactive tiles
@@ -161,10 +176,13 @@ const clearAlerts = () => {
 const getItem = () => {
     let item = floor.tiles[activeTileId].item
 
-    if (item !== null) {
-        inventory.push(item)
+    if (item !== null && inventory.items.length < inventory.capacity) {
+        inventory.items.push(item)
         alert.innerHTML = `${item.name} added to inventory.`
         floor.tiles[activeTileId].item = null
+        buildInventory()
+    } else if (item !== null && inventory.items.length === inventory.capacity) {
+        alert.innerHTML = 'Your inventory is full!'
     } else {
         alert.innerHTML = 'There\'s nothing here to pick up.'
     }

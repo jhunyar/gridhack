@@ -59,9 +59,40 @@ body {
     top: 0; right: 0; bottom: 0; left: 0
 }
 
-#room div {
+#room div, #inventory div {
     background: #666;
     border-radius: 10px
+}
+
+#inventory {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-gap: 3px;
+    position: absolute;
+    top: -3px;
+    right: 0;
+    bottom: 0;
+    left: 520px;
+    height: 506px;
+    width: 146px;
+    background: #222;
+    padding: 3px;
+}
+
+#inventory div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px
+}
+
+#inventory div p {
+    font-family: fantasy;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    font-size: 0.9em
 }
 
 #active {
