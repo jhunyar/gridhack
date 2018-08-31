@@ -104,7 +104,7 @@ function Tile(id, name, desc, floor, item) {
 }
 
 const buildFloors = () => {
-    for (i = 0; i < dungeon.depth; i++) {
+    for (let i = 0; i < dungeon.depth; i++) {
         let floor = new Floor(i, buildTiles())
         dungeon.floors.push(floor)
 
@@ -116,7 +116,6 @@ const buildTiles = () => {
     let tileCount = 49
     let tiles = []
     for (i = 0; i < tileCount; i++) {
-
         // Create a random item for each tile
         let randItem = Math.floor(Math.random() * Math.floor(items.length))
         let currentItem = items[randItem]
@@ -129,15 +128,14 @@ const buildTiles = () => {
             chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
         }
 
-        // Construct the tile and push it to the temporary tiles array
         if (item.chance !== 1) {
             item = null
         }
 
+        // Construct the tile and push it to the temporary tiles array
         let tile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item)
         tiles.push(tile)
     }
-    // This breaks things. We need to be able to do this without a return somehow?
     return tiles
 }
 
