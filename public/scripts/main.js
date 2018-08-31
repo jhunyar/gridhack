@@ -7,6 +7,9 @@ resetFloor()
 // lets also set up our visible tiles since we already know our active tile (we start with one manually set as active)
 setVisible()
 
+// display information about the first tile
+describeTile()
+
 // the movement handler itself
 document.addEventListener('keydown', function(e) {
     const current = tileArray[activeTileId]
@@ -78,6 +81,8 @@ document.addEventListener('keydown', function(e) {
         // now set the visible tiles based on that new active tile
         setVisible()
 
+        describeTile()
+
         // The cartographer's aide
         //  0  1  2  3  4  5  6
         //  7  8  9 10 11 12 13
@@ -87,11 +92,8 @@ document.addEventListener('keydown', function(e) {
         // 35 36 37 38 39 40 41
         // 42 43 44 45 46 47 48
 
-        const room = floor.tiles[activeTileId]
-
-        roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
-        roomInfoDesc.innerHTML = `"${room.desc}".`
-
+        let room = floor.tiles[activeTileId]
+        
         if (look) {
             if (room.item !== null) {
                 alert.innerHTML = `You see a ${room.item.name} here.`

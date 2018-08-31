@@ -4,22 +4,65 @@
 }
 
 body {
-    background: #333;
-    color: #EEE
+    background: #111;
+    color: #EEE;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    background-image: url(assets/images/navy.png)
 }
 
 #container {
     width: 500px;
     height: 500px;;
     position: relative;
-    background: #333;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 90px;
     margin-bottom: 20px
 }
 
+#header {
+    position: relative;
+    top: -75px;
+    left: 0;
+    width: 666px;
+    height: 70px;
+    /* background: #666; */
+    font-family: 'Aladin', cursive;
+}
+
+#header--banner {
+    position: absolute;
+    bottom: -105px;
+    left: 128px;
+    font-size: 5em;
+    -webkit-text-stroke: 1px #000;
+    color: white;
+    text-shadow:
+        4px 4px 0 #000,
+        -2px -2px 0 #000,  
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000;
+}
+
+#header--banner__inventory {
+    position: absolute;
+    bottom: -65px;
+    right: -3px;
+    font-size: 3em;
+    -webkit-text-stroke: 1px #111;
+    color: white;
+    text-shadow:
+        3px 3px 0 #111,
+        -1px -1px 0 #111,  
+        1px -1px 0 #111,
+        -1px 1px 0 #111,
+        1px 1px 0 #111;
+    z-index: 2
+}
+
 #info {
-    border: 1px solid yellow;
+    border: 1px solid black;
     border-top: none;
     border-bottom: none;
     border-radius: 10px;
@@ -27,6 +70,13 @@ body {
     height: 200px;
     margin: 0 auto; 
     position: relative;
+    font-size: 0.9em;
+    box-shadow: 0 0 3px black;
+}
+
+#info #room-name {
+    font-size: 1.5em;
+    font-family: 'Aladin', cursive
 }
 
 #output, #alert {
@@ -43,9 +93,9 @@ body {
 }
 
 #alert {
-    border-top: 1px solid yellow;
+    border-top: 1px solid black;
     border-radius: 0 0 10px 10px;
-    background: #111;
+    background: #333;
     height: 60px;
     text-align: center
 }
@@ -61,7 +111,9 @@ body {
 
 #room div, #inventory div {
     background: #666;
-    border-radius: 10px
+    border-radius: 3px;
+    text-shadow: 1px 1px black;
+    box-shadow: 1px 1px 2px black;
 }
 
 #inventory {
@@ -78,6 +130,10 @@ body {
     width: 146px;
     background: #222;
     padding: 3px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 0 3px black;
 }
 
 #inventory div {
@@ -88,11 +144,11 @@ body {
 }
 
 #inventory div p {
-    font-family: fantasy;
+    font-family: 'Aladin', cursive;
     text-align: center;
     justify-content: center;
     display: flex;
-    font-size: 0.9em
+    font-size: 1.1em
 }
 
 #active {
@@ -107,3 +163,4 @@ body {
 .inactive {
     background: #666 !important;
 }
+

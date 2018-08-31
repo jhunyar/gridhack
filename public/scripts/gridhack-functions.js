@@ -118,6 +118,7 @@ const buildTiles = () => {
 
     // Set the center tile as active
     room.childNodes[24].id = 'active'
+
     tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
     activeTileId = tileArray.findIndex(x => x.id == 'active')
@@ -186,4 +187,11 @@ const getItem = () => {
     } else {
         alert.innerHTML = 'There\'s nothing here to pick up.'
     }
+}
+
+const describeTile = () => {
+    const room = floor.tiles[activeTileId]
+
+    roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
+    roomInfoDesc.innerHTML = `"${room.desc}".`
 }
