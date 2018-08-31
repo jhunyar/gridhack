@@ -1,11 +1,22 @@
-const items = []
-// items[#] = [ 'name', 'description', 'type' rarity/100 ]
-items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25 ]
-items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'tool', 15 ]
-items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 10 ]
-items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 10 ]
-items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75 ]
+// Misc variables
+let tileArray, activeTileId
+const visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
+const leftwall = [-1, 6, 13, 20, 27, 34, 41]
+const rightCol = [6,13,20,27,34,41,48]
+const leftCol = [0,7,14,21,28,35,42]
+const rightwall = [7, 14, 21, 28, 35, 42, 49]
+const topwall = [-8, -7, -6, -5, -4, -3, -2, -1]
+const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
+const roomInfoName = document.querySelector('#room-name')
+const roomInfoDesc = document.querySelector('#room-desc')
+const alert = document.querySelector('#alert')
+const room = document.querySelector('#room')
+const inventoryEl = document.querySelector('#inventory')
 
+// Item array variables
+const items = []
+
+// Room variables
 let rooms = []
 // rooms[x] = [ 'Room name', 'Room description', 'Floor type' ]
 rooms[0] = [ 'In the shadowed northwestern corner', 'Description of room 0', 'Earth' ]
@@ -58,27 +69,31 @@ rooms[46] = [ 'Along the southern boundary', 'Description of room 46', 'Earth' ]
 rooms[47] = [ 'Along the southern boundary', 'Description of room 47', 'Earth' ]
 rooms[48] = [ 'In the shadowed southeastern corner', 'Description of room 48', 'Earth' ]
 
-// let randItem = Math.floor(Math.random() * Math.floor(items.length))
+// items[#] = [ 'name', 'description', 'type' rarity/100 ]
+items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25 ]
+items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'tool', 15 ]
+items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 10 ]
+items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 10 ]
+items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75 ]
 
-// define variables we'll be using throughout the game
-let tiles, tileArray, activeTileId
-const visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
-const leftwall = [-1, 6, 13, 20, 27, 34, 41]
-const rightCol = [6,13,20,27,34,41,48]
-const leftCol = [0,7,14,21,28,35,42]
-const rightwall = [7, 14, 21, 28, 35, 42, 49]
-const topwall = [-8, -7, -6, -5, -4, -3, -2, -1]
-const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
-const roomInfoName = document.querySelector('#room-name')
-const roomInfoDesc = document.querySelector('#room-desc')
-const alert = document.querySelector('#alert')
-const room = document.querySelector('#room')
-const inventoryEl = document.querySelector('#inventory')
-
-let floor = {
-    number: 1,
-    tiles: [],
+// Object variables
+const dungeon = {
+    depth: 48,
+    floors: []
 }
+
+const inventory = {
+    capacity: 14,
+    items: []
+}
+
+// Constructor functions
+function Floor(number, tiles) {
+    this.number = number;
+    this.tiles = tiles
+}
+
+let currentFloor = 0
 
 function Tile(id, name, desc, floor, item) {
     this.id = id;
@@ -88,12 +103,19 @@ function Tile(id, name, desc, floor, item) {
     this.item = item;
 }
 
+const buildFloors = () => {
+    for (i = 0; i < dungeon.depth; i++) {
+        let floor = new Floor(i, buildTiles())
+        dungeon.floors.push(floor)
+
+        console.log('Creating new floor')
+    }
+}
+
 const buildTiles = () => {
     let tileCount = 49
+    let tiles = []
     for (i = 0; i < tileCount; i++) {
-        // Create the tile element and append it to the room
-        const tile = document.createElement('div')
-        room.appendChild(tile)
 
         // Create a random item for each tile
         let randItem = Math.floor(Math.random() * Math.floor(items.length))
@@ -107,26 +129,29 @@ const buildTiles = () => {
             chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
         }
 
-        // Construct the tile and push it to the floor object's tiles array
+        // Construct the tile and push it to the temporary tiles array
         if (item.chance !== 1) {
             item = null
         }
 
-        let thisTile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item)
-        floor.tiles.push(thisTile)
+        let tile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item)
+        tiles.push(tile)
     }
-
-    // Set the center tile as active
-    room.childNodes[24].id = 'active'
-
-    tiles = room.getElementsByTagName('div')
-    tileArray = Array.from(tiles)
-    activeTileId = tileArray.findIndex(x => x.id == 'active')
+    // This breaks things. We need to be able to do this without a return somehow?
+    return tiles
 }
 
-const inventory = {
-    capacity: 14,
-    items: []
+const renderFloor = () => {
+    dungeon.floors[currentFloor].tiles.forEach(() => {
+        const tileEl = document.createElement('div')
+        room.appendChild(tileEl)
+    })
+
+    room.childNodes[24].id = 'active'
+
+    let tiles = room.getElementsByTagName('div')
+    tileArray = Array.from(tiles)
+    activeTileId = tileArray.findIndex(x => x.id == 'active')
 }
 
 const buildInventory = () => {
@@ -156,6 +181,7 @@ const setActive = () => {
 
 // Set all tiles adjacent to activeTileId to be visible 
 const setVisible = () => {
+    let tiles = room.getElementsByTagName('div')
     visibleArray.forEach((tile) => {
         if (rightCol.includes(activeTileId+tile) && leftCol.includes(activeTileId) 
         || (leftCol.includes(activeTileId+tile) && rightCol.includes(activeTileId))
@@ -175,12 +201,12 @@ const clearAlerts = () => {
 
 // get an item
 const getItem = () => {
-    let item = floor.tiles[activeTileId].item
+    let item = dungeon.floors[currentFloor].tiles[activeTileId].item
 
     if (item !== null && inventory.items.length < inventory.capacity) {
         inventory.items.push(item)
         alert.innerHTML = `${item.name} added to inventory.`
-        floor.tiles[activeTileId].item = null
+        dungeon.floors[currentFloor].tiles[activeTileId].item = null
         buildInventory()
     } else if (item !== null && inventory.items.length === inventory.capacity) {
         alert.innerHTML = 'Your inventory is full!'
@@ -190,7 +216,7 @@ const getItem = () => {
 }
 
 const describeTile = () => {
-    const room = floor.tiles[activeTileId]
+    const room = dungeon.floors[currentFloor].tiles[activeTileId]
 
     roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
     roomInfoDesc.innerHTML = `"${room.desc}".`

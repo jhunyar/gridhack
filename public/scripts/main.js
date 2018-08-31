@@ -1,5 +1,8 @@
 // build floor elements
-buildTiles()
+buildFloors()
+
+// render the current floor
+renderFloor()
 
 // lets go ahead and reset the room to start fresh
 resetFloor()
@@ -92,7 +95,7 @@ document.addEventListener('keydown', function(e) {
         // 35 36 37 38 39 40 41
         // 42 43 44 45 46 47 48
 
-        let room = floor.tiles[activeTileId]
+        let room = dungeon.floors[currentFloor].tiles[activeTileId]
         
         if (look) {
             if (room.item !== null) {
