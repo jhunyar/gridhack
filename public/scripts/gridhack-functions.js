@@ -78,7 +78,7 @@ items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflicti
 
 // Object variables
 const dungeon = {
-    depth: 48,
+    depth: 49,
     floors: []
 }
 
