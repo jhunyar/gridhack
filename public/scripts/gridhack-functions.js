@@ -5,8 +5,8 @@ const leftWall = [-1, 13, 27, 41, 53, 69, 83, 97, 111, 125, 139, 153, 167, 181]
 const rightCol = [13, 27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181, 195]
 const leftCol = [0, 14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182]
 const rightWall = [14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182, 196]
-const topWall = [-14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
-const bottomWall = [196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209]
+const topWall = [-15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
+const bottomWall = [196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210]
 const roomInfoName = document.querySelector('#room-name')
 const roomInfoDesc = document.querySelector('#room-desc')
 const alert = document.querySelector('#alert')
@@ -126,7 +126,7 @@ const buildInventory = () => {
 // Clear the room of aything other than active, mapped and hidden tiles
 const resetFloor = () => {
     tileArray.forEach((tile) => {
-        if ( tile.id != 'active' && tile.className != 'mapped visible' && tile.className != 'mapped') {
+        if (tile.id != 'active' && tile.className != 'mapped visible' && tile.className != 'mapped') {
             tile.className = 'hidden'
         }
         if (tile.className == 'mapped visible') {

@@ -4,7 +4,6 @@ buildFloors()
 // render the current floor
 renderFloor()
 
-
 // lets go ahead and reset the room to start fresh
 resetFloor()
 
