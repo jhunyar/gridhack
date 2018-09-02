@@ -1,0 +1,165 @@
+* {
+    transition: ease .1s;
+    box-sizing: border-box
+}
+
+body {
+    background: #111;
+    color: #EEE;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    background-image: url(assets/images/navy.png)
+}
+
+#container {
+    width: 500px;
+    height: 500px;;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 90px;
+    margin-bottom: 20px
+}
+
+#header {
+    position: relative;
+    top: -75px;
+    left: 0;
+    width: 666px;
+    height: 70px;
+    /* background: #666; */
+    font-family: 'Aladin', cursive;
+}
+
+#header--banner {
+    position: absolute;
+    bottom: -105px;
+    left: 128px;
+    font-size: 5em;
+    -webkit-text-stroke: 1px #000;
+    color: white;
+    text-shadow:
+        4px 4px 0 #000,
+        -2px -2px 0 #000,  
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000;
+}
+
+#header--banner__inventory {
+    position: absolute;
+    bottom: -65px;
+    right: -3px;
+    font-size: 3em;
+    -webkit-text-stroke: 1px #111;
+    color: white;
+    text-shadow:
+        3px 3px 0 #111,
+        -1px -1px 0 #111,  
+        1px -1px 0 #111,
+        -1px 1px 0 #111,
+        1px 1px 0 #111;
+    z-index: 2
+}
+
+#info {
+    border: 1px solid black;
+    border-top: none;
+    border-bottom: none;
+    border-radius: 10px;
+    width: 500px;
+    height: 200px;
+    margin: 0 auto; 
+    position: relative;
+    font-size: 0.9em;
+    box-shadow: 0 0 3px black;
+}
+
+#info #room-name {
+    font-size: 1.5em;
+    font-family: 'Aladin', cursive
+}
+
+#output, #alert {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    padding: 5px
+}
+
+#output {
+    border-radius: 10px 10px 0 0;
+    background: #222;
+    height: 140px
+}
+
+#alert {
+    border-top: 1px solid black;
+    border-radius: 0 0 10px 10px;
+    background: #333;
+    height: 60px;
+    text-align: center
+}
+
+#room {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    grid-template-rows: repeat(14, 1fr);
+    grid-gap: 3px;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0
+}
+
+#room div, #inventory div {
+    background: #666;
+    text-shadow: 1px 1px black;
+    box-shadow: 1px 1px 2px black;
+}
+
+#inventory {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-gap: 3px;
+    position: absolute;
+    top: -3px;
+    right: 0;
+    bottom: 0;
+    left: 520px;
+    height: 506px;
+    width: 146px;
+    background: #222;
+    padding: 3px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 0 3px black;
+}
+
+#inventory div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px
+}
+
+#inventory div p {
+    font-family: 'Aladin', cursive;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    font-size: 1.1em
+}
+
+#active {
+    background: yellow !important;
+    transition: ease .1s
+}
+
+.visible {
+    background: #999 !important;
+}
+
+.inactive {
+    background: #666 !important;
+}
+
