@@ -1,12 +1,12 @@
 // Misc variables
 let tileArray, activeTileId
-const visibleArray = [6, 7, 8, 1, -1, -6, -7, -8]
-const leftwall = [-1, 6, 13, 20, 27, 34, 41]
-const rightCol = [6,13,20,27,34,41,48]
-const leftCol = [0,7,14,21,28,35,42]
-const rightwall = [7, 14, 21, 28, 35, 42, 49]
-const topwall = [-8, -7, -6, -5, -4, -3, -2, -1]
-const bottomwall = [49, 50, 51, 52, 53, 54, 55, 56]
+const visibleArray = [13, 14, 15, 1, -1, -13, -14, -15]
+const leftWall = [-1, 13, 27, 41, 53, 69, 83, 97, 111, 125, 139, 153, 167, 181]
+const rightCol = [13, 27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181, 195]
+const leftCol = [0, 14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182]
+const rightWall = [14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182, 196]
+const topWall = [-14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
+const bottomWall = [196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209]
 const roomInfoName = document.querySelector('#room-name')
 const roomInfoDesc = document.querySelector('#room-desc')
 const alert = document.querySelector('#alert')
@@ -18,56 +18,16 @@ const items = []
 
 // Room variables
 let rooms = []
-// rooms[x] = [ 'Room name', 'Room description', 'Floor type' ]
-rooms[0] = [ 'In the shadowed northwestern corner', 'Description of room 0', 'Earth' ]
-rooms[1] = [ 'Along the northern boundary', 'Description of room 1', 'Earth' ]
-rooms[2] = [ 'Along the northern boundary', 'Description of room 2', 'Earth' ]
-rooms[3] = [ 'Along the northern boundary', 'Description of room 3', 'Earth' ]
-rooms[4] = [ 'Along the northern boundary', 'Description of room 4', 'Earth' ]
-rooms[5] = [ 'Along the northern boundary', 'Description of room 5', 'Earth' ]
-rooms[6] = [ 'In the shadowed northeastern corner', 'Description of room 6', 'Earth' ]
-rooms[7] = [ 'Along the western boundary', 'Description of room 7', 'Earth' ]
-rooms[8] = [ 'Approaching the northwestern boundary', 'Description of room 8', 'Earth' ]
-rooms[9] = [ 'Approaching the northern boundary', 'Description of room 9', 'Earth' ]
-rooms[10] = [ 'Approaching the northern boundary', 'Description of room 10', 'Earth' ]
-rooms[11] = [ 'Approaching the northern boundary', 'Description of room 11', 'Earth' ]
-rooms[12] = [ 'Approaching the northeastern boundary', 'Description of room 12', 'Earth' ]
-rooms[13] = [ 'Along the eastern boundary', 'Description of room 13', 'Earth' ]
-rooms[14] = [ 'Along the western boundary', 'Description of room 14', 'Earth' ]
-rooms[15] = [ 'Approaching the western boundary', 'Description of room 15', 'Earth' ]
-rooms[16] = [ 'Venturing northwest from the center', 'Description of room 16', 'Earth' ]
-rooms[17] = [ 'Venturing north from the center', 'Description of room 17', 'Earth' ]
-rooms[18] = [ 'Venturing northeast from the center', 'Description of room 18', 'Earth' ]
-rooms[19] = [ 'Approaching the eastern boundary', 'Description of room 19', 'Earth' ]
-rooms[20] = [ 'Along the eastern boundary', 'Description of room 20', 'Earth' ]
-rooms[21] = [ 'Along the western boundary', 'Description of room 21', 'Earth' ]
-rooms[22] = [ 'Approaching the western boundary', 'Description of room 22', 'Earth' ]
-rooms[23] = [ 'Venturing west from the center', 'Description of room 23', 'Earth' ]
-rooms[24] = [ 'At the still center of the map', 'Description of room 24', 'Earth' ]
-rooms[25] = [ 'Venturing east from the center', 'Description of room 25', 'Earth' ]
-rooms[26] = [ 'Approaching the eastern boundary', 'Description of room 26', 'Earth' ]
-rooms[27] = [ 'Along the eastern boundary', 'Description of room 27', 'Earth' ]
-rooms[28] = [ 'Along the western boundary', 'Description of room 28', 'Earth' ]
-rooms[29] = [ 'Approaching the western boundary', 'Description of room 29', 'Earth' ]
-rooms[30] = [ 'Venturing southwest from the center', 'Description of room 30', 'Earth' ]
-rooms[31] = [ 'Venturing south from the center', 'Description of room 31', 'Earth' ]
-rooms[32] = [ 'Venturing southeast from the center', 'Description of room 32', 'Earth' ]
-rooms[33] = [ 'Approaching the eastern boundary', 'Description of room 33', 'Earth' ]
-rooms[34] = [ 'Along the eastern boundary', 'Description of room 34', 'Earth' ]
-rooms[35] = [ 'Along the western boundary', 'Description of room 35', 'Earth' ]
-rooms[36] = [ 'Approaching the southwestern boundary', 'Description of room 36', 'Earth' ]
-rooms[37] = [ 'Approaching the southern boundary', 'Description of room 37', 'Earth' ]
-rooms[38] = [ 'Approaching the southern boundary', 'Description of room 38', 'Earth' ]
-rooms[39] = [ 'Approaching the southern boundary', 'Description of room 39', 'Earth' ]
-rooms[40] = [ 'Approaching the southeastern boundary', 'Description of room 40', 'Earth' ]
-rooms[41] = [ 'Along the eastern boundary', 'Description of room 41', 'Earth' ]
-rooms[42] = [ 'In the shadowed southeastern corner', 'Description of room 42', 'Earth' ]
-rooms[43] = [ 'Along the southern boundary', 'Description of room 43', 'Earth' ]
-rooms[44] = [ 'Along the southern boundary', 'Description of room 44', 'Earth' ]
-rooms[45] = [ 'Along the southern boundary', 'Description of room 45', 'Earth' ]
-rooms[46] = [ 'Along the southern boundary', 'Description of room 46', 'Earth' ]
-rooms[47] = [ 'Along the southern boundary', 'Description of room 47', 'Earth' ]
-rooms[48] = [ 'In the shadowed southeastern corner', 'Description of room 48', 'Earth' ]
+
+const describeRooms = () => {
+    let tileCount = 196
+    for (let i = 0; i < tileCount; i++) {
+        rooms.push([ 'Title', `Description of room ${i}`, 'Earth'])
+    }
+}
+
+// We need to describe the rooms right off the bat for other functions to work
+describeRooms()
 
 // items[#] = [ 'name', 'description', 'type' rarity/100 ]
 items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25 ]
@@ -113,7 +73,7 @@ const buildFloors = () => {
 }
 
 const buildTiles = () => {
-    let tileCount = 49
+    let tileCount = 196
     let tiles = []
     for (i = 0; i < tileCount; i++) {
         // Create a random item for each tile
@@ -183,8 +143,8 @@ const setVisible = () => {
     visibleArray.forEach((tile) => {
         if (rightCol.includes(activeTileId+tile) && leftCol.includes(activeTileId) 
         || (leftCol.includes(activeTileId+tile) && rightCol.includes(activeTileId))
-        || topwall.includes(activeTileId + tile) 
-        || bottomwall.includes(activeTileId + tile)) {
+        || topWall.includes(activeTileId + tile) 
+        || bottomWall.includes(activeTileId + tile)) {
             return false
         } else {
             tiles[activeTileId+tile].className = 'visible'
