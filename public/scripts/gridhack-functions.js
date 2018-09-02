@@ -123,11 +123,14 @@ const buildInventory = () => {
     })
 }
 
-// Clear the room of aything other than active and inactive tiles
+// Clear the room of aything other than active, mapped and hidden tiles
 const resetFloor = () => {
     tileArray.forEach((tile) => {
-        if ( tile.id != 'active' ) {
-            tile.className = 'inactive'
+        if ( tile.id != 'active' && tile.className != 'mapped visible' && tile.className != 'mapped') {
+            tile.className = 'hidden'
+        }
+        if (tile.className == 'mapped visible') {
+            tile.classList.remove('visible')
         }
     })
 }
@@ -146,8 +149,11 @@ const setVisible = () => {
         || topWall.includes(activeTileId + tile) 
         || bottomWall.includes(activeTileId + tile)) {
             return false
-        } else {
-            tiles[activeTileId+tile].className = 'visible'
+        } 
+        else {
+            tiles[activeTileId+tile].classList.remove ('hidden')
+            tiles[activeTileId+tile].classList.add ('mapped')
+            tiles[activeTileId+tile].classList.add ('visible')
         }
     })
 }

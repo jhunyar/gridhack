@@ -106,11 +106,14 @@ body {
     grid-template-rows: repeat(14, 1fr);
     grid-gap: 3px;
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0
+    top: 0; right: 0; bottom: 0; left: 0 ;
+    border: 3pt solid #999;
+    border-radius: .8%;
+    border-style: ridge
 }
 
 #room div, #inventory div {
-    background: #666;
+    background: #555;
     text-shadow: 1px 1px black;
     box-shadow: 1px 1px 2px black;
 }
@@ -159,7 +162,11 @@ body {
     background: #999 !important;
 }
 
-.inactive {
-    background: #666 !important;
+.mapped {
+    background: #555;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
