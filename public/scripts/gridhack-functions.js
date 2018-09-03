@@ -105,7 +105,7 @@ const renderFloor = () => {
         room.appendChild(tileEl)
     })
 
-    room.childNodes[90].id = 'active'
+    room.childNodes[Math.floor(Math.random() * dungeon.floors[currentFloor].tiles.length)].id = 'active'
 
     let tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)

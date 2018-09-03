@@ -1,17 +1,8 @@
-// build floor elements
-buildFloors()
-
-// render the current floor
-renderFloor()
-
-// lets go ahead and reset the room to start fresh
-resetFloor()
-
-// lets also set up our visible tiles since we already know our active tile (we start with one manually set as active)
-setVisible()
-
-// display information about the first tile
-describeTile()
+buildFloors()   // Build all dungeon floors
+renderFloor()   // Render the current floor
+resetFloor()    // Reset the floor
+setVisible()    // Set visible tiles around active tile
+describeTile()  // Display information about the current tile
 
 // the movement handler itself
 document.addEventListener('keydown', function(e) {
@@ -74,21 +65,11 @@ document.addEventListener('keydown', function(e) {
             }
         }
 
-        // we need to reset the room on every key action to clear any of the visible tiles from the last movement
-        resetFloor()
-        clearAlerts()
-
-        // everything after this point happens regardless of which direction the user enters
-        
-        // first of all, set our new active tile to wherever we moved
-        setActive()
-
-        // now set the visible tiles based on that new active tile
-        setVisible()
-
-        describeRooms()
-
-        describeTile()
+        resetFloor()    // Reset the floor on every key action to clear any visible tiles from last movement
+        clearAlerts()   // Reset alerts area after action
+        setActive()     // Set active tile to wherever player moved
+        setVisible()    // Set new visible area based on active tile
+        describeTile()  // Describe the new active tile
 
         // The cartographer's aide
 
