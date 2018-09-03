@@ -1,14 +1,14 @@
 // Misc variables
 let tileArray, activeTileId
 const visibleArray = [13, 14, 15, 1, -1, -13, -14, -15]
-const leftWall = [-1, 13, 27, 41, 53, 69, 83, 97, 111, 125, 139, 153, 167, 181]
-const rightCol = [13, 27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181, 195]
-const leftCol = [0, 14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182]
-const rightWall = [14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182, 196]
-const topWall = [-15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
-const bottomWall = [196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210]
-const roomInfoName = document.querySelector('#room-name')
-const roomInfoDesc = document.querySelector('#room-desc')
+const westWall = [-1, 13, 27, 41, 53, 69, 83, 97, 111, 125, 139, 153, 167, 181]
+const eastCol = [13, 27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181, 195]
+const westCol = [0, 14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182]
+const eastWall = [14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182, 196]
+const northWall = [-15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
+const southWall = [196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210]
+const tileInfoName = document.querySelector('#room-name')
+const tileInfoDesc = document.querySelector('#room-desc')
 const alert = document.querySelector('#alert')
 const room = document.querySelector('#room')
 const inventoryEl = document.querySelector('#inventory')
@@ -143,10 +143,10 @@ const setActive = () => {
 const setVisible = () => {
     let tiles = room.getElementsByTagName('div')
     visibleArray.forEach((tile) => {
-        if (rightCol.includes(activeTileId+tile) && leftCol.includes(activeTileId) 
-        || (leftCol.includes(activeTileId+tile) && rightCol.includes(activeTileId))
-        || topWall.includes(activeTileId + tile) 
-        || bottomWall.includes(activeTileId + tile)) {
+        if (eastCol.includes(activeTileId+tile) && westCol.includes(activeTileId) 
+        || (westCol.includes(activeTileId+tile) && eastCol.includes(activeTileId))
+        || northWall.includes(activeTileId + tile) 
+        || southWall.includes(activeTileId + tile)) {
             return false
         } 
         else {
@@ -181,6 +181,6 @@ const getItem = () => {
 const describeTile = () => {
     const room = dungeon.floors[currentFloor].tiles[activeTileId]
 
-    roomInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
-    roomInfoDesc.innerHTML = `"${room.desc}".`
+    tileInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
+    tileInfoDesc.innerHTML = `"${room.desc}".`
 }

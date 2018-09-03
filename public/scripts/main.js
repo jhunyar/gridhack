@@ -7,19 +7,19 @@ describeTile()  // Display information about the current tile
 // the movement handler itself
 document.addEventListener('keydown', function(e) {
     const current = tileArray[activeTileId]
-    const left = tileArray[activeTileId-1]
-    const right = tileArray[activeTileId+1]
-    const up = tileArray[activeTileId-14]
-    const down = tileArray[activeTileId+14]
+    const west = tileArray[activeTileId-1]
+    const east = tileArray[activeTileId+1]
+    const north = tileArray[activeTileId-14]
+    const south = tileArray[activeTileId+14]
     
-    let moveLeft = e.keyCode == '37'
-    let moveUp = e.keyCode == '38'
-    let moveRight = e.keyCode == '39'
-    let moveDown = e.keyCode == '40'
+    let moveWest = e.keyCode == '37'
+    let moveNorth = e.keyCode == '38'
+    let moveEast = e.keyCode == '39'
+    let moveSouth = e.keyCode == '40'
     let look = e.keyCode == '76'
     let get = e.keyCode == '71'
 
-    if (moveLeft || moveUp || moveRight || moveDown || look || get) {
+    if (moveWest || moveNorth || moveEast || moveSouth || look || get) {
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
@@ -27,41 +27,41 @@ document.addEventListener('keydown', function(e) {
 
 
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
-        if (moveLeft) {
-            if (leftWall.includes(activeTileId-1)) {
+        if (moveWest) {
+            if (westWall.includes(activeTileId-1)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
-                left.id = 'active'
+                west.id = 'active'
             }
-        } else if (moveRight) {
-            if (rightWall.includes(activeTileId+1)) {
+        } else if (moveEast) {
+            if (eastWall.includes(activeTileId+1)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
-                right.id = 'active'
+                east.id = 'active'
             }
-        } else if (moveUp) {
-            if (topWall.includes(activeTileId-14)) {
+        } else if (moveNorth) {
+            if (northWall.includes(activeTileId-14)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
-                up.id = 'active'
+                north.id = 'active'
             }
-        } else if (moveDown) {
-            if (bottomWall.includes(activeTileId+14)) {
+        } else if (moveSouth) {
+            if (southWall.includes(activeTileId+14)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
-                down.id = 'active'
+                south.id = 'active'
             }
         }
 
@@ -92,23 +92,22 @@ document.addEventListener('keydown', function(e) {
         //     |---------------------------------------------------------|
         //       196 197 198 199 200 201 202 203 204 205 206 207 208 209 
 
-        let room = dungeon.floors[currentFloor].tiles[activeTileId]
+        let tile = dungeon.floors[currentFloor].tiles[activeTileId]
         
         if (look) {
-            if (room.item !== null) {
-                alert.innerHTML = `You see a ${room.item.name} here.`
+            if (tile.item !== null) {
+                alert.innerHTML = `You see a ${tile.item.name} here.`
             } else {
                 alert.innerHTML = 'You see nothing of particular interest'
             }
         }
-        if (room.item !== null) {
-            roomInfoDesc.innerHTML += ` You found a ${room.item.name}. ${room.item.description}`
-            console.log(room.item)
+        if (tile.item !== null) {
+            tileInfoDesc.innerHTML += ` You found a ${tile.item.name}. ${tile.item.description}`
         }
 
         if (get) {
             getItem()
-            roomInfoDesc.innerHTML = `"${room.desc}".`
+            tileInfoDesc.innerHTML = `"${room.desc}".`
         }
     }
 })
