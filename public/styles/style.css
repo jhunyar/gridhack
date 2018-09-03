@@ -122,15 +122,6 @@ body {
     top: 0; right: 0; bottom: 0; left: 0;
 }
 
-#room div, #inventory div {
-    align-items: center;
-    background: #555;
-    box-shadow: 1px 1px 2px black;
-    display: flex;
-    justify-content: center;
-    font-size: 1.7em
-}
-
 #inventory {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -142,7 +133,7 @@ body {
     bottom: 0;
     left: 520px;
     height: 506px;
-    width: 146px;
+    width: 143px;
     background: #222;
     padding: 3px;
     border-left: 1px solid black;
@@ -151,11 +142,21 @@ body {
     box-shadow: 0 0 3px black;
 }
 
-#inventory div {
-    display: flex;
+#room div, #inventory div {
     align-items: center;
+    background: #555;
+    box-shadow: 1px 1px 2px black;
+    display: flex;
     justify-content: center;
-    height: 70px
+    font-size: 1.7em
+}
+
+#inventory div {
+    align-items: center;
+    display: flex;
+    font-size: initial;
+    justify-content: center;
+    height: 69px
 }
 
 #inventory div p {

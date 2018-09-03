@@ -22,7 +22,7 @@ document.addEventListener('keydown', function(e) {
     let look = e.keyCode == '76'
     let get = e.keyCode == '71'
 
-    if (moveWest || moveNorth || moveEast || moveSouth || moveDown || look || get) {
+    if (moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get) {
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
@@ -72,32 +72,47 @@ document.addEventListener('keydown', function(e) {
             }
         }
 
-        if (moveDown) {
-            if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
-                dungeon.visitedFloors.push(dungeon.floors[player.currentFloor])
-                player.currentFloor += 1
-                renderFloor()   // Render the current floor
-                resetFloorEls()    // Reset the floor on every key action to clear any visible tiles from last movement
-                clearAlerts()   // Reset alerts area after action
-                setActive()     // Set active tile to wherever player moved
-                setVisible()    // Set new visible area based on active tile
-                describeTile()  // Describe the new active tile
-            } else {
-                console.log('There is no staircase here!')
-            }
-        }
-
-        if (moveUp) {
-            if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairUp) {
-                player.currentFloor -= 1
-            }
-        }
-
         resetFloorEls()    // Reset the floor on every key action to clear any visible tiles from last movement
         clearAlerts()   // Reset alerts area after action
         setActive()     // Set active tile to wherever player moved
         setVisible()    // Set new visible area based on active tile
         describeTile()  // Describe the new active tile
+
+        if (moveDown) {
+            if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
+                player.currentFloor += 1
+
+                Object.defineProperty(dungeon.floors[player.currentFloor].tiles[player.currentTile], 'stairUp', {
+                    value: true
+                })
+
+                renderFloor()   // Render the current floor
+                resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
+                clearAlerts()   // Reset alerts area after action
+                setActive()     // Set active tile to wherever player moved
+                setVisible()    // Set new visible area based on active tile
+                describeTile()  // Describe the new active tile
+            } else {
+                alert.innerHTML = 'There\'s no staircase here'
+            }
+        }
+
+        if (moveUp) {
+            if (dungeon.floors[player.currentFloor === 0]) {
+                alert.innerHTML = 'You can\'t go up for here'
+            } else if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairUp) {
+                player.currentFloor -= 1
+
+                renderFloor()
+                resetFloorEls()
+                clearAlerts()
+                setActive()
+                setVisible()
+                describeTile()
+            } else {
+                alert.innerHTML = 'There\'s no staircase here'
+            }
+        }
 
         // The cartographer's aide
 

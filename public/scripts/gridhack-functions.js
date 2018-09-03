@@ -39,8 +39,7 @@ items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflicti
 // Object variables
 const dungeon = {
     depth: 49,
-    floors: [],
-    visitedFloors: []
+    floors: []
 }
 
 const player = {
@@ -70,8 +69,15 @@ function Tile(id, name, desc, floor, item, mapped) {
 
 const buildFloors = () => {
     for (let i = 0; i < dungeon.depth; i++) {
-        let floor = new Floor(i, buildTiles())
+        let floor = new Floor(i, buildTiles(), false)
         dungeon.floors.push(floor)
+
+        // Create a staircase on each floor
+        if (i !== dungeon.depth) {
+            Object.defineProperty(dungeon.floors[i].tiles[Math.floor(Math.random() * 196)], 'stairDown', {
+                value: true
+            })
+        }
     }
 }
 
@@ -80,8 +86,7 @@ const buildTiles = () => {
     let tiles = []
     for (i = 0; i < tileCount; i++) {
         // Create a random item for each tile
-        let randItem = Math.floor(Math.random() * Math.floor(items.length))
-        let currentItem = items[randItem]
+        let currentItem = items[Math.floor(Math.random() * Math.floor(items.length))]
 
         let item = {
             name: currentItem[0],
@@ -111,17 +116,12 @@ const renderFloor = () => {
     })
 
     let randTileEl = room.childNodes[Math.floor(Math.random() * dungeon.floors[player.currentFloor].tiles.length)]
-    let randTile = dungeon.floors[player.currentFloor].tiles[Math.floor(Math.random() * 196)]
 
     if (player.currentFloor === 0) {
         randTileEl.id = 'active'
     } else {
         room.childNodes[player.currentTile].id = 'active'
     }
-    
-    Object.defineProperty(randTile, 'stairDown', {
-        value: true
-    })
 
     let tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
@@ -175,6 +175,12 @@ const setVisible = () => {
             tileEls[player.currentTile + tile].classList.add('mapped')
             tileEls[player.currentTile + tile].classList.add('visible')
             tileEls[player.currentTile + tile].innerHTML = '<i class="fas fa-arrow-down"></i>'
+        } else if (tiles[player.currentTile + tile].stairUp) {
+            tiles[player.currentTile + tile].mapped = true
+            tileEls[player.currentTile + tile].classList.remove('hidden')
+            tileEls[player.currentTile + tile].classList.add('mapped')
+            tileEls[player.currentTile + tile].classList.add('visible')
+            tileEls[player.currentTile + tile].innerHTML = '<i class="fas fa-arrow-up"></i>'
         } else {
             tiles[player.currentTile + tile].mapped = true
             tileEls[player.currentTile + tile].classList.remove('hidden')
