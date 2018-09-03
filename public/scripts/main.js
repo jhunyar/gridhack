@@ -7,17 +7,18 @@ describeTile()  // Display information about the current tile
 
 // the movement handler itself
 document.addEventListener('keydown', function(e) {
-    const current = tileArray[activeTileId]
-    const west = tileArray[activeTileId-1]
-    const east = tileArray[activeTileId+1]
-    const north = tileArray[activeTileId-14]
-    const south = tileArray[activeTileId+14]
+    const current = tileArray[player.currentTile]
+    const west = tileArray[player.currentTile-1]
+    const east = tileArray[player.currentTile+1]
+    const north = tileArray[player.currentTile-14]
+    const south = tileArray[player.currentTile+14]
     
     let moveWest = e.keyCode == '37'
     let moveNorth = e.keyCode == '38'
     let moveEast = e.keyCode == '39'
     let moveSouth = e.keyCode == '40'
     let moveDown = e.keyCode == '34'
+    let moveUp = e.keyCode == '33'
     let look = e.keyCode == '76'
     let get = e.keyCode == '71'
 
@@ -30,49 +31,49 @@ document.addEventListener('keydown', function(e) {
 
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
         if (moveWest) {
-            if (westWall.includes(activeTileId-1)) {
+            if (westWall.includes(player.currentTile-1)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
                 west.id = 'active'
-                player.currentTile = activeTileId-1
+                player.currentTile = player.currentTile-1
             }
         } else if (moveEast) {
-            if (eastWall.includes(activeTileId+1)) {
+            if (eastWall.includes(player.currentTile+1)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
                 east.id = 'active'
-                player.currentTile = activeTileId+1
+                player.currentTile = player.currentTile+1
             }
         } else if (moveNorth) {
-            if (northWall.includes(activeTileId-14)) {
+            if (northWall.includes(player.currentTile-14)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
                 north.id = 'active'
-                player.currentTile = activeTileId-14
+                player.currentTile = player.currentTile-14
             }
         } else if (moveSouth) {
-            if (southWall.includes(activeTileId+14)) {
+            if (southWall.includes(player.currentTile+14)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
                 south.id = 'active'
-                player.currentTile = activeTileId+14
+                player.currentTile = player.currentTile+14
             }
         }
 
         if (moveDown) {
-            if (dungeon.floors[player.currentFloor].tiles[activeTileId].stairDown) {
+            if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
                 player.currentFloor += 1
                 renderFloor()   // Render the current floor
                 resetFloorEls()    // Reset the floor on every key action to clear any visible tiles from last movement
@@ -82,6 +83,12 @@ document.addEventListener('keydown', function(e) {
                 describeTile()  // Describe the new active tile
             } else {
                 console.log('There is no staircase here!')
+            }
+        }
+
+        if (moveUp) {
+            if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairUp) {
+
             }
         }
 
@@ -112,7 +119,7 @@ document.addEventListener('keydown', function(e) {
         //     |---------------------------------------------------------|
         //       196 197 198 199 200 201 202 203 204 205 206 207 208 209 
 
-        let tile = dungeon.floors[player.currentFloor].tiles[activeTileId]
+        let tile = dungeon.floors[player.currentFloor].tiles[player.currentTile]
 
         if (tile.stairDown) {
             tileInfoDesc.innerHTML += ' You see a staircase leading down.'

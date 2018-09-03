@@ -1,5 +1,5 @@
 // Misc variables
-let tileArray, activeTileId
+let tileArray
 const visibleArray = [13, 14, 15, 1, -1, -13, -14, -15]
 const westWall = [-1, 13, 27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181]
 const eastCol = [13, 27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181, 195]
@@ -124,7 +124,7 @@ const renderFloor = () => {
 
     let tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
-    activeTileId = tileArray.findIndex(x => x.id == 'active')
+    player.currentTile = tileArray.findIndex(x => x.id == 'active')
 }
 
 const buildInventory = () => {
@@ -151,32 +151,31 @@ const resetFloorEls = () => {
     })
 }
 
-// Reset the value of the activeTileId variable
+// Reset the value of the player.currentTile variable
 const setActive = () => {
-    activeTileId = tileArray.findIndex(x => x.id == 'active')
-    player.currentTile = activeTileId
+    player.currentTile = tileArray.findIndex(x => x.id == 'active')
 }
 
-// Set all tiles adjacent to activeTileId to be visible 
+// Set all tiles adjacent to player.currentTile to be visible 
 const setVisible = () => {
     let tileEls = room.getElementsByTagName('div')
     let tiles = dungeon.floors[player.currentFloor].tiles
 
     visibleArray.forEach((tile) => {
-        if (eastCol.includes(activeTileId + tile) && westCol.includes(activeTileId) 
-        || (westCol.includes(activeTileId + tile) && eastCol.includes(activeTileId))
-        || northWall.includes(activeTileId + tile) 
-        || southWall.includes(activeTileId + tile)) {
+        if (eastCol.includes(player.currentTile + tile) && westCol.includes(player.currentTile) 
+        || (westCol.includes(player.currentTile + tile) && eastCol.includes(player.currentTile))
+        || northWall.includes(player.currentTile + tile) 
+        || southWall.includes(player.currentTile + tile)) {
             return false
-        } else if (tiles[activeTileId + tile].stairDown) {
-            tileEls[activeTileId + tile].classList.remove('hidden')
-            tileEls[activeTileId + tile].classList.add('mapped')
-            tileEls[activeTileId + tile].classList.add('visible')
-            tileEls[activeTileId + tile].classList.add('staircase')
+        } else if (tiles[player.currentTile + tile].stairDown) {
+            tileEls[player.currentTile + tile].classList.remove('hidden')
+            tileEls[player.currentTile + tile].classList.add('mapped')
+            tileEls[player.currentTile + tile].classList.add('visible')
+            tileEls[player.currentTile + tile].classList.add('staircase')
         } else {
-            tileEls[activeTileId + tile].classList.remove('hidden')
-            tileEls[activeTileId + tile].classList.add('mapped')
-            tileEls[activeTileId + tile].classList.add('visible')
+            tileEls[player.currentTile + tile].classList.remove('hidden')
+            tileEls[player.currentTile + tile].classList.add('mapped')
+            tileEls[player.currentTile + tile].classList.add('visible')
         }
     })
 }
@@ -188,12 +187,12 @@ const clearAlerts = () => {
 
 // get an item
 const getItem = () => {
-    let item = dungeon.floors[player.currentFloor].tiles[activeTileId].item
+    let item = dungeon.floors[player.currentFloor].tiles[player.currentTile].item
 
     if (item !== null && inventory.items.length < inventory.capacity) {
         inventory.items.push(item)
         alert.innerHTML = `${item.name} added to inventory.`
-        dungeon.floors[player.currentFloor].tiles[activeTileId].item = null
+        dungeon.floors[player.currentFloor].tiles[player.currentTile].item = null
         buildInventory()
     } else if (item !== null && inventory.items.length === inventory.capacity) {
         alert.innerHTML = 'Your inventory is full!'
@@ -203,7 +202,7 @@ const getItem = () => {
 }
 
 const describeTile = () => {
-    const room = dungeon.floors[player.currentFloor].tiles[activeTileId]
+    const room = dungeon.floors[player.currentFloor].tiles[player.currentTile]
 
     tileInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
     tileInfoDesc.innerHTML = `"${room.desc}".`
