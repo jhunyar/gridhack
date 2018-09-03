@@ -34,9 +34,6 @@ document.addEventListener('keydown', function(e) {
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
 
-        // we need to reset the room on every key action to clear any of the visible tiles from the last movement
-        resetFloor()
-        clearAlerts()
 
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
         if (moveLeft) {
@@ -76,6 +73,11 @@ document.addEventListener('keydown', function(e) {
                 down.id = 'active'
             }
         }
+
+        // we need to reset the room on every key action to clear any of the visible tiles from the last movement
+        resetFloor()
+        clearAlerts()
+
         // everything after this point happens regardless of which direction the user enters
         
         // first of all, set our new active tile to wherever we moved
