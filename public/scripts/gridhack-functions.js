@@ -42,15 +42,14 @@ const dungeon = {
     floors: []
 }
 
-const inventory = {
-    capacity: 14,
-    items: []
-}
-
 const player = {
     name: '',
     currentFloor: 0,
-    currentTile: 0
+    currentTile: 0,
+    inventory: {
+        capacity: 14,
+        items: []
+    }
 }
 
 // Constructor functions
@@ -129,7 +128,7 @@ const renderFloor = () => {
 
 const buildInventory = () => {
     inventoryEl.innerHTML = ''
-    inventory.items.forEach((item) => {
+    player.inventory.items.forEach((item) => {
         let itemEl = document.createElement('div')
         let itemTextEl = document.createElement('p')
         itemTextEl.textContent = item.name
@@ -171,7 +170,7 @@ const setVisible = () => {
             tileEls[player.currentTile + tile].classList.remove('hidden')
             tileEls[player.currentTile + tile].classList.add('mapped')
             tileEls[player.currentTile + tile].classList.add('visible')
-            tileEls[player.currentTile + tile].classList.add('staircase')
+            tileEls[player.currentTile + tile].innerHTML = '<i class="fas fa-arrow-down"></i>'
         } else {
             tileEls[player.currentTile + tile].classList.remove('hidden')
             tileEls[player.currentTile + tile].classList.add('mapped')
@@ -189,12 +188,12 @@ const clearAlerts = () => {
 const getItem = () => {
     let item = dungeon.floors[player.currentFloor].tiles[player.currentTile].item
 
-    if (item !== null && inventory.items.length < inventory.capacity) {
-        inventory.items.push(item)
+    if (item !== null && player.inventory.items.length < player.inventory.capacity) {
+        player.inventory.items.push(item)
         alert.innerHTML = `${item.name} added to inventory.`
         dungeon.floors[player.currentFloor].tiles[player.currentTile].item = null
         buildInventory()
-    } else if (item !== null && inventory.items.length === inventory.capacity) {
+    } else if (item !== null && player.inventory.items.length === player.inventory.capacity) {
         alert.innerHTML = 'Your inventory is full!'
     } else {
         alert.innerHTML = 'There\'s nothing here to pick up.'
