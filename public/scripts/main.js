@@ -1,6 +1,7 @@
 buildFloors()   // Build all dungeon floors
 renderFloor()   // Render the current floor
-resetFloorEls()    // Reset the floor elements
+resetFloorEls() // Reset the floor elements
+setActive()
 setVisible()    // Set visible tiles around active tile
 describeTile()  // Display information about the current tile
 
@@ -36,6 +37,7 @@ document.addEventListener('keydown', function(e) {
             } else {
                 current.id = ''
                 west.id = 'active'
+                player.currentTile = activeTileId-1
             }
         } else if (moveEast) {
             if (eastWall.includes(activeTileId+1)) {
@@ -45,6 +47,7 @@ document.addEventListener('keydown', function(e) {
             } else {
                 current.id = ''
                 east.id = 'active'
+                player.currentTile = activeTileId+1
             }
         } else if (moveNorth) {
             if (northWall.includes(activeTileId-14)) {
@@ -54,6 +57,7 @@ document.addEventListener('keydown', function(e) {
             } else {
                 current.id = ''
                 north.id = 'active'
+                player.currentTile = activeTileId-14
             }
         } else if (moveSouth) {
             if (southWall.includes(activeTileId+14)) {
@@ -63,13 +67,19 @@ document.addEventListener('keydown', function(e) {
             } else {
                 current.id = ''
                 south.id = 'active'
+                player.currentTile = activeTileId+14
             }
         }
 
         if (moveDown) {
             if (dungeon.floors[player.currentFloor].tiles[activeTileId].stairDown) {
-                console.log('Player requests to go down')
                 player.currentFloor += 1
+                renderFloor()   // Render the current floor
+                resetFloorEls()    // Reset the floor on every key action to clear any visible tiles from last movement
+                clearAlerts()   // Reset alerts area after action
+                setActive()     // Set active tile to wherever player moved
+                setVisible()    // Set new visible area based on active tile
+                describeTile()  // Describe the new active tile
             } else {
                 console.log('There is no staircase here!')
             }

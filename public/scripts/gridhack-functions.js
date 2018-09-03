@@ -12,6 +12,7 @@ const tileInfoDesc = document.querySelector('#room-desc')
 const alert = document.querySelector('#alert')
 const room = document.querySelector('#room')
 const inventoryEl = document.querySelector('#inventory')
+const dungeonLevelEl = document.querySelector('#header--dungeon-counter')
 
 // Item array variables
 const items = []
@@ -48,7 +49,8 @@ const inventory = {
 
 const player = {
     name: '',
-    currentFloor: 0
+    currentFloor: 0,
+    currentTile: 0
 }
 
 // Constructor functions
@@ -69,8 +71,6 @@ const buildFloors = () => {
     for (let i = 0; i < dungeon.depth; i++) {
         let floor = new Floor(i, buildTiles())
         dungeon.floors.push(floor)
-
-        console.log('Creating new floor')
     }
 }
 
@@ -102,6 +102,8 @@ const buildTiles = () => {
 }
 
 const renderFloor = () => {
+    room.innerHTML = ''
+    dungeonLevelEl.innerHTML = `Level ${player.currentFloor + 1}`
     dungeon.floors[player.currentFloor].tiles.forEach(() => {
         const tileEl = document.createElement('div')
         room.appendChild(tileEl)
@@ -110,7 +112,11 @@ const renderFloor = () => {
     let randTileEl = room.childNodes[Math.floor(Math.random() * dungeon.floors[player.currentFloor].tiles.length)]
     let randTile = dungeon.floors[player.currentFloor].tiles[Math.floor(Math.random() * 196)]
 
-    randTileEl.id = 'active'
+    if (player.currentFloor === 0) {
+        randTileEl.id = 'active'
+    } else {
+        room.childNodes[player.currentTile].id = 'active'
+    }
     
     Object.defineProperty(randTile, 'stairDown', {
         value: true
@@ -135,7 +141,9 @@ const buildInventory = () => {
 // Clear the room of anything other than active, mapped and hidden tiles
 const resetFloorEls = () => {
     tileArray.forEach((tile) => {
-        if (tile.id != 'active' && !tile.classList.contains('staircase') && tile.className != 'mapped visible' && tile.className != 'mapped') {
+        if (tile.id != 'active'
+        && !tile.classList.contains('staircase')
+        && !tile.classList.contains('mapped', 'visible')) {
             tile.className = 'hidden'
         } else if (tile.className == 'mapped visible') {
             tile.classList.remove('visible')
@@ -146,6 +154,7 @@ const resetFloorEls = () => {
 // Reset the value of the activeTileId variable
 const setActive = () => {
     activeTileId = tileArray.findIndex(x => x.id == 'active')
+    player.currentTile = activeTileId
 }
 
 // Set all tiles adjacent to activeTileId to be visible 

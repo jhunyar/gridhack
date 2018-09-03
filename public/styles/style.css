@@ -60,6 +60,13 @@ body {
     z-index: 2
 }
 
+#header--dungeon-counter {
+    font-size: 1.5em;
+    position: absolute;
+    right: 205px;
+    top: 23px;
+}
+
 #info {
     border: 1px solid black;
     border-top: none;
