@@ -1,42 +1,41 @@
 * {
+    box-sizing: border-box;
     transition: ease .1s;
-    box-sizing: border-box
 }
 
 body {
     background: #111;
+    background-image: url(assets/images/navy.png);
     color: #EEE;
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
-    background-image: url(assets/images/navy.png)
 }
 
 #container {
-    width: 500px;
-    height: 500px;;
+    height: 500px;
     position: relative;
     margin: 0 auto;
+    margin-bottom: 20px;
     margin-top: 90px;
-    margin-bottom: 20px
+    width: 500px;
 }
 
 #header {
+    font-family: 'Aladin', cursive;
+    height: 70px;
+    left: 0;
     position: relative;
     top: -75px;
-    left: 0;
     width: 666px;
-    height: 70px;
-    /* background: #666; */
-    font-family: 'Aladin', cursive;
 }
 
 #header--banner {
-    position: absolute;
     bottom: -105px;
-    left: 128px;
-    font-size: 5em;
-    -webkit-text-stroke: 1px #000;
     color: white;
+    font-size: 5em;
+    left: 128px;
+    position: absolute;
+    -webkit-text-stroke: 1px #000;
     text-shadow:
         4px 4px 0 #000,
         -2px -2px 0 #000,  
@@ -101,15 +100,17 @@ body {
 }
 
 #room {
+    border: 3pt solid #999;
+    border-radius: .8%;
+    border-style: ridge;
     display: grid;
     grid-template-columns: repeat(14, 1fr);
     grid-template-rows: repeat(14, 1fr);
     grid-gap: 3px;
+    padding-bottom: 1px;
+    padding-right: 1px;
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0 ;
-    border: 3pt solid #999;
-    border-radius: .8%;
-    border-style: ridge
+    top: 0; right: 0; bottom: 0; left: 0;
 }
 
 #room div, #inventory div {
@@ -170,3 +171,6 @@ body {
     visibility: hidden;
 }
 
+.staircase {
+    background: red !important
+}

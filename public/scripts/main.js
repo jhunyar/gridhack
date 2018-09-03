@@ -1,6 +1,6 @@
 buildFloors()   // Build all dungeon floors
 renderFloor()   // Render the current floor
-resetFloor()    // Reset the floor
+resetFloorEls()    // Reset the floor elements
 setVisible()    // Set visible tiles around active tile
 describeTile()  // Display information about the current tile
 
@@ -16,10 +16,11 @@ document.addEventListener('keydown', function(e) {
     let moveNorth = e.keyCode == '38'
     let moveEast = e.keyCode == '39'
     let moveSouth = e.keyCode == '40'
+    let moveDown = e.keyCode == '34'
     let look = e.keyCode == '76'
     let get = e.keyCode == '71'
 
-    if (moveWest || moveNorth || moveEast || moveSouth || look || get) {
+    if (moveWest || moveNorth || moveEast || moveSouth || moveDown || look || get) {
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
@@ -65,7 +66,16 @@ document.addEventListener('keydown', function(e) {
             }
         }
 
-        resetFloor()    // Reset the floor on every key action to clear any visible tiles from last movement
+        if (moveDown) {
+            if (dungeon.floors[player.currentFloor].tiles[activeTileId].stairDown) {
+                console.log('Player requests to go down')
+                player.currentFloor += 1
+            } else {
+                console.log('There is no staircase here!')
+            }
+        }
+
+        resetFloorEls()    // Reset the floor on every key action to clear any visible tiles from last movement
         clearAlerts()   // Reset alerts area after action
         setActive()     // Set active tile to wherever player moved
         setVisible()    // Set new visible area based on active tile
@@ -92,7 +102,11 @@ document.addEventListener('keydown', function(e) {
         //     |---------------------------------------------------------|
         //       196 197 198 199 200 201 202 203 204 205 206 207 208 209 
 
-        let tile = dungeon.floors[currentFloor].tiles[activeTileId]
+        let tile = dungeon.floors[player.currentFloor].tiles[activeTileId]
+
+        if (tile.stairDown) {
+            tileInfoDesc.innerHTML += ' You see a staircase leading down.'
+        }
         
         if (look) {
             if (tile.item !== null) {
@@ -107,7 +121,7 @@ document.addEventListener('keydown', function(e) {
 
         if (get) {
             getItem()
-            tileInfoDesc.innerHTML = `"${room.desc}".`
+            tileInfoDesc.innerHTML = `"${tile.desc}".`
         }
     }
 })

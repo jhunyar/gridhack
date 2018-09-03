@@ -1,7 +1,7 @@
 // Misc variables
 let tileArray, activeTileId
 const visibleArray = [13, 14, 15, 1, -1, -13, -14, -15]
-const westWall = [-1, 13, 27, 41, 53, 69, 83, 97, 111, 125, 139, 153, 167, 181]
+const westWall = [-1, 13, 27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181]
 const eastCol = [13, 27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181, 195]
 const westCol = [0, 14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182]
 const eastWall = [14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182, 196]
@@ -26,8 +26,7 @@ const describeRooms = () => {
     }
 }
 
-// We need to describe the rooms right off the bat for other functions to work
-describeRooms()
+describeRooms() // We need to describe the rooms right off the bat for other functions to work
 
 // items[#] = [ 'name', 'description', 'type' rarity/100 ]
 items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25 ]
@@ -47,13 +46,16 @@ const inventory = {
     items: []
 }
 
+const player = {
+    name: '',
+    currentFloor: 0
+}
+
 // Constructor functions
 function Floor(number, tiles) {
     this.number = number;
     this.tiles = tiles
 }
-
-let currentFloor = 0
 
 function Tile(id, name, desc, floor, item) {
     this.id = id;
@@ -100,12 +102,19 @@ const buildTiles = () => {
 }
 
 const renderFloor = () => {
-    dungeon.floors[currentFloor].tiles.forEach(() => {
+    dungeon.floors[player.currentFloor].tiles.forEach(() => {
         const tileEl = document.createElement('div')
         room.appendChild(tileEl)
     })
 
-    room.childNodes[Math.floor(Math.random() * dungeon.floors[currentFloor].tiles.length)].id = 'active'
+    let randTileEl = room.childNodes[Math.floor(Math.random() * dungeon.floors[player.currentFloor].tiles.length)]
+    let randTile = dungeon.floors[player.currentFloor].tiles[Math.floor(Math.random() * 196)]
+
+    randTileEl.id = 'active'
+    
+    Object.defineProperty(randTile, 'stairDown', {
+        value: true
+    })
 
     let tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
@@ -123,10 +132,10 @@ const buildInventory = () => {
     })
 }
 
-// Clear the room of aything other than active, mapped and hidden tiles
-const resetFloor = () => {
+// Clear the room of anything other than active, mapped and hidden tiles
+const resetFloorEls = () => {
     tileArray.forEach((tile) => {
-        if (tile.id != 'active' && tile.className != 'mapped visible' && tile.className != 'mapped') {
+        if (tile.id != 'active' && !tile.classList.contains('staircase') && tile.className != 'mapped visible' && tile.className != 'mapped') {
             tile.className = 'hidden'
         } else if (tile.className == 'mapped visible') {
             tile.classList.remove('visible')
@@ -141,18 +150,24 @@ const setActive = () => {
 
 // Set all tiles adjacent to activeTileId to be visible 
 const setVisible = () => {
-    let tiles = room.getElementsByTagName('div')
+    let tileEls = room.getElementsByTagName('div')
+    let tiles = dungeon.floors[player.currentFloor].tiles
+
     visibleArray.forEach((tile) => {
-        if (eastCol.includes(activeTileId+tile) && westCol.includes(activeTileId) 
-        || (westCol.includes(activeTileId+tile) && eastCol.includes(activeTileId))
+        if (eastCol.includes(activeTileId + tile) && westCol.includes(activeTileId) 
+        || (westCol.includes(activeTileId + tile) && eastCol.includes(activeTileId))
         || northWall.includes(activeTileId + tile) 
         || southWall.includes(activeTileId + tile)) {
             return false
-        } 
-        else {
-            tiles[activeTileId+tile].classList.remove ('hidden')
-            tiles[activeTileId+tile].classList.add ('mapped')
-            tiles[activeTileId+tile].classList.add ('visible')
+        } else if (tiles[activeTileId + tile].stairDown) {
+            tileEls[activeTileId + tile].classList.remove('hidden')
+            tileEls[activeTileId + tile].classList.add('mapped')
+            tileEls[activeTileId + tile].classList.add('visible')
+            tileEls[activeTileId + tile].classList.add('staircase')
+        } else {
+            tileEls[activeTileId + tile].classList.remove('hidden')
+            tileEls[activeTileId + tile].classList.add('mapped')
+            tileEls[activeTileId + tile].classList.add('visible')
         }
     })
 }
@@ -164,12 +179,12 @@ const clearAlerts = () => {
 
 // get an item
 const getItem = () => {
-    let item = dungeon.floors[currentFloor].tiles[activeTileId].item
+    let item = dungeon.floors[player.currentFloor].tiles[activeTileId].item
 
     if (item !== null && inventory.items.length < inventory.capacity) {
         inventory.items.push(item)
         alert.innerHTML = `${item.name} added to inventory.`
-        dungeon.floors[currentFloor].tiles[activeTileId].item = null
+        dungeon.floors[player.currentFloor].tiles[activeTileId].item = null
         buildInventory()
     } else if (item !== null && inventory.items.length === inventory.capacity) {
         alert.innerHTML = 'Your inventory is full!'
@@ -179,7 +194,7 @@ const getItem = () => {
 }
 
 const describeTile = () => {
-    const room = dungeon.floors[currentFloor].tiles[activeTileId]
+    const room = dungeon.floors[player.currentFloor].tiles[activeTileId]
 
     tileInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
     tileInfoDesc.innerHTML = `"${room.desc}".`
