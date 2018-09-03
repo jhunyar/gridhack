@@ -1,7 +1,7 @@
 buildFloors()   // Build all dungeon floors
 renderFloor()   // Render the current floor
 resetFloorEls() // Reset the floor elements
-setActive()
+setActive()     // Set the active tile
 setVisible()    // Set visible tiles around active tile
 describeTile()  // Display information about the current tile
 
