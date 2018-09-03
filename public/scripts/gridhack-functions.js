@@ -39,7 +39,8 @@ items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflicti
 // Object variables
 const dungeon = {
     depth: 49,
-    floors: []
+    floors: [],
+    visitedFloors: []
 }
 
 const player = {
@@ -58,12 +59,13 @@ function Floor(number, tiles) {
     this.tiles = tiles
 }
 
-function Tile(id, name, desc, floor, item) {
+function Tile(id, name, desc, floor, item, mapped) {
     this.id = id;
     this.name = name;
     this.desc = desc;
     this.floor = floor;
     this.item = item;
+    this.mapped = mapped
 }
 
 const buildFloors = () => {
@@ -94,7 +96,7 @@ const buildTiles = () => {
         }
 
         // Construct the tile and push it to the temporary tiles array
-        let tile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item)
+        let tile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item, false)
         tiles.push(tile)
     }
     return tiles
@@ -153,6 +155,7 @@ const resetFloorEls = () => {
 // Reset the value of the player.currentTile variable
 const setActive = () => {
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
+    dungeon.floors[player.currentFloor].tiles[player.currentTile].mapped = true
 }
 
 // Set all tiles adjacent to player.currentTile to be visible 
@@ -167,11 +170,13 @@ const setVisible = () => {
         || southWall.includes(player.currentTile + tile)) {
             return false
         } else if (tiles[player.currentTile + tile].stairDown) {
+            tiles[player.currentTile + tile].mapped = true
             tileEls[player.currentTile + tile].classList.remove('hidden')
             tileEls[player.currentTile + tile].classList.add('mapped')
             tileEls[player.currentTile + tile].classList.add('visible')
             tileEls[player.currentTile + tile].innerHTML = '<i class="fas fa-arrow-down"></i>'
         } else {
+            tiles[player.currentTile + tile].mapped = true
             tileEls[player.currentTile + tile].classList.remove('hidden')
             tileEls[player.currentTile + tile].classList.add('mapped')
             tileEls[player.currentTile + tile].classList.add('visible')

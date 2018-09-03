@@ -74,6 +74,7 @@ document.addEventListener('keydown', function(e) {
 
         if (moveDown) {
             if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
+                dungeon.visitedFloors.push(dungeon.floors[player.currentFloor])
                 player.currentFloor += 1
                 renderFloor()   // Render the current floor
                 resetFloorEls()    // Reset the floor on every key action to clear any visible tiles from last movement
@@ -88,7 +89,7 @@ document.addEventListener('keydown', function(e) {
 
         if (moveUp) {
             if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairUp) {
-
+                player.currentFloor -= 1
             }
         }
 
