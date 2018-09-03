@@ -105,7 +105,7 @@ const renderFloor = () => {
         room.appendChild(tileEl)
     })
 
-    room.childNodes[24].id = 'active'
+    room.childNodes[90].id = 'active'
 
     let tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
@@ -128,8 +128,7 @@ const resetFloor = () => {
     tileArray.forEach((tile) => {
         if (tile.id != 'active' && tile.className != 'mapped visible' && tile.className != 'mapped') {
             tile.className = 'hidden'
-        }
-        if (tile.className == 'mapped visible') {
+        } else if (tile.className == 'mapped visible') {
             tile.classList.remove('visible')
         }
     })
