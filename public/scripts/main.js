@@ -1,25 +1,28 @@
 buildFloors()   // Build all dungeon floors
 renderFloor()   // Render the current floor
-resetFloor()    // Reset the floor
+resetFloorEls() // Reset the floor elements
+setActive()     // Set the active tile
 setVisible()    // Set visible tiles around active tile
 describeTile()  // Display information about the current tile
 
 // the movement handler itself
 document.addEventListener('keydown', function(e) {
-    const current = tileArray[activeTileId]
-    const left = tileArray[activeTileId-1]
-    const right = tileArray[activeTileId+1]
-    const up = tileArray[activeTileId-14]
-    const down = tileArray[activeTileId+14]
+    const current = tileArray[player.currentTile]
+    const west = tileArray[player.currentTile-1]
+    const east = tileArray[player.currentTile+1]
+    const north = tileArray[player.currentTile-14]
+    const south = tileArray[player.currentTile+14]
     
-    let moveLeft = e.keyCode == '37'
-    let moveUp = e.keyCode == '38'
-    let moveRight = e.keyCode == '39'
-    let moveDown = e.keyCode == '40'
+    let moveWest = e.keyCode == '37'
+    let moveNorth = e.keyCode == '38'
+    let moveEast = e.keyCode == '39'
+    let moveSouth = e.keyCode == '40'
+    let moveDown = e.keyCode == '34'
+    let moveUp = e.keyCode == '33'
     let look = e.keyCode == '76'
     let get = e.keyCode == '71'
 
-    if (moveLeft || moveUp || moveRight || moveDown || look || get) {
+    if (moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get) {
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
@@ -27,45 +30,69 @@ document.addEventListener('keydown', function(e) {
 
 
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
-        if (moveLeft) {
-            if (leftWall.includes(activeTileId-1)) {
+        if (moveWest) {
+            if (westWall.includes(player.currentTile-1)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
-                left.id = 'active'
+                west.id = 'active'
+                player.currentTile = player.currentTile-1
             }
-        } else if (moveRight) {
-            if (rightWall.includes(activeTileId+1)) {
+        } else if (moveEast) {
+            if (eastWall.includes(player.currentTile+1)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
-                right.id = 'active'
+                east.id = 'active'
+                player.currentTile = player.currentTile+1
             }
-        } else if (moveUp) {
-            if (topWall.includes(activeTileId-14)) {
+        } else if (moveNorth) {
+            if (northWall.includes(player.currentTile-14)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
-                up.id = 'active'
+                north.id = 'active'
+                player.currentTile = player.currentTile-14
             }
-        } else if (moveDown) {
-            if (bottomWall.includes(activeTileId+14)) {
+        } else if (moveSouth) {
+            if (southWall.includes(player.currentTile+14)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
             } else {
                 current.id = ''
-                down.id = 'active'
+                south.id = 'active'
+                player.currentTile = player.currentTile+14
             }
         }
 
-        resetFloor()    // Reset the floor on every key action to clear any visible tiles from last movement
+        if (moveDown) {
+            if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
+                player.currentFloor += 1
+                renderFloor()   // Render the current floor
+            } else {
+                alert.innerHTML = 'There\'s no staircase here'
+            }
+        }
+
+        if (moveUp) {
+            if (dungeon.floors[player.currentFloor === 0]) {
+                alert.innerHTML = 'You can\'t go up from here'
+            } else if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairUp) {
+                player.currentFloor -= 1
+                renderFloor()
+            } else {
+                alert.innerHTML = 'There\'s no staircase here'
+            }
+        }
+
+        resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
         clearAlerts()   // Reset alerts area after action
         setActive()     // Set active tile to wherever player moved
         setVisible()    // Set new visible area based on active tile
@@ -92,23 +119,26 @@ document.addEventListener('keydown', function(e) {
         //     |---------------------------------------------------------|
         //       196 197 198 199 200 201 202 203 204 205 206 207 208 209 
 
-        let room = dungeon.floors[currentFloor].tiles[activeTileId]
+        let tile = dungeon.floors[player.currentFloor].tiles[player.currentTile]
+
+        if (tile.stairDown) {
+            tileInfoDesc.innerHTML += ' You see a staircase leading down.'
+        }
         
         if (look) {
-            if (room.item !== null) {
-                alert.innerHTML = `You see a ${room.item.name} here.`
+            if (tile.item !== null) {
+                alert.innerHTML = `You see a ${tile.item.name} here.`
             } else {
                 alert.innerHTML = 'You see nothing of particular interest'
             }
         }
-        if (room.item !== null) {
-            roomInfoDesc.innerHTML += ` You found a ${room.item.name}. ${room.item.description}`
-            console.log(room.item)
+        if (tile.item !== null) {
+            tileInfoDesc.innerHTML += ` You found a ${tile.item.name}. ${tile.item.description}`
         }
 
         if (get) {
             getItem()
-            roomInfoDesc.innerHTML = `"${room.desc}".`
+            tileInfoDesc.innerHTML = `"${tile.desc}".`
         }
     }
 })

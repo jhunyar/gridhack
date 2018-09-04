@@ -1,42 +1,43 @@
 * {
-    transition: ease .1s;
-    box-sizing: border-box
+    box-sizing: border-box;
+    /* transition: ease .2s; */
+    /* transition: linear .2s; */
+    transition: cubic-bezier(1, 0, 0, 1) .1s
 }
 
 body {
     background: #111;
+    background-image: url(assets/images/navy.png);
     color: #EEE;
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
-    background-image: url(assets/images/navy.png)
 }
 
 #container {
-    width: 500px;
-    height: 500px;;
+    height: 500px;
     position: relative;
     margin: 0 auto;
+    margin-bottom: 20px;
     margin-top: 90px;
-    margin-bottom: 20px
+    width: 500px;
 }
 
 #header {
+    font-family: 'Aladin', cursive;
+    height: 70px;
+    left: 0;
     position: relative;
     top: -75px;
-    left: 0;
     width: 666px;
-    height: 70px;
-    /* background: #666; */
-    font-family: 'Aladin', cursive;
 }
 
 #header--banner {
-    position: absolute;
     bottom: -105px;
-    left: 128px;
-    font-size: 5em;
-    -webkit-text-stroke: 1px #000;
     color: white;
+    font-size: 5em;
+    left: 128px;
+    position: absolute;
+    -webkit-text-stroke: 1px #000;
     text-shadow:
         4px 4px 0 #000,
         -2px -2px 0 #000,  
@@ -59,6 +60,13 @@ body {
         -1px 1px 0 #111,
         1px 1px 0 #111;
     z-index: 2
+}
+
+#header--dungeon-counter {
+    font-size: 1.5em;
+    position: absolute;
+    right: 205px;
+    top: 23px;
 }
 
 #info {
@@ -101,21 +109,17 @@ body {
 }
 
 #room {
+    border: 3pt solid #999;
+    border-radius: .8%;
+    border-style: ridge;
     display: grid;
     grid-template-columns: repeat(14, 1fr);
     grid-template-rows: repeat(14, 1fr);
     grid-gap: 3px;
+    padding-bottom: 1px;
+    padding-right: 1px;
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0 ;
-    border: 3pt solid #999;
-    border-radius: .8%;
-    border-style: ridge
-}
-
-#room div, #inventory div {
-    background: #555;
-    text-shadow: 1px 1px black;
-    box-shadow: 1px 1px 2px black;
+    top: 0; right: 0; bottom: 0; left: 0;
 }
 
 #inventory {
@@ -129,20 +133,29 @@ body {
     bottom: 0;
     left: 520px;
     height: 506px;
-    width: 146px;
+    width: 143px;
     background: #222;
     padding: 3px;
     border-left: 1px solid black;
     border-right: 1px solid black;
-    border-radius: 10px;
     box-shadow: 0 0 3px black;
 }
 
-#inventory div {
-    display: flex;
+#room div, #inventory div {
     align-items: center;
+    background: #555;
+    box-shadow: 1px 1px 2px black;
+    display: flex;
     justify-content: center;
-    height: 70px
+    font-size: 1.7em
+}
+
+#inventory div {
+    align-items: center;
+    display: flex;
+    font-size: initial;
+    justify-content: center;
+    height: 69px
 }
 
 #inventory div p {
@@ -155,7 +168,8 @@ body {
 
 #active {
     background: yellow !important;
-    transition: ease .1s
+    transition: ease .1s;
+    color: black
 }
 
 .visible {
@@ -169,4 +183,3 @@ body {
 .hidden {
     visibility: hidden;
 }
-
