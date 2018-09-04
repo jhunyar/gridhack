@@ -72,21 +72,10 @@ document.addEventListener('keydown', function(e) {
             }
         }
 
-        resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
-        clearAlerts()   // Reset alerts area after action
-        setActive()     // Set active tile to wherever player moved
-        setVisible()    // Set new visible area based on active tile
-        describeTile()  // Describe the new active tile
-
         if (moveDown) {
             if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
                 player.currentFloor += 1
                 renderFloor()   // Render the current floor
-                resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
-                clearAlerts()   // Reset alerts area after action
-                setActive()     // Set active tile to wherever player moved
-                setVisible()    // Set new visible area based on active tile
-                describeTile()  // Describe the new active tile
             } else {
                 alert.innerHTML = 'There\'s no staircase here'
             }
@@ -97,17 +86,17 @@ document.addEventListener('keydown', function(e) {
                 alert.innerHTML = 'You can\'t go up from here'
             } else if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairUp) {
                 player.currentFloor -= 1
-
                 renderFloor()
-                resetFloorEls()
-                clearAlerts()
-                setActive()
-                setVisible()
-                describeTile()
             } else {
                 alert.innerHTML = 'There\'s no staircase here'
             }
         }
+
+        resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
+        clearAlerts()   // Reset alerts area after action
+        setActive()     // Set active tile to wherever player moved
+        setVisible()    // Set new visible area based on active tile
+        describeTile()  // Describe the new active tile
 
         // The cartographer's aide
 
