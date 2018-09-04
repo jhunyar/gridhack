@@ -116,6 +116,8 @@ const buildTiles = () => {
 }
 
 const renderFloor = () => {
+    const currentFloor = dungeon.floors[player.currentFloor]
+
     // Empty the room first
     room.innerHTML = ''
 
@@ -129,7 +131,7 @@ const renderFloor = () => {
     })
 
     // Pick a random tile
-    let randTileEl = room.childNodes[Math.floor(Math.random() * dungeon.floors[player.currentFloor].tiles.length)]
+    let randTileEl = room.childNodes[Math.floor(Math.random() * currentFloor.tiles.length)]
 
     // Set that random tile as active
     if (player.currentFloor === 0) {
@@ -143,16 +145,16 @@ const renderFloor = () => {
     tileArray = Array.from(tiles)
 
     // Mark any staircases with appropriate icons
-    if (dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairDown).length > 0) {
-        tileArray[dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairDown)[0].id].innerHTML = '<i class="fas fa-arrow-down"></i>'
+    if (currentFloor.tiles.filter((tile) => tile.stairDown).length > 0) {
+        tileArray[currentFloor.tiles.filter((tile) => tile.stairDown)[0].id].innerHTML = '<i class="fas fa-arrow-down"></i>'
     }
 
     if (dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairUp).length > 0) {
-        tileArray[dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairUp)[0].id].innerHTML = '<i class="fas fa-arrow-up"></i>'
+        tileArray[currentFloor.tiles.filter((tile) => tile.stairUp)[0].id].innerHTML = '<i class="fas fa-arrow-up"></i>'
     }
 
     const renderItems = () => {
-        dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.item).forEach((tile) => {
+        currentFloor.tiles.filter((tile) => tile.item).forEach((tile) => {
             if (tile.item.type === 'weapon') {
                 tileArray[tile.id].innerHTML = '<img src="./assets/images/sword.png" width="70%">'
             } else if (tile.item.type === 'armor') {
