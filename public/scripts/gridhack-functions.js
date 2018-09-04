@@ -31,7 +31,7 @@ describeRooms() // We need to describe the rooms right off the bat for other fun
 
 // items[#] = [ 'name', 'description', 'type' rarity/100 ]
 items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25 ]
-items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'map', 15 ]
+items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'tool', 15 ]
 items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 10 ]
 items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 10 ]
 items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75 ]
@@ -149,23 +149,7 @@ const renderFloor = () => {
 
     if (dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairUp).length > 0) {
         tileArray[dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairUp)[0].id].innerHTML = '<i class="fas fa-arrow-up"></i>'
-    }
-
-    const renderItems = () => {
-        dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.item).forEach((tile) => {
-            if (tile.item.type === 'weapon') {
-                tileArray[tile.id].innerHTML = '<img src="./assets/images/sword.png" width="70%">'
-            } else if (tile.item.type === 'armor') {
-                tileArray[tile.id].innerHTML = '<img src="./assets/images/armor.png" width="70%">'
-            } else if (tile.item.type === 'potion') {
-                tileArray[tile.id].innerHTML = '<img src="./assets/images/potion.png" width="70%">'
-            } else if (tile.item.type === 'map') {
-                tileArray[tile.id].innerHTML = '<img src="./assets/images/map.png" width="70%">'
-            }
-        })
-    }
-
-    renderItems()
+    }    
 
     // Set the player.currentTile property to the element with the ID of active
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
@@ -236,7 +220,6 @@ const getItem = () => {
         player.inventory.items.push(item)
         alert.innerHTML = `${item.name} added to inventory.`
         dungeon.floors[player.currentFloor].tiles[player.currentTile].item = null
-        tileArray[dungeon.floors[player.currentFloor].tiles[player.currentTile].id].innerHTML = ''
         buildInventory()
     } else if (item !== null && player.inventory.items.length === player.inventory.capacity) {
         alert.innerHTML = 'Your inventory is full!'
