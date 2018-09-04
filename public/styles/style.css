@@ -7,7 +7,7 @@
 
 body {
     background: #111;
-    background-image: url(assets/images/navy.png);
+    background-image: url(../assets/images/navy.png);
     color: #EEE;
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
