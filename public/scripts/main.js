@@ -72,7 +72,7 @@ document.addEventListener('keydown', function(e) {
             }
         }
 
-        resetFloorEls()    // Reset the floor on every key action to clear any visible tiles from last movement
+        resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
         clearAlerts()   // Reset alerts area after action
         setActive()     // Set active tile to wherever player moved
         setVisible()    // Set new visible area based on active tile
@@ -81,11 +81,6 @@ document.addEventListener('keydown', function(e) {
         if (moveDown) {
             if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
                 player.currentFloor += 1
-
-                // Object.defineProperty(dungeon.floors[player.currentFloor].tiles[player.currentTile], 'stairUp', {
-                //     value: true
-                // })
-
                 renderFloor()   // Render the current floor
                 resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
                 clearAlerts()   // Reset alerts area after action

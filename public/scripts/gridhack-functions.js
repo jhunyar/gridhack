@@ -149,8 +149,7 @@ const renderFloor = () => {
 
     if (dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairUp).length > 0) {
         tileArray[dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairUp)[0].id].innerHTML = '<i class="fas fa-arrow-up"></i>'
-    }
-    
+    }    
 
     // Set the player.currentTile property to the element with the ID of active
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
