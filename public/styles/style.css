@@ -109,6 +109,7 @@ body {
 }
 
 #room {
+    background: #111;
     border: 3pt solid #999;
     border-radius: .8%;
     border-style: ridge;
