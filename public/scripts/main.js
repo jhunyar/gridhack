@@ -28,14 +28,19 @@ document.addEventListener('keydown', function(e) {
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
 
-
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
         if (moveWest) {
             if (westWall.includes(player.currentTile-1)) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
-            } else {
+            } 
+            else if (tileArray[player.currentTile-1].classList.contains('border-right') || tileArray[player.currentTile].classList.contains('border-left')) {
+                alert.innerHTML = ' You can\'t go that way!'
+                setVisible()
+                return false 
+            } 
+            else {
                 current.id = ''
                 west.id = 'active'
                 player.currentTile = player.currentTile-1
@@ -45,6 +50,10 @@ document.addEventListener('keydown', function(e) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
+            } else if (tileArray[player.currentTile+1].classList.contains('border-left') || tileArray[player.currentTile].classList.contains('border-right')) {
+                alert.innerHTML = ' You can\'t go that way!'
+                setVisible()
+                return false 
             } else {
                 current.id = ''
                 east.id = 'active'
@@ -55,6 +64,10 @@ document.addEventListener('keydown', function(e) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
+            } else if (tileArray[player.currentTile-14].classList.contains('border-bottom') || tileArray[player.currentTile].classList.contains('border-top')) {
+                alert.innerHTML = ' You can\'t go that way!'
+                setVisible()
+                return false 
             } else {
                 current.id = ''
                 north.id = 'active'
@@ -65,6 +78,10 @@ document.addEventListener('keydown', function(e) {
                 alert.innerHTML = ' You can\'t go that way!'
                 setVisible()
                 return false
+            } else if (tileArray[player.currentTile+14].classList.contains('border-top') || tileArray[player.currentTile].classList.contains('border-bottom')) {
+                alert.innerHTML = ' You can\'t go that way!'
+                setVisible()
+                return false 
             } else {
                 current.id = ''
                 south.id = 'active'

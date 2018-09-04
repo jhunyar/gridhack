@@ -183,3 +183,19 @@ body {
 .hidden {
     visibility: hidden;
 }
+
+.border-bottom {
+    border-bottom: 3px solid blue
+}
+
+.border-top {
+    border-top: 3px solid blue
+}
+
+.border-right {
+    border-right: 3px solid blue
+}
+
+.border-left {
+    border-left: 3px solid blue
+}

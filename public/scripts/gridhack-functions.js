@@ -156,6 +156,13 @@ const renderFloor = () => {
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
 }
 
+const buildWalls = () => {
+    tileArray.forEach((tile) => {
+        const classes = ['border-bottom', 'border-top', 'border-right', 'border-left']
+        tile.classList.add(classes[Math.floor( Math.random()*classes.length)])
+    })
+}
+
 const buildInventory = () => {
     inventoryEl.innerHTML = ''
     player.inventory.items.forEach((item) => {
@@ -174,9 +181,9 @@ const resetFloorEls = () => {
             if (tile.id != 'active'
             && !tile.classList.contains('staircase')
             && !tile.classList.contains('mapped', 'visible')) {
-                tile.className = 'hidden'
+                tile.classList.add('hidden')
             }
-        } else if (tile.className == 'mapped visible') {
+        } else if (tile.classList.contains ('visible')) {
             tile.classList.remove('visible')
         }
     })
