@@ -69,12 +69,20 @@ function Tile(id, name, desc, floor, item, mapped) {
 
 const buildFloors = () => {
     for (let i = 0; i < dungeon.depth; i++) {
-        let floor = new Floor(i, buildTiles(), false)
+        let floor = new Floor(i, buildTiles())
         dungeon.floors.push(floor)
 
-        // Create a staircase on each floor
+        // Create a down staircase on each floor
         if (i !== dungeon.depth) {
             Object.defineProperty(dungeon.floors[i].tiles[Math.floor(Math.random() * 196)], 'stairDown', {
+                value: true
+            })
+        }
+
+        // Create an up staircase on each subsequent floor
+        if (i !== 0) {
+            const staircase = dungeon.floors[i-1].tiles.filter((tile) => tile.stairDown)[0].id
+            Object.defineProperty(dungeon.floors[i].tiles[staircase], 'stairUp', {
                 value: true
             })
         }
@@ -108,23 +116,33 @@ const buildTiles = () => {
 }
 
 const renderFloor = () => {
+    // Empty the room first
     room.innerHTML = ''
+
+    // Set the floor counter
     dungeonLevelEl.innerHTML = `Level ${player.currentFloor + 1}`
+
+    // Create an element for each tile
     dungeon.floors[player.currentFloor].tiles.forEach(() => {
         const tileEl = document.createElement('div')
         room.appendChild(tileEl)
     })
 
+    // Pick a random tile
     let randTileEl = room.childNodes[Math.floor(Math.random() * dungeon.floors[player.currentFloor].tiles.length)]
 
+    // Set that random tile as active
     if (player.currentFloor === 0) {
         randTileEl.id = 'active'
     } else {
         room.childNodes[player.currentTile].id = 'active'
     }
 
+    // Build an array from tile elements
     let tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
+
+    // Set the player.currentTile property to the element with the ID of active
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
 }
 
@@ -142,10 +160,12 @@ const buildInventory = () => {
 // Clear the room of anything other than active, mapped and hidden tiles
 const resetFloorEls = () => {
     tileArray.forEach((tile) => {
-        if (tile.id != 'active'
-        && !tile.classList.contains('staircase')
-        && !tile.classList.contains('mapped', 'visible')) {
-            tile.className = 'hidden'
+        if (!dungeon.floors[player.currentFloor].tiles[tileArray.indexOf(tile)].mapped) {
+            if (tile.id != 'active'
+            && !tile.classList.contains('staircase')
+            && !tile.classList.contains('mapped', 'visible')) {
+                tile.className = 'hidden'
+            }
         } else if (tile.className == 'mapped visible') {
             tile.classList.remove('visible')
         }

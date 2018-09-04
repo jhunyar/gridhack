@@ -82,9 +82,9 @@ document.addEventListener('keydown', function(e) {
             if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
                 player.currentFloor += 1
 
-                Object.defineProperty(dungeon.floors[player.currentFloor].tiles[player.currentTile], 'stairUp', {
-                    value: true
-                })
+                // Object.defineProperty(dungeon.floors[player.currentFloor].tiles[player.currentTile], 'stairUp', {
+                //     value: true
+                // })
 
                 renderFloor()   // Render the current floor
                 resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
@@ -99,7 +99,7 @@ document.addEventListener('keydown', function(e) {
 
         if (moveUp) {
             if (dungeon.floors[player.currentFloor === 0]) {
-                alert.innerHTML = 'You can\'t go up for here'
+                alert.innerHTML = 'You can\'t go up from here'
             } else if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairUp) {
                 player.currentFloor -= 1
 
