@@ -116,7 +116,7 @@ body {
     display: grid;
     grid-template-columns: repeat(14, 1fr);
     grid-template-rows: repeat(14, 1fr);
-    grid-gap: 3px;
+    grid-gap: 2px;
     padding-bottom: 1px;
     padding-right: 1px;
     position: absolute;
