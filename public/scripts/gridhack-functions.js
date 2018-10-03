@@ -70,6 +70,7 @@ function Tile(id, name, desc, floor, item, mapped) {
 const buildFloors = () => {
     for (let i = 0; i < dungeon.depth; i++) {
         let floor = new Floor(i, buildTiles())
+    
         dungeon.floors.push(floor)
 
         // Create a down staircase on current floor in a random tile
@@ -93,26 +94,32 @@ const buildTiles = () => {
     let tileCount = 196
     let tiles = []
     for (i = 0; i < tileCount; i++) {
-        // Create a random item for each tile
-        let currentItem = items[Math.floor(Math.random() * Math.floor(items.length))]
 
-        let item = {
-            name: currentItem[0],
-            description: currentItem[1],
-            type: currentItem[2],
-            rarity: currentItem[3],
-            chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
-        }
-
-        if (item.chance !== 1) {
-            item = null
-        }
+        let item = placeItems()
 
         // Construct the tile and push it to the temporary tiles array
         let tile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item, false)
         tiles.push(tile)
     }
     return tiles
+}
+
+const placeItems = () => {
+    let currentItem = items[Math.floor(Math.random() * Math.floor(items.length))]
+
+    let item = {
+        name: currentItem[0],
+        description: currentItem[1],
+        type: currentItem[2],
+        rarity: currentItem[3],
+        chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
+    }
+
+    if (item.chance !== 1) {
+        item = null
+    }
+
+    return item
 }
 
 const renderFloor = () => {
