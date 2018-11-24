@@ -1,14 +1,11 @@
 // TODO:
-    // Build tiles as objects that have all of the properties from the array 
-    // Create a findItem function that, upon RNG item drop, adds it to the current tile's array/object
     // Create an inventory UI
     // Create inventory object/array
-    // Create a listener for 'g' that removes item from tile if present, and adds to inventory array
-        // Create a refreshInventory function that redraws the inventory(?)
+    // Create a refreshInventory function that redraws the inventory(?)
 // 
 
 // build floor elements
-buildFloor()
+buildTiles()
 
 // lets go ahead and reset the room to start fresh
 resetFloor()

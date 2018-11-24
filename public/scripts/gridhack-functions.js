@@ -76,9 +76,14 @@ const roomInfoDesc = document.querySelector('#room-desc')
 const alert = document.querySelector('#alert')
 const room = document.querySelector('#room')
 
-let floor = {
-    number: 1,
-    tiles: []
+const floors = []
+
+
+function Floor(floorNumber, tiles, stairDown, stairUp) {
+    this.floorNumber = floorNumber
+    this.tiles = tiles
+    this.stairDown = stairDown
+    this.stairUp = stairUp
 }
 
 function Tile(id, name, desc, floor, item) {
@@ -89,8 +94,27 @@ function Tile(id, name, desc, floor, item) {
     this.item = item;
 }
 
-const buildFloor = () => {
+const buildFloors = () => {
+    let floorCount = 49
+    for (i = 0; i < floorCount; i++) {   
+        let tiles = buildTiles()
+        let stairDown = stairDown()
+        let floorNumber = i
+        let stairUp = 1
+        const thisFloor = new Floor( floorNumber, tiles, stairDown, stairUp )
+        floors.push(thisFloor)
+    }
+}
+
+buildFloors()
+
+const stairDown = () => {
+    Math.floor(Math.random() * 48) + 0 
+}
+
+const buildTiles = () => {
     let tileCount = 49
+    let tiles= []
     for (i = 0; i < tileCount; i++) {
         // Create the tile element and append it to the room
         const tile = document.createElement('div')
@@ -108,13 +132,13 @@ const buildFloor = () => {
             chance: Math.floor(Math.random() * Math.floor(currentItem[3]))
         }
 
-        // Construct the tile and push it to the floor object's tiles array
         if (item.chance !== 1) {
             item = null
         }
 
-        let thisTile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item)
-        floor.tiles.push(thisTile)
+        // Construct the tile and push it to the floor object's tiles array
+        const thisTile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item)
+        tiles.push(thisTile)
     }
 
     // Set the center tile as active
@@ -122,6 +146,7 @@ const buildFloor = () => {
     tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
     activeTileId = tileArray.findIndex(x => x.id == 'active')
+    return tiles
 }
 
 // Clear the room of aything other than active and inactive tiles
@@ -147,7 +172,7 @@ const setVisible = () => {
         || bottomwall.includes(activeTileId + tile)) {
             return false
         } else {
-            tiles[activeTileId+tile].className = 'visible'
+            floors[0].tiles[activeTileId+tile].className = 'visible'
         }
     })
 }
