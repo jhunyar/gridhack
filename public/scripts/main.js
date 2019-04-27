@@ -119,12 +119,14 @@ document.addEventListener('keydown', function(e) {
         //     |---------------------------------------------------------|
         //       196 197 198 199 200 201 202 203 204 205 206 207 208 209 
 
+        // Define the player's current tile
         let tile = dungeon.floors[player.currentFloor].tiles[player.currentTile]
 
+        // Let the user know if there is a staircase
         if (tile.stairDown) {
             tileInfoDesc.innerHTML += ' You see a staircase leading down.'
         }
-        
+
         if (look) {
             if (tile.item !== null) {
                 alert.innerHTML = `You see a ${tile.item.name} here.`
@@ -132,6 +134,7 @@ document.addEventListener('keydown', function(e) {
                 alert.innerHTML = 'You see nothing of particular interest'
             }
         }
+
         if (tile.item !== null) {
             tileInfoDesc.innerHTML += ` You found a ${tile.item.name}. ${tile.item.description}`
         }
