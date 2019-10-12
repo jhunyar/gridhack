@@ -185,13 +185,24 @@ const renderItems = () => {
 
 const buildInventory = () => {
     inventoryEl.innerHTML = ''
-    player.inventory.items.forEach((item) => {
+    let slotNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'q', 'w', 'e', 'r', 't']
+   
+    for (let i = 0; i < player.inventory.items.length; i++) {
         let itemEl = document.createElement('div')
         let itemTextEl = document.createElement('p')
-        itemTextEl.textContent = item.name
+
+        let slotNumber = document.createElement('span')
+        slotNumber.style.position = 'relative'
+        slotNumber.style.left = '1px'
+        slotNumber.style.top = '1px'
+        slotNumber.style.color = 'white'
+        slotNumber.textContent = slotNumbers[i]
+        itemEl.appendChild(slotNumber)
+
+        itemTextEl.textContent = player.inventory.items[i].name
         itemEl.appendChild(itemTextEl)
         inventoryEl.appendChild(itemEl)
-    })
+    }
 }
 
 // Clear the room of anything other than active, mapped and hidden tiles
