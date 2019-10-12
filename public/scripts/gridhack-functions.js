@@ -153,6 +153,26 @@ const renderFloor = () => {
     let tiles = room.getElementsByTagName('div')
     tileArray = Array.from(tiles)
 
+    renderItems()
+
+    // Set the player.currentTile property to the element with the ID of active
+    player.currentTile = tileArray.findIndex(x => x.id == 'active')
+}
+
+const renderItems = () => {
+    const currentFloor = dungeon.floors[player.currentFloor]
+    currentFloor.tiles.filter((tile) => tile.item).forEach((tile) => {
+        if (tile.item.type === 'weapon') {
+            tileArray[tile.id].innerHTML = '<img src="./assets/images/sword.png" width="70%">'
+        } else if (tile.item.type === 'armor') {
+            tileArray[tile.id].innerHTML = '<img src="./assets/images/armor.png" width="70%">'
+        } else if (tile.item.type === 'potion') {
+            tileArray[tile.id].innerHTML = '<img src="./assets/images/potion.png" width="70%">'
+        } else if (tile.item.type === 'map') {
+            tileArray[tile.id].innerHTML = '<img src="./assets/images/map.png" width="70%">'
+        }
+    })
+
     // Mark any staircases with appropriate icons
     if (currentFloor.tiles.filter((tile) => tile.stairDown).length > 0) {
         tileArray[currentFloor.tiles.filter((tile) => tile.stairDown)[0].id].innerHTML = '<i class="fas fa-arrow-down"></i>'
@@ -161,25 +181,6 @@ const renderFloor = () => {
     if (dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairUp).length > 0) {
         tileArray[currentFloor.tiles.filter((tile) => tile.stairUp)[0].id].innerHTML = '<i class="fas fa-arrow-up"></i>'
     }
-
-    const renderItems = () => {
-        currentFloor.tiles.filter((tile) => tile.item).forEach((tile) => {
-            if (tile.item.type === 'weapon') {
-                tileArray[tile.id].innerHTML = '<img src="./assets/images/sword.png" width="70%">'
-            } else if (tile.item.type === 'armor') {
-                tileArray[tile.id].innerHTML = '<img src="./assets/images/armor.png" width="70%">'
-            } else if (tile.item.type === 'potion') {
-                tileArray[tile.id].innerHTML = '<img src="./assets/images/potion.png" width="70%">'
-            } else if (tile.item.type === 'map') {
-                tileArray[tile.id].innerHTML = '<img src="./assets/images/map.png" width="70%">'
-            }
-        })
-    }
-
-    renderItems()
-
-    // Set the player.currentTile property to the element with the ID of active
-    player.currentTile = tileArray.findIndex(x => x.id == 'active')
 }
 
 const buildInventory = () => {
@@ -248,6 +249,7 @@ const getItem = () => {
         alert.innerHTML = `${item.name} added to inventory.`
         dungeon.floors[player.currentFloor].tiles[player.currentTile].item = null
         tileArray[dungeon.floors[player.currentFloor].tiles[player.currentTile].id].innerHTML = ''
+        renderItems()
         buildInventory()
     } else if (item !== null && player.inventory.items.length === player.inventory.capacity) {
         alert.innerHTML = 'Your inventory is full!'
