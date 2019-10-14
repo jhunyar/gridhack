@@ -218,6 +218,32 @@ const renderItems = () => {
     }
 }
 
+const renderCurrentTile = () => {
+    const currentTile = dungeon.floors[player.currentFloor].tiles[player.currentTile]
+
+    if (currentTile.item === null) {
+        return
+    }
+    
+    if (currentTile.item.type === 'weapon') {
+        tileArray[currentTile.id].innerHTML = '<img src="./assets/images/sword.png" width="70%">'
+    } else if (currentTile.item.type === 'armor') {
+        tileArray[currentTile.id].innerHTML = '<img src="./assets/images/armor.png" width="70%">'
+    } else if (currentTile.item.type === 'potion') {
+        tileArray[currentTile.id].innerHTML = '<img src="./assets/images/potion.png" width="70%">'
+    } else if (currentTile.item.type === 'map') {
+        tileArray[currentTile.id].innerHTML = '<img src="./assets/images/map.png" width="70%">'
+    }
+
+    if (currentTile.stairDown) {
+        tileArray[currentTile.id].innerHTML = '<i class="fas fa-arrow-down"></i>'
+    }
+
+    if (currentTile.stairUp) {
+        tileArray[currentTile.id].innerHTML = '<i class="fas fa-arrow-up"></i>'
+    }
+}
+
 const buildInventory = () => {
     inventoryEl.innerHTML = ''
     let slotNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'q', 'w', 'e', 'r', 't']
@@ -295,7 +321,7 @@ const getItem = () => {
         alert.innerHTML = `${item.name} added to inventory.`
         dungeon.floors[player.currentFloor].tiles[player.currentTile].item = null
         tileArray[dungeon.floors[player.currentFloor].tiles[player.currentTile].id].innerHTML = ''
-        renderItems()
+        renderCurrentTile()
         buildInventory()
     } else if (item !== null && player.inventory.items.length === player.inventory.capacity) {
         alert.innerHTML = 'Your inventory is full!'
@@ -376,7 +402,7 @@ const dropListener = function(e) {
         alert.innerHTML = 'There is no item in that slot.'
     }
 
-    renderItems()
+    renderCurrentTile()
     buildInventory()
     document.removeEventListener('keydown', dropListener)
 }
