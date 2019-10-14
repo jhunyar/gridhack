@@ -4,8 +4,9 @@ resetFloorEls() // Reset the floor elements
 setActive()     // Set the active tile
 setVisible()    // Set visible tiles around active tile
 describeTile()  // Display information about the current tile
+renderStats()
 
-// the movement handler itself
+// main movement and action listener
 document.addEventListener('keydown', function(e) {
     const current = tileArray[player.currentTile]
     const west = tileArray[player.currentTile-1]
@@ -22,8 +23,9 @@ document.addEventListener('keydown', function(e) {
     let look = e.keyCode == '76'
     let get = e.keyCode == '71'
     let drop = e.keyCode == '68'
+    let use = e.keyCode == '85'
 
-    if (moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get || drop) {
+    if (moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get || drop || use) {
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
@@ -150,6 +152,12 @@ document.addEventListener('keydown', function(e) {
             } else {
                 alert.innerHTML = 'There is already an item here, cannot drop another.'
             }
+        }
+
+        if (use) {
+           if (player.inventory.items.length === -1) {
+               alert.innerHTML = 'You have no items to use! Pick one up with G'
+           }
         }
     }
 })
