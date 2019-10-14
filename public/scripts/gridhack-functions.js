@@ -197,10 +197,10 @@ const buildInventory = () => {
         slotNumber.style.top = '1px'
         slotNumber.style.color = 'white'
         slotNumber.textContent = slotNumbers[i]
-        itemEl.appendChild(slotNumber)
 
         itemTextEl.textContent = player.inventory.items[i].name
         itemEl.appendChild(itemTextEl)
+        itemEl.appendChild(slotNumber)
         inventoryEl.appendChild(itemEl)
     }
 }
@@ -267,6 +267,82 @@ const getItem = () => {
     } else {
         alert.innerHTML = 'There\'s nothing here to pick up.'
     }
+}
+
+const dropItem = () => {
+    alert.innerHTML = 'Drop which item?'
+    document.addEventListener('keydown', dropListener)
+}
+
+const dropListener = function(e) {
+    let items = player.inventory.items
+    let item1 = e.keyCode == '49'
+    let item2 = e.keyCode == '50'
+    let item3 = e.keyCode == '51'
+    let item4 = e.keyCode == '52'
+    let item5 = e.keyCode == '53'
+    let item6 = e.keyCode == '54'
+    let item7 = e.keyCode == '55'
+    let item8 = e.keyCode == '56'
+    let item9 = e.keyCode == '57'
+    let item10 = e.keyCode == '81'
+    let item11 = e.keyCode == '87'
+    let item12 = e.keyCode == '69'
+    let item13 = e.keyCode == '82'
+    let item14 = e.keyCode == '84'
+
+    // prevent default action of ctrl and shift keys to avoid error
+    if (e.ctrlKey) return false
+    if (e.shiftKey) return false
+
+    if (item1 && items[0]) {
+        items.splice(0, 1)
+        alert.innerHTML = 'Dropped item 1'
+    } else if (item2 && items[1]) {
+        items.splice(1, 1)
+        alert.innerHTML = 'Dropped item 2'
+    } else if (item3 && items[2]) {
+        items.splice(2, 1)
+        alert.innerHTML = 'Dropped item 3'
+    } else if (item4 && items[3]) {
+        items.splice(3, 1)
+        alert.innerHTML = 'Dropped item 4'
+    } else if (item5 && items[4]) {
+        items.splice(4, 1)
+        alert.innerHTML = 'Dropped item 5'
+    } else if (item6 && items[5]) {
+        items.splice(5, 1)
+        alert.innerHTML = 'Dropped item 6'
+    } else if (item7 && items[6]) {
+        items.splice(6, 1)
+        alert.innerHTML = 'Dropped item 7'
+    } else if (item8 && items[7]) {
+        items.splice(7, 1)
+        alert.innerHTML = 'Dropped item 8'
+    } else if (item9 && items[8]) {
+        items.splice(8, 1)
+        alert.innerHTML = 'Dropped item 9'
+    } else if (item10 && items[9]) {
+        items.splice(9, 1)
+        alert.innerHTML = 'Dropped item q'
+    } else if (item11 && items[10]) {
+        items.splice(10, 1)
+        alert.innerHTML = 'Dropped item w'
+    } else if (item12 && items[11]) {
+        items.splice(11, 1)
+        alert.innerHTML = 'Dropped item e'
+    } else if (item13 && items[12]) {
+        items.splice(12, 1)
+        alert.innerHTML = 'Dropped item r'
+    } else if (item14 && items[13]) {
+        items.splice(13, 1)
+        alert.innerHTML = 'Dropped item t'
+    } else {
+        alert.innerHTML = 'There is no item in that slot.'
+    }
+
+    buildInventory()
+    document.removeEventListener('keydown', dropListener)
 }
 
 const describeTile = () => {

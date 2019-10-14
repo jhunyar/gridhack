@@ -21,13 +21,13 @@ document.addEventListener('keydown', function(e) {
     let moveUp = e.keyCode == '33'
     let look = e.keyCode == '76'
     let get = e.keyCode == '71'
+    let drop = e.keyCode == '68'
 
-    if (moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get) {
+    if (moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get || drop) {
 
         // prevent default action of ctrl and shift keys to avoid error
         if (e.ctrlKey) return false
         if (e.shiftKey) return false
-
 
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
         if (moveWest) {
@@ -141,6 +141,11 @@ document.addEventListener('keydown', function(e) {
 
         if (get) {
             getItem()
+            
+        }
+
+        if (drop) {
+            dropItem()
             tileInfoDesc.innerHTML = `"${tile.desc}".`
         }
     }
