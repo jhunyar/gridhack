@@ -141,12 +141,15 @@ document.addEventListener('keydown', function(e) {
 
         if (get) {
             getItem()
-            
         }
 
         if (drop) {
-            dropItem()
-            tileInfoDesc.innerHTML = `"${tile.desc}".`
+            if (dungeon.floors[player.currentFloor].tiles[player.currentTile].item === null) {
+                dropItem()
+                tileInfoDesc.innerHTML = `"${tile.desc}".`
+            } else {
+                alert.innerHTML = 'There is already an item here, cannot drop another.'
+            }
         }
     }
 })

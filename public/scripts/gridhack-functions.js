@@ -275,7 +275,6 @@ const dropItem = () => {
 }
 
 const dropListener = function(e) {
-    let items = player.inventory.items
     let item1 = e.keyCode == '49'
     let item2 = e.keyCode == '50'
     let item3 = e.keyCode == '51'
@@ -296,51 +295,52 @@ const dropListener = function(e) {
     if (e.shiftKey) return false
 
     if (item1 && items[0]) {
-        items.splice(0, 1)
+        moveItem(0)
         alert.innerHTML = 'Dropped item 1'
     } else if (item2 && items[1]) {
-        items.splice(1, 1)
+        moveItem(1)
         alert.innerHTML = 'Dropped item 2'
     } else if (item3 && items[2]) {
-        items.splice(2, 1)
+        moveItem(2)
         alert.innerHTML = 'Dropped item 3'
     } else if (item4 && items[3]) {
-        items.splice(3, 1)
+        moveItem(3)
         alert.innerHTML = 'Dropped item 4'
     } else if (item5 && items[4]) {
-        items.splice(4, 1)
+        moveItem(4)
         alert.innerHTML = 'Dropped item 5'
     } else if (item6 && items[5]) {
-        items.splice(5, 1)
+        moveItem(5)
         alert.innerHTML = 'Dropped item 6'
     } else if (item7 && items[6]) {
-        items.splice(6, 1)
+        moveItem(6)
         alert.innerHTML = 'Dropped item 7'
     } else if (item8 && items[7]) {
-        items.splice(7, 1)
+        moveItem(7)
         alert.innerHTML = 'Dropped item 8'
     } else if (item9 && items[8]) {
-        items.splice(8, 1)
+        moveItem(8)
         alert.innerHTML = 'Dropped item 9'
     } else if (item10 && items[9]) {
-        items.splice(9, 1)
+        moveItem(9)
         alert.innerHTML = 'Dropped item q'
     } else if (item11 && items[10]) {
-        items.splice(10, 1)
+        moveItem(10)
         alert.innerHTML = 'Dropped item w'
     } else if (item12 && items[11]) {
-        items.splice(11, 1)
+        moveItem(11)
         alert.innerHTML = 'Dropped item e'
     } else if (item13 && items[12]) {
-        items.splice(12, 1)
+        moveItem(12)
         alert.innerHTML = 'Dropped item r'
     } else if (item14 && items[13]) {
-        items.splice(13, 1)
+        moveItem(13)
         alert.innerHTML = 'Dropped item t'
     } else {
         alert.innerHTML = 'There is no item in that slot.'
     }
 
+    renderItems()
     buildInventory()
     document.removeEventListener('keydown', dropListener)
 }
@@ -350,4 +350,9 @@ const describeTile = () => {
 
     tileInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
     tileInfoDesc.innerHTML = `"${room.desc}".`
+}
+
+let moveItem = (slot) => {
+    dungeon.floors[player.currentFloor].tiles[player.currentTile].item = JSON.parse(JSON.stringify(player.inventory.items[slot]))
+    player.inventory.items.splice(slot, 1)
 }
