@@ -157,6 +157,8 @@ document.addEventListener('keydown', function(e) {
         if (use) {
            if (player.inventory.items.length === -1) {
                alert.innerHTML = 'You have no items to use! Pick one up with G'
+           } else {
+               useItem()
            }
         }
     }
