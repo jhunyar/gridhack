@@ -214,7 +214,7 @@ const renderFloor = () => {
     tileArray = Array.from(tiles)
 
     renderItems()
-    renderMobs()
+    // renderMobs()
 
     // Set the player.currentTile property to the element with the ID of active
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
@@ -244,17 +244,18 @@ const renderItems = () => {
     }
 }
 
-const renderMobs = () => {
-    const currentFloor = dungeon.floors[player.currentFloor]
-    currentFloor.tiles.forEach((tile) => {
-        if (tile.mob) {
-            tileArray[tile.id].innerHTML = '#' // '<img src="./assets/images/sword.png" width="70%">'
-        } else {
-            tileArray[tile.id].innerHTML = ''
-            renderTile(tile.id)
-        }
-    })
-}
+    const renderMobs = () => {
+        const currentFloor = dungeon.floors[player.currentFloor]
+        currentFloor.tiles.forEach((tile) => {
+            if (tile.mob) {
+                tileArray[tile.id].innerHTML = 'R' // '<img src="./assets/images/sword.png" width="70%">'
+            } else {
+                tileArray[tile.id].innerHTML = ''
+                renderTile(tile.id)
+                //TODO: This is aggressive full-map rendering. Render only if we know a mob moved away from this tile. 
+            }
+        })
+    }
 
 const renderTile = (id) => {
     let tile = dungeon.floors[player.currentFloor].tiles[id]
