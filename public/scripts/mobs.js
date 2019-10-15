@@ -1,11 +1,11 @@
 let mobs = []
 
 // [id, name, desc, atk, def, rarity]
-mobs[0] = [0, 'Rat', 'A small black rat', 1, 0, 30, false]
-mobs[1] = [1, 'Large rat', 'A large black rat', 2, 0, 60, false]
-mobs[1] = [2, 'Rabid rat', 'A rabid black rat', 3, 0, 90, true]
+mobs[0] = [0, 'rat', 'A small black rat', 1, 0, 30, false, 'r']
+mobs[1] = [1, 'large rat', 'A large black rat', 2, 0, 60, false, 'R']
+mobs[1] = [2, 'rabid rat', 'A rabid black rat', 3, 0, 90, true, 'ɍ']
 
-function Mob(id, name, desc, atk, def, rarity, aggro) {
+function Mob(id, name, desc, atk, def, rarity, aggro, symbol) {
   this.id = id
   this.name = name
   this.desc = desc
@@ -13,6 +13,7 @@ function Mob(id, name, desc, atk, def, rarity, aggro) {
   this.def = def
   this.rarity = rarity
   this.aggro = aggro
+  this.symbol = symbol
 }
 
 const moveMobs = () => {

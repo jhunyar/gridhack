@@ -176,7 +176,8 @@ const placeMobs = () => {
         def: currentMob[4],
         rarity: currentMob[5],
         chance: Math.floor(Math.random() * Math.floor(currentMob[5])),
-        aggro: currentMob[6]
+        aggro: currentMob[6],
+        symbol: currentMob[7]
     }
 
     if (mob.chance !== 1) {
@@ -250,7 +251,7 @@ const renderMobs = () => {
     const currentFloor = dungeon.floors[player.currentFloor]
     currentFloor.tiles.forEach((tile) => {
         if (tile.mob) {
-            tileArray[tile.id].innerHTML = 'R' // '<img src="./assets/images/sword.png" width="70%">'
+            tileArray[tile.id].innerHTML = tile.mob.symbol // '<img src="./assets/images/sword.png" width="70%">'
         } else {
             tileArray[tile.id].innerHTML = ''
             renderTile(tile.id)
