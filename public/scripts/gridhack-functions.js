@@ -169,12 +169,14 @@ const placeMobs = () => {
     let currentMob = mobs[Math.floor(Math.random() * Math.floor(mobs.length))]
 
     let mob = {
+        id: currentMob[0],
         name: currentMob[1],
         description: currentMob[2],
         atk: currentMob[3],
         def: currentMob[4],
         rarity: currentMob[5],
-        chance: Math.floor(Math.random() * Math.floor(currentMob[5]))
+        chance: Math.floor(Math.random() * Math.floor(currentMob[5])),
+        aggro: currentMob[6]
     }
 
     if (mob.chance !== 1) {
@@ -244,41 +246,40 @@ const renderItems = () => {
     }
 }
 
-    const renderMobs = () => {
-        const currentFloor = dungeon.floors[player.currentFloor]
-        currentFloor.tiles.forEach((tile) => {
-            if (tile.mob) {
-                tileArray[tile.id].innerHTML = 'R' // '<img src="./assets/images/sword.png" width="70%">'
-            } else {
-                tileArray[tile.id].innerHTML = ''
-                renderTile(tile.id)
-                //TODO: This is aggressive full-map rendering. Render only if we know a mob moved away from this tile. 
-            }
-        })
-    }
+const renderMobs = () => {
+    const currentFloor = dungeon.floors[player.currentFloor]
+    currentFloor.tiles.forEach((tile) => {
+        if (tile.mob) {
+            tileArray[tile.id].innerHTML = 'R' // '<img src="./assets/images/sword.png" width="70%">'
+        } else {
+            tileArray[tile.id].innerHTML = ''
+            renderTile(tile.id)
+        }
+    })
+}
 
 const renderTile = (id) => {
     let tile = dungeon.floors[player.currentFloor].tiles[id]
 
-    if (tile.item === null) {
-        return
-    }
-
-    if (tile.item.type === 'weapon') {
-        tileArray[tile.id].innerHTML = '<img src="./assets/images/sword.png" width="70%">'
-    } else if (tile.item.type === 'armor') {
-        tileArray[tile.id].innerHTML = '<img src="./assets/images/armor.png" width="70%">'
-    } else if (tile.item.type === 'potion') {
-        tileArray[tile.id].innerHTML = '<img src="./assets/images/potion.png" width="70%">'
-    } else if (tile.item.type === 'map') {
-        tileArray[tile.id].innerHTML = '<img src="./assets/images/map.png" width="70%">'
+    if (tile.item) {
+        if (tile.item.type === 'weapon') {
+            tileArray[tile.id].innerHTML = '<img src="./assets/images/sword.png" width="70%">'
+        } else if (tile.item.type === 'armor') {
+            tileArray[tile.id].innerHTML = '<img src="./assets/images/armor.png" width="70%">'
+        } else if (tile.item.type === 'potion') {
+            tileArray[tile.id].innerHTML = '<img src="./assets/images/potion.png" width="70%">'
+        } else if (tile.item.type === 'map') {
+            tileArray[tile.id].innerHTML = '<img src="./assets/images/map.png" width="70%">'
+        }
     }
 
     if (tile.stairDown) {
+        console.log(`Rendering stair down at ${tile.id}`)
         tileArray[tile.id].innerHTML = '<i class="fas fa-arrow-down"></i>'
     }
 
     if (tile.stairUp) {
+        console.log(`Rendering stair up at ${tile.id}`)
         tileArray[tile.id].innerHTML = '<i class="fas fa-arrow-up"></i>'
     }
 }
