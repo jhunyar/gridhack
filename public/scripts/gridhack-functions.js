@@ -135,6 +135,9 @@ const buildTiles = () => {
 
         let item = placeItems()
         let mob = placeMobs()
+        if (mob !== null) {
+            mob.currentTile = i
+        }
 
         // Construct the tile and push it to the temporary tiles array
         let tile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item, mob, false)
@@ -243,11 +246,40 @@ const renderItems = () => {
 
 const renderMobs = () => {
     const currentFloor = dungeon.floors[player.currentFloor]
-    currentFloor.tiles.filter((tile) => tile.mob).forEach((tile) => {
+    currentFloor.tiles.forEach((tile) => {
         if (tile.mob) {
             tileArray[tile.id].innerHTML = '#' // '<img src="./assets/images/sword.png" width="70%">'
+        } else {
+            tileArray[tile.id].innerHTML = ''
+            renderTile(tile.id)
         }
     })
+}
+
+const renderTile = (id) => {
+    let tile = dungeon.floors[player.currentFloor].tiles[id]
+
+    if (tile.item === null) {
+        return
+    }
+
+    if (tile.item.type === 'weapon') {
+        tileArray[tile.id].innerHTML = '<img src="./assets/images/sword.png" width="70%">'
+    } else if (tile.item.type === 'armor') {
+        tileArray[tile.id].innerHTML = '<img src="./assets/images/armor.png" width="70%">'
+    } else if (tile.item.type === 'potion') {
+        tileArray[tile.id].innerHTML = '<img src="./assets/images/potion.png" width="70%">'
+    } else if (tile.item.type === 'map') {
+        tileArray[tile.id].innerHTML = '<img src="./assets/images/map.png" width="70%">'
+    }
+
+    if (tile.stairDown) {
+        tileArray[tile.id].innerHTML = '<i class="fas fa-arrow-down"></i>'
+    }
+
+    if (tile.stairUp) {
+        tileArray[tile.id].innerHTML = '<i class="fas fa-arrow-up"></i>'
+    }
 }
 
 const renderCurrentTile = () => {

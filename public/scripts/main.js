@@ -99,6 +99,8 @@ document.addEventListener('keydown', function(e) {
         setActive()     // Set active tile to wherever player moved
         setVisible()    // Set new visible area based on active tile
         describeTile()  // Describe the new active tile
+        moveMobs()
+        renderMobs()
 
         // The cartographer's aide
 
