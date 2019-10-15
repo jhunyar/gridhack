@@ -95,12 +95,13 @@ function Floor(number, tiles) {
     this.tiles = tiles
 }
 
-function Tile(id, name, desc, floor, item, mapped) {
+function Tile(id, name, desc, floor, item, mob, mapped) {
     this.id = id;
     this.name = name;
     this.desc = desc;
     this.floor = floor;
     this.item = item;
+    this.mob = mob;
     this.mapped = mapped
 }
 
@@ -133,9 +134,10 @@ const buildTiles = () => {
     for (i = 0; i < tileCount; i++) {
 
         let item = placeItems()
+        let mob = placeMobs()
 
         // Construct the tile and push it to the temporary tiles array
-        let tile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item, false)
+        let tile = new Tile(i, rooms[i][0], rooms[i][1], rooms[i][2], item, mob, false)
         tiles.push(tile)
     }
     return tiles
@@ -158,6 +160,25 @@ const placeItems = () => {
     }
 
     return item
+}
+
+const placeMobs = () => {
+    let currentMob = mobs[Math.floor(Math.random() * Math.floor(mobs.length))]
+
+    let mob = {
+        name: currentMob[1],
+        description: currentMob[2],
+        atk: currentMob[3],
+        def: currentMob[4],
+        rarity: currentMob[5],
+        chance: Math.floor(Math.random() * Math.floor(currentMob[5]))
+    }
+
+    if (mob.chance !== 1) {
+        mob = null
+    }
+
+    return mob
 }
 
 const renderFloor = () => {
@@ -190,6 +211,7 @@ const renderFloor = () => {
     tileArray = Array.from(tiles)
 
     renderItems()
+    renderMobs()
 
     // Set the player.currentTile property to the element with the ID of active
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
@@ -217,6 +239,15 @@ const renderItems = () => {
     if (dungeon.floors[player.currentFloor].tiles.filter((tile) => tile.stairUp).length > 0) {
         tileArray[currentFloor.tiles.filter((tile) => tile.stairUp)[0].id].innerHTML = '<i class="fas fa-arrow-up"></i>'
     }
+}
+
+const renderMobs = () => {
+    const currentFloor = dungeon.floors[player.currentFloor]
+    currentFloor.tiles.filter((tile) => tile.mob).forEach((tile) => {
+        if (tile.mob) {
+            tileArray[tile.id].innerHTML = '#' // '<img src="./assets/images/sword.png" width="70%">'
+        }
+    })
 }
 
 const renderCurrentTile = () => {

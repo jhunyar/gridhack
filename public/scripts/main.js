@@ -4,7 +4,7 @@ resetFloorEls() // Reset the floor elements
 setActive()     // Set the active tile
 setVisible()    // Set visible tiles around active tile
 describeTile()  // Display information about the current tile
-renderStats()
+renderStats()   // Display stat panel
 
 // main movement and action listener
 document.addEventListener('keydown', function(e) {
@@ -13,7 +13,7 @@ document.addEventListener('keydown', function(e) {
     const east = tileArray[player.currentTile+1]
     const north = tileArray[player.currentTile-14]
     const south = tileArray[player.currentTile+14]
-    
+
     let moveWest = e.keyCode == '37'
     let moveNorth = e.keyCode == '38'
     let moveEast = e.keyCode == '39'
@@ -139,6 +139,10 @@ document.addEventListener('keydown', function(e) {
 
         if (tile.item !== null) {
             tileInfoDesc.innerHTML += ` You found a ${tile.item.name}. ${tile.item.description}`
+        }
+
+        if (tile.mob !== null) {
+            tileInfoDesc.innerHTML += ` There is a ${tile.mob.name} here.`
         }
 
         if (get) {
