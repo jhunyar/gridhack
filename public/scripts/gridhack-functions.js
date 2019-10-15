@@ -275,12 +275,10 @@ const renderTile = (id) => {
     }
 
     if (tile.stairDown) {
-        console.log(`Rendering stair down at ${tile.id}`)
         tileArray[tile.id].innerHTML = '<i class="fas fa-arrow-down"></i>'
     }
 
     if (tile.stairUp) {
-        console.log(`Rendering stair up at ${tile.id}`)
         tileArray[tile.id].innerHTML = '<i class="fas fa-arrow-up"></i>'
     }
 }

@@ -24,7 +24,6 @@ const moveMobs = () => {
     let move = Math.random()*4
 
     if (move >= 0 && move < 1) {
-      console.log(`Trying to move mob ${tile.mob.id} west from tile ${tile.mob.currentTile} to ${tile.mob.currentTile-1}`)
       if (!tiles[tile.mob.currentTile-1] 
         || westWall.includes(tile.mob.currentTile-1)
         || tiles[tile.mob.currentTile-1].mob != null) {
@@ -35,7 +34,6 @@ const moveMobs = () => {
         tiles[tile.mob.currentTile+1].mob = null
       }
     } else if (move >= 1 && move < 2) {
-      console.log(`Trying to move mob ${tile.mob.id} east from tile ${tile.mob.currentTile} to ${tile.mob.currentTile+1}`)
       if (!tiles[tile.mob.currentTile+1]
         || eastWall.includes(tile.mob.currentTile+1)
         || tiles[tile.mob.currentTile+1].mob != null) {
@@ -46,7 +44,6 @@ const moveMobs = () => {
         tiles[tile.mob.currentTile-1].mob = null
       }
     } else if (move >= 2 && move < 3) {
-      console.log(`Trying to move mob ${tile.mob.id} north from tile ${tile.mob.currentTile} to ${tile.mob.currentTile-14}`)
       if (!tiles[tile.mob.currentTile-14]
         || northWall.includes(tile.mob.currentTile-14)
         || tiles[tile.mob.currentTile-14].mob != null) {
@@ -57,7 +54,6 @@ const moveMobs = () => {
         tiles[tile.mob.currentTile+14].mob = null
       }
     } else if (move >= 3 && move < 4) {
-      console.log(`Trying to move mob ${tile.mob.id} south from tile ${tile.mob.currentTile} to ${tile.mob.currentTile+14}`)
       if (!tiles[tile.mob.currentTile+14]
         || southWall.includes(tile.mob.currentTile+14)
         || tiles[tile.mob.currentTile+14].mob != null) {
