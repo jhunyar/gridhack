@@ -23,7 +23,7 @@ const items = []
 // Room variables
 let rooms = []
 
-const describeRooms = () => {
+const describeRooms =()=> {
     let tileCount = 196
     for (let i = 0; i < tileCount; i++) {
         rooms.push([ 'Title', `Description of room ${i}`, 'Earth'])
@@ -79,7 +79,7 @@ const player = {
     }
 }
 
-let renderStats = () => {
+let renderStats =()=> {
     stats.innerHTML = ''
     for (let i = 0; i < Object.keys(player.stats).length; i++) {
         let p = document.createElement('p')
@@ -105,7 +105,7 @@ function Tile(id, name, desc, floor, item, mob, mapped) {
     this.mapped = mapped
 }
 
-const buildFloors = () => {
+const buildFloors =()=> {
     for (let i = 0; i < dungeon.depth; i++) {
         let floor = new Floor(i, buildTiles())
     
@@ -128,7 +128,7 @@ const buildFloors = () => {
     }
 }
 
-const buildTiles = () => {
+const buildTiles =()=> {
     let tileCount = 196
     let tiles = []
     for (i = 0; i < tileCount; i++) {
@@ -146,7 +146,7 @@ const buildTiles = () => {
     return tiles
 }
 
-const placeItems = () => {
+const placeItems =()=> {
     let currentItem = items[Math.floor(Math.random() * Math.floor(items.length))]
 
     let item = {
@@ -165,7 +165,7 @@ const placeItems = () => {
     return item
 }
 
-const placeMobs = () => {
+const placeMobs =()=> {
     let currentMob = mobs[Math.floor(Math.random() * Math.floor(mobs.length))]
 
     let mob = {
@@ -177,7 +177,8 @@ const placeMobs = () => {
         rarity: currentMob[5],
         chance: Math.floor(Math.random() * Math.floor(currentMob[5])),
         aggro: currentMob[6],
-        symbol: currentMob[7]
+        symbol: currentMob[7],
+        hp: currentMob[8]
     }
 
     if (mob.chance !== 1) {
@@ -187,7 +188,7 @@ const placeMobs = () => {
     return mob
 }
 
-const renderFloor = () => {
+const renderFloor =()=> {
     const currentFloor = dungeon.floors[player.currentFloor]
 
     // Empty the room first
@@ -223,7 +224,7 @@ const renderFloor = () => {
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
 }
 
-const renderItems = () => {
+const renderItems =()=> {
     const currentFloor = dungeon.floors[player.currentFloor]
     currentFloor.tiles.filter((tile) => tile.item).forEach((tile) => {
         if (tile.item.type === 'weapon') {
@@ -247,7 +248,7 @@ const renderItems = () => {
     }
 }
 
-const renderMobs = () => {
+const renderMobs =()=> {
     const currentFloor = dungeon.floors[player.currentFloor]
     currentFloor.tiles.forEach((tile) => {
         if (tile.mob) {
@@ -259,7 +260,7 @@ const renderMobs = () => {
     })
 }
 
-const renderTile = (id) => {
+const renderTile =(id)=> {
     let tile = dungeon.floors[player.currentFloor].tiles[id]
 
     if (tile.item) {
@@ -283,7 +284,7 @@ const renderTile = (id) => {
     }
 }
 
-const renderCurrentTile = () => {
+const renderCurrentTile =()=> {
     const currentTile = dungeon.floors[player.currentFloor].tiles[player.currentTile]
 
     if (currentTile.item === null) {
@@ -309,7 +310,7 @@ const renderCurrentTile = () => {
     }
 }
 
-const buildInventory = () => {
+const buildInventory =()=> {
     inventoryEl.innerHTML = ''
     let slotNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'q', 'w', 'e', 'r', 't']
    
@@ -332,7 +333,7 @@ const buildInventory = () => {
 }
 
 // Clear the room of anything other than active, mapped and hidden tiles
-const resetFloorEls = () => {
+const resetFloorEls =()=> {
     tileArray.forEach((tile) => {
         if (!dungeon.floors[player.currentFloor].tiles[tileArray.indexOf(tile)].mapped) {
             if (tile.id != 'active'
@@ -347,13 +348,13 @@ const resetFloorEls = () => {
 }
 
 // Reset the value of the player.currentTile variable
-const setActive = () => {
+const setActive =()=> {
     player.currentTile = tileArray.findIndex(x => x.id == 'active')
     dungeon.floors[player.currentFloor].tiles[player.currentTile].mapped = true
 }
 
 // Set all tiles adjacent to player.currentTile to be visible 
-const setVisible = () => {
+const setVisible =()=> {
     let tileEls = room.getElementsByTagName('div')
     let tiles = dungeon.floors[player.currentFloor].tiles
 
@@ -373,12 +374,12 @@ const setVisible = () => {
 }
 
 // Clear the alerts
-const clearAlerts = () => {
+const clearAlerts =()=> {
     alert.innerHTML = ''
 }
 
 // get an item
-const getItem = () => {
+const getItem =()=> {
     let item = dungeon.floors[player.currentFloor].tiles[player.currentTile].item
 
     if (item !== null && player.inventory.items.length < player.inventory.capacity) {
@@ -395,12 +396,12 @@ const getItem = () => {
     }
 }
 
-const dropItem = () => {
+const dropItem =()=> {
     alert.innerHTML = 'Drop which item?'
     document.addEventListener('keydown', dropListener)
 }
 
-const useItem = () => {
+const useItem =()=> {
     alert.innerHTML = 'Use which item?'
     document.addEventListener('keydown', useListener)
 }
@@ -562,14 +563,14 @@ const useListener = function(e) {
     document.removeEventListener('keydown', useListener)
 }
 
-const describeTile = () => {
+const describeTile =()=> {
     const room = dungeon.floors[player.currentFloor].tiles[player.currentTile]
 
     tileInfoName.innerHTML = `${room.name} - Floor type: ${room.floor}`
     tileInfoDesc.innerHTML = `"${room.desc}".`
 }
 
-const addItemEffects = (slot) => {
+const addItemEffects =(slot)=> {
     let item = player.inventory.items[slot]
     if (item.type === 'armor') {
         player.stats.def = item.affects.def
@@ -588,11 +589,23 @@ const addItemEffects = (slot) => {
     renderStats()
 }
 
-const moveItem = (slot) => {
+const moveItem =(slot)=> {
     dungeon.floors[player.currentFloor].tiles[player.currentTile].item = JSON.parse(JSON.stringify(player.inventory.items[slot]))
     player.inventory.items.splice(slot, 1)
 }
 
-const removeItem = (slot) => {
+const removeItem =(slot)=> {
     player.inventory.items.splice(slot, 1)
+}
+
+const mobBlocking =(dir)=> { dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob ? true : false }
+
+const attackMob =(dir)=> {
+    let mob = dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob
+    mob.hp -= (player.stats.atk - mob.def)
+    alert.innerHTML = `You attack the ${mob.name} for ${player.stats.atk} points.`
+    if (mob.hp < 1) {
+        alert.innerHTML = `You kill the ${mob.name}`
+        dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob = null
+    }
 }

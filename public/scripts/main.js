@@ -33,14 +33,19 @@ document.addEventListener('keydown', function(e) {
 
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
         if (moveWest) {
-            if (westWall.includes(player.currentTile-1)) {
-                alert.innerHTML = ' You can\'t go that way!'
-                setVisible()
-                return false
+            if (!mobBlocking(-1)) {
+                if (westWall.includes(player.currentTile-1)) {
+                    alert.innerHTML = ' You can\'t go that way!'
+                    setVisible()
+                    return false
+                } else {
+                    current.id = ''
+                    west.id = 'active'
+                    player.currentTile = player.currentTile-1
+                }
             } else {
-                current.id = ''
-                west.id = 'active'
-                player.currentTile = player.currentTile-1
+                attackMob(-1)
+                console.log('Attacking')
             }
         } else if (moveEast) {
             if (eastWall.includes(player.currentTile+1)) {
