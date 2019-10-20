@@ -1,3 +1,6 @@
+import { northWall, eastWall, southWall, westWall } from './constants.js'
+import { dungeon, player } from './builder.js'
+
 let mobs = []
 
 // [id, name, desc, atk, def, rarity]
@@ -67,3 +70,7 @@ const moveMobs = () => {
     }
   })
 }
+
+const mobBlocking =(dir)=> { dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob ? true : false }
+
+export { mobs, moveMobs, mobBlocking }

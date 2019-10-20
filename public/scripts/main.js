@@ -1,10 +1,20 @@
-buildFloors()   // Build all dungeon floors
-renderFloor()   // Render the current floor
-resetFloorEls() // Reset the floor elements
-setActive()     // Set the active tile
-setVisible()    // Set visible tiles around active tile
-describeTile()  // Display information about the current tile
-renderStats()   // Display stat panel
+import { alert, northWall, eastWall, southWall, westWall, tileInfoDesc } from './constants.js'
+import { dungeon, buildFloors, player } from './builder.js'
+import { renderFloor, resetFloorEls, setActive, setVisible, describeTile, renderStats, tileArray, clearAlerts, renderMobs } from './renderer.js'
+import { moveMobs, mobBlocking } from './mobs.js'
+import { getItem, useItem, dropItem } from './actions.js'
+
+const startGame =()=> {
+    buildFloors()   // Build all dungeon floors
+    renderFloor()   // Render the current floor
+    resetFloorEls() // Reset the floor elements
+    setActive()     // Set the active tile
+    setVisible()    // Set visible tiles around active tile
+    describeTile()  // Display information about the current tile
+    renderStats()   // Display stat panel
+}
+
+startGame()
 
 // main movement and action listener
 document.addEventListener('keydown', function(e) {
@@ -43,7 +53,7 @@ document.addEventListener('keydown', function(e) {
                     west.id = 'active'
                     player.currentTile = player.currentTile-1
                 }
-            } else {
+            } else if (mobBlocking(-1)) {
                 attackMob(-1)
                 console.log('Attacking')
             }
