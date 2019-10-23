@@ -35,7 +35,7 @@ const renderFloor =()=> {
   tileArray = Array.from(tiles)
 
   renderItems()
-  // renderMobs()
+  renderMobs()
 
   // Set the player.currentTile property to the element with the ID of active
   player.currentTile = tileArray.findIndex(x => x.id == 'active')
@@ -70,11 +70,13 @@ const renderMobs =()=> {
   currentFloor.tiles.forEach((tile) => {
       if (tile.mob) {
           tileArray[tile.id].innerHTML = tile.mob.symbol // '<img src="./assets/images/sword.png" width="70%">'
-      } else {
-          tileArray[tile.id].innerHTML = ''
-          renderTile(tile.id)
       }
   })
+}
+
+const renderMob =(tileId)=> {
+    let tile = dungeon.floors[player.currentFloor].tiles[tileId]
+    tileArray[tileId].innerHTML = tile.mob.symbol
 }
 
 const renderTile =(id)=> {
@@ -212,6 +214,6 @@ const buildInventory =()=> {
   }
 }
 
-export { tileArray, renderFloor, renderItems, renderMobs, renderTile, renderCurrentTile,
+export { tileArray, renderFloor, renderItems, renderTile, renderCurrentTile,
          resetFloorEls, setActive, setVisible, clearAlerts, describeTile,
-         renderStats, renderMobs, buildInventory }
+         renderStats, renderMobs, renderMob, buildInventory }

@@ -1,5 +1,6 @@
 import { northWall, eastWall, southWall, westWall } from './constants.js'
 import { dungeon, player } from './builder.js'
+import { renderTile, renderMob, tileArray } from './renderer.js'
 
 let mobs = []
 
@@ -36,6 +37,7 @@ const moveMobs = () => {
         tile.mob.currentTile = tile.mob.currentTile-1
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile+1].mob = null
+        resetTileEl(tile, -1)
       }
     } else if (move >= 1 && move < 2) {
       if (!tiles[tile.mob.currentTile+1]
@@ -46,6 +48,7 @@ const moveMobs = () => {
         tile.mob.currentTile = tile.mob.currentTile+1
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile-1].mob = null
+        resetTileEl(tile, +1)
       }
     } else if (move >= 2 && move < 3) {
       if (!tiles[tile.mob.currentTile-14]
@@ -56,6 +59,7 @@ const moveMobs = () => {
         tile.mob.currentTile = tile.mob.currentTile-14
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile+14].mob = null
+        resetTileEl(tile, -14)
       }
     } else if (move >= 3 && move < 4) {
       if (!tiles[tile.mob.currentTile+14]
@@ -66,9 +70,19 @@ const moveMobs = () => {
         tile.mob.currentTile = tile.mob.currentTile+14
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile-14].mob = null
+        resetTileEl(tile, 14)
       }
     }
   })
+}
+
+// Reset a specifc tile after a mob movement
+const resetTileEl =(tile, offset)=> {
+  tileArray[tile.id].innerHTML = ''
+  renderMob(tile.id + offset)
+  if (tile.item || tile.stairDown || tile.stairUp) {
+      renderTile(tile.id)
+  }
 }
 
 const mobBlocking =(dir)=> { dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob ? true : false }
