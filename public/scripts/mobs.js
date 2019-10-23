@@ -29,36 +29,28 @@ const moveMobs = () => {
     let move = Math.random()*4
 
     if (move >= 0 && move < 1) { // west
-      if (isBlocked(tile.id, -1)) {
-        return
-      } else {
+      if (!isBlocked(tile.id, -1)) {
         tile.mob.currentTile = tile.mob.currentTile-1
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile+1].mob = null
         resetTileEl(tile, -1)
       }
     } else if (move >= 1 && move < 2) { // east
-      if (isBlocked(tile.id, 1)) {
-        return
-      } else {
+      if (!isBlocked(tile.id, 1)) {
         tile.mob.currentTile = tile.mob.currentTile+1
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile-1].mob = null
         resetTileEl(tile, +1)
       }
     } else if (move >= 2 && move < 3) { // north
-      if (isBlocked(tile.id, -14)) {
-        return
-      } else {
+      if (!isBlocked(tile.id, -14)) {
         tile.mob.currentTile = tile.mob.currentTile-14
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile+14].mob = null
         resetTileEl(tile, -14)
       }
     } else if (move >= 3 && move < 4) { // south
-      if (isBlocked(tile.id, 14)) {
-        return
-      } else {
+      if (!isBlocked(tile.id, 14)) {
         tile.mob.currentTile = tile.mob.currentTile+14
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile-14].mob = null
