@@ -1,6 +1,6 @@
 import { alert, northWall, eastWall, southWall, westWall, tileInfoDesc } from './constants.js'
 import { dungeon, buildFloors, player } from './builder.js'
-import { renderFloor, resetFloorEls, setActive, setVisible, describeTile, renderStats, tileArray, clearAlerts, renderMobs } from './renderer.js'
+import { renderFloor, resetFloorEls, setActive, setVisible, describeTile, renderStats, tileArray, clearAlerts, renderMob } from './renderer.js'
 import { moveMobs, mobBlocking } from './mobs.js'
 import { getItem, useItem, dropItem, attackMob } from './actions.js'
 
@@ -35,6 +35,8 @@ document.addEventListener('keydown', function(e) {
     let drop = e.keyCode == '68'
     let use = e.keyCode == '85'
 
+    let postAttack = false
+
     if (moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get || drop || use) {
 
         // prevent default action of ctrl and shift keys to avoid error
@@ -50,7 +52,8 @@ document.addEventListener('keydown', function(e) {
             } else {
                 if (mobBlocking(-1)) {
                     attackMob(-1)
-                    console.log('Attacking west')
+                    renderMob(player.currentTile-1)
+                    postAttack = true
                 } else {
                     current.id = ''
                     west.id = 'active'
@@ -65,7 +68,9 @@ document.addEventListener('keydown', function(e) {
             } else {
                 if (mobBlocking(1)) {
                     attackMob(1)
-                    console.log('Attacking east')
+                    renderMob(player.currentTile+1)
+                    postAttack = true
+                    setVisible()
                 } else {
                     current.id = ''
                     east.id = 'active'
@@ -80,7 +85,8 @@ document.addEventListener('keydown', function(e) {
             } else {
                 if (mobBlocking(-14)) {
                     attackMob(-14)
-                    console.log('Attacking north')
+                    renderMob(player.currentTile-14)
+                    postAttack = true
                 } else {
                     current.id = ''
                     north.id = 'active'
@@ -95,7 +101,8 @@ document.addEventListener('keydown', function(e) {
             } else {
                 if (mobBlocking(14)) {
                     attackMob(14)
-                    console.log('Attacking south')
+                    renderMob(player.currentTile+14)
+                    postAttack = true
                 } else {
                     current.id = ''
                     south.id = 'active'
@@ -126,7 +133,7 @@ document.addEventListener('keydown', function(e) {
 
         const postMove =()=> {
             resetFloorEls() // Reset the floor on every key action to clear any visible tiles from last movement
-            clearAlerts()   // Reset alerts area after action
+            postAttack ? postAttack = false : clearAlerts() // Reset alerts area after action
             setActive()     // Set active tile to wherever player moved
             setVisible()    // Set new visible area based on active tile
             describeTile()  // Describe the new active tile

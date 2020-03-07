@@ -76,7 +76,11 @@ const renderMobs =()=> {
 
 const renderMob =(tileId)=> {
     let tile = dungeon.floors[player.currentFloor].tiles[tileId]
-    tileArray[tileId].innerHTML = tile.mob.symbol
+    if (tile.mob) {
+        tileArray[tileId].innerHTML = tile.mob.symbol
+    } else {
+        tileArray[tileId].innerHTML = ''
+    }
 }
 
 const renderTile =(id)=> {
