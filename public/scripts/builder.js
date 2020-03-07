@@ -15,12 +15,12 @@ describeRooms()
 let items = []
 
 // items[#] = [ 'name', 'description', 'type' rarity/100, affect{} ]
-items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 25, { poisonResist: true, swimming: true } ]
-items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'map', 15, { revealMap: true } ]
-items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 20, { hp: 5 } ]
-items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 20, { atk: 3 } ]
+items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 75, { poisonResist: true, swimming: true } ]
+items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'map', 50, { revealMap: true } ]
+items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 40, { hp: 5 } ]
+items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 40, { atk: 3 } ]
 items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75, { hp: 100 } ]
-items[5] = [ 'Leather armor', 'Provides 3 defense points', 'armor', 20, { def: 3 }]
+items[5] = [ 'Leather armor', 'Provides 3 defense points', 'armor', 40, { def: 3 }]
 
 // Object variables
 const dungeon = {

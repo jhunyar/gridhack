@@ -22,6 +22,12 @@ body {
     width: 500px;
 }
 
+#music-bg {
+    margin: 0 auto;
+    display: block;
+    margin-top: 15px;
+}
+
 #header {
     font-family: 'Aladin', cursive;
     height: 70px;
@@ -123,6 +129,10 @@ body {
     background: #333;
     height: 60px;
     text-align: center
+}
+
+#controls {
+    display: inline-block;
 }
 
 #room {
