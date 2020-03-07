@@ -2,7 +2,7 @@ import { alert, northWall, eastWall, southWall, westWall, tileInfoDesc } from '.
 import { dungeon, buildFloors, player } from './builder.js'
 import { renderFloor, resetFloorEls, setActive, setVisible, describeTile, renderStats, tileArray, clearAlerts, renderMobs } from './renderer.js'
 import { moveMobs, mobBlocking } from './mobs.js'
-import { getItem, useItem, dropItem } from './actions.js'
+import { getItem, useItem, dropItem, attackMob } from './actions.js'
 
 const startGame =()=> {
     buildFloors()   // Build all dungeon floors
@@ -15,10 +15,6 @@ const startGame =()=> {
 }
 
 startGame()
-
-const movementListener =(e)=> {
-
-}
 
 // main movement and action listener
 document.addEventListener('keydown', function(e) {
@@ -47,19 +43,19 @@ document.addEventListener('keydown', function(e) {
 
         // conditional movement rules to determine which tile we need to set as active and which we need to clear
         if (moveWest) {
-            if (!mobBlocking(-1)) {
-                if (westWall.includes(player.currentTile-1)) {
-                    alert.innerHTML = ' You can\'t go that way!'
-                    setVisible()
-                    return false
+            if (westWall.includes(player.currentTile-1)) {
+                alert.innerHTML = ' You can\'t go that way!'
+                setVisible()
+                return false
+            } else {
+                if (mobBlocking(-1)) {
+                    attackMob(-1)
+                    console.log('Attacking west')
                 } else {
                     current.id = ''
                     west.id = 'active'
                     player.currentTile = player.currentTile-1
                 }
-            } else if (mobBlocking(-1)) {
-                attackMob(-1)
-                console.log('Attacking')
             }
         } else if (moveEast) {
             if (eastWall.includes(player.currentTile+1)) {
@@ -67,9 +63,14 @@ document.addEventListener('keydown', function(e) {
                 setVisible()
                 return false
             } else {
-                current.id = ''
-                east.id = 'active'
-                player.currentTile = player.currentTile+1
+                if (mobBlocking(1)) {
+                    attackMob(1)
+                    console.log('Attacking east')
+                } else {
+                    current.id = ''
+                    east.id = 'active'
+                    player.currentTile = player.currentTile+1
+                }
             }
         } else if (moveNorth) {
             if (northWall.includes(player.currentTile-14)) {
@@ -77,9 +78,14 @@ document.addEventListener('keydown', function(e) {
                 setVisible()
                 return false
             } else {
-                current.id = ''
-                north.id = 'active'
-                player.currentTile = player.currentTile-14
+                if (mobBlocking(-14)) {
+                    attackMob(-14)
+                    console.log('Attacking north')
+                } else {
+                    current.id = ''
+                    north.id = 'active'
+                    player.currentTile = player.currentTile-14
+                }
             }
         } else if (moveSouth) {
             if (southWall.includes(player.currentTile+14)) {
@@ -87,9 +93,14 @@ document.addEventListener('keydown', function(e) {
                 setVisible()
                 return false
             } else {
-                current.id = ''
-                south.id = 'active'
-                player.currentTile = player.currentTile+14
+                if (mobBlocking(14)) {
+                    attackMob(14)
+                    console.log('Attacking south')
+                } else {
+                    current.id = ''
+                    south.id = 'active'
+                    player.currentTile = player.currentTile+14
+                }
             }
         }
 

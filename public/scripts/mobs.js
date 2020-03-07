@@ -74,7 +74,7 @@ const isBlocked =(tileId, offset)=> {
   }
 }
 
-// Reset a specifc tile after a mob movement
+// Reset a specific tile after a mob movement
 const resetTileEl =(tile, offset)=> {
   tileArray[tile.id].innerHTML = ''
   renderMob(tile.id + offset)
@@ -83,6 +83,6 @@ const resetTileEl =(tile, offset)=> {
   }
 }
 
-const mobBlocking =(dir)=> { dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob ? true : false }
+const mobBlocking =(dir)=> dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob
 
 export { mobs, moveMobs, mobBlocking }

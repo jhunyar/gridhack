@@ -225,4 +225,4 @@ const attackMob =(dir)=> {
   }
 }
 
-export { getItem, dropItem, useItem }
+export { getItem, dropItem, useItem, attackMob }
