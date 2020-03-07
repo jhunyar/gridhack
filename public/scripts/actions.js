@@ -218,9 +218,11 @@ const removeItem =(slot)=> {
 const attackMob =(dir)=> {
   let mob = dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob
   mob.hp -= (player.stats.atk - mob.def)
-  alert.innerHTML = `You attack the ${mob.name} for ${player.stats.atk} points.<br />The ${mob.name} has ${mob.hp} HP remaining.`
+  alert.innerHTML = `You smite the ${mob.name} for ${player.stats.atk} points.<br />The ${mob.name} has ${mob.hp} HP remaining.`
   if (mob.hp < 1) {
-      alert.innerHTML += ` You smite the ${mob.name}!`
+      alert.innerHTML += ` You abolish the ${mob.name}!`
+      player.stats.abolished++
+      renderStats()
       dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob = null
   }
 }

@@ -41,7 +41,8 @@ const player = {
       exp: 0,
       hp: 10,
       atk: 1,
-      def: 1
+      def: 1,
+      abolished: 0
   },
   status: {
       poisoned: false,
