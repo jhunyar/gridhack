@@ -4,10 +4,10 @@ import { renderTile, renderMob, tileArray } from './renderer.js'
 
 let mobs = []
 
-// [id, name, desc, atk, def, rarity]
+// [id, name, desc, atk, def, rarity, aggro, symbol, hp]
 mobs[0] = [0, 'rat', 'A small black rat', 1, 0, 30, false, 'r', 1]
-mobs[1] = [1, 'large rat', 'A large black rat', 2, 0, 60, false, 'R', 3]
-mobs[1] = [2, 'rabid rat', 'A rabid black rat', 3, 0, 90, true, 'ɍ', 2]
+mobs[1] = [1, 'large rat', 'A large black rat', 2, 0, 60, false, 'R', 5]
+mobs[1] = [2, 'rabid rat', 'A rabid black rat', 3, 0, 90, true, 'ɍ', 3]
 
 function Mob(id, name, desc, atk, def, rarity, aggro, symbol) {
   this.id = id
