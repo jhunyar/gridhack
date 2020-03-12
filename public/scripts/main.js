@@ -3,6 +3,7 @@ import { dungeon, buildFloors, player } from './builder.js'
 import { renderFloor, resetFloorEls, setActive, setVisible, describeTile, renderStats, tileArray, clearAlerts, renderMob } from './renderer.js'
 import { moveMobs, mobBlocking } from './mobs.js'
 import { getItem, useItem, dropItem, attackMob } from './actions.js'
+import { soundsAttack } from './sounds.js'
 
 const startGame =()=> {
     buildFloors()   // Build all dungeon floors
@@ -51,6 +52,8 @@ document.addEventListener('keydown', function(e) {
                 return false
             } else {
                 if (mobBlocking(-1)) {
+                    let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
+                    soundAttack.play()
                     attackMob(-1)
                     renderMob(player.currentTile-1)
                     postAttack = true
@@ -67,6 +70,8 @@ document.addEventListener('keydown', function(e) {
                 return false
             } else {
                 if (mobBlocking(1)) {
+                    let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
+                    soundAttack.play()
                     attackMob(1)
                     renderMob(player.currentTile+1)
                     postAttack = true
@@ -84,6 +89,8 @@ document.addEventListener('keydown', function(e) {
                 return false
             } else {
                 if (mobBlocking(-14)) {
+                    let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
+                    soundAttack.play()
                     attackMob(-14)
                     renderMob(player.currentTile-14)
                     postAttack = true
@@ -100,6 +107,8 @@ document.addEventListener('keydown', function(e) {
                 return false
             } else {
                 if (mobBlocking(14)) {
+                    let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
+                    soundAttack.play()
                     attackMob(14)
                     renderMob(player.currentTile+14)
                     postAttack = true
