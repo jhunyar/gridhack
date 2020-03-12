@@ -2,8 +2,9 @@ import { alert, northWall, eastWall, southWall, westWall, tileInfoDesc } from '.
 import { dungeon, player } from './builder.js'
 import { buildInventory, clearAlerts, describeTile, renderCurrentTile, renderFloor, renderMob,
          renderStats, resetFloorEls, setActive, setVisible, tileArray } from './renderer.js'
-import { moveMobs, mobBlocking } from './mobs.js'
+import { moveMobs, mobBlocking, mobsAttack } from './mobs.js'
 import { soundsAttack } from './sounds.js'
+import { startGame } from './main.js'
 
 const playerActionEvents =()=> {
     // main movement and action listener
@@ -47,6 +48,7 @@ const playerActionEvents =()=> {
                         renderMob(player.currentTile-1)
                         postAttack = true
                     } else {
+                        mobsAttack()
                         current.id = ''
                         west.id = 'active'
                         player.currentTile = player.currentTile-1
@@ -66,6 +68,7 @@ const playerActionEvents =()=> {
                         postAttack = true
                         setVisible()
                     } else {
+                        mobsAttack()
                         current.id = ''
                         east.id = 'active'
                         player.currentTile = player.currentTile+1
@@ -84,6 +87,7 @@ const playerActionEvents =()=> {
                         renderMob(player.currentTile-14)
                         postAttack = true
                     } else {
+                        mobsAttack()
                         current.id = ''
                         north.id = 'active'
                         player.currentTile = player.currentTile-14
@@ -102,6 +106,7 @@ const playerActionEvents =()=> {
                         renderMob(player.currentTile+14)
                         postAttack = true
                     } else {
+                        mobsAttack()
                         current.id = ''
                         south.id = 'active'
                         player.currentTile = player.currentTile+14
@@ -403,14 +408,28 @@ const removeItem =(slot)=> {
 
 const attackMob =(dir)=> {
   let mob = dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob
-  mob.hp -= (player.stats.atk - mob.def)
-  alert.innerHTML = `You smite the ${mob.name} for ${player.stats.atk} points.<br />The ${mob.name} has ${mob.hp} HP remaining.`
-  if (mob.hp < 1) {
-      alert.innerHTML += ` You abolish the ${mob.name}!`
-      player.stats.abolished++
-      renderStats()
-      dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob = null
+  
+  if (mob.hp-1 < player.stats.atk) {
+    mob.hp -= (player.stats.atk - mob.def)
+    alert.innerHTML = `You smite the ${mob.name} for ${player.stats.atk} points.<br /> You abolish the ${mob.name}!`
+    player.stats.abolished++
+    renderStats()
+    dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob = null
+  } else {
+    if (!mob.aggro) {
+        mob.aggro = true
+    }
+
+    mob.hp -= (player.stats.atk - mob.def)
+    alert.innerHTML = `You smite the ${mob.name} for ${player.stats.atk} points.<br />The ${mob.name} has ${mob.hp} HP remaining.`
   }
 }
 
-export { playerActionEvents, getItem, dropItem, useItem, attackMob }
+const killPlayer =()=> {
+    player.stats.hp = 0
+    player.stats.def = 0
+    startGame() // TODO why this no work??
+    window.alert('Game over!')
+}
+
+export { playerActionEvents, getItem, dropItem, useItem, attackMob, killPlayer }

@@ -1,13 +1,14 @@
 import { northWall, eastWall, southWall, westWall } from './constants.js'
 import { dungeon, player } from './builder.js'
-import { renderTile, renderMob, tileArray } from './renderer.js'
+import { renderTile, renderMob, tileArray, renderStats } from './renderer.js'
+import { killPlayer } from './actions.js'
 
 let mobs = []
 
 // [id, name, desc, atk, def, rarity, aggro, symbol, hp, effects ]
 mobs[0] = [0, 'rat', 'A small black rat', 1, 0, 30, false, 'r', 1]
-mobs[1] = [1, 'large rat', 'A large black rat', 2, 0, 60, false, 'R', 5]
-mobs[1] = [2, 'rabid rat', 'A rabid black rat', 3, 0, 90, true, 'ɍ', 3, { poisoned: true }]
+mobs[1] = [1, 'large rat', 'A large black rat', 2, 0, 30, false, 'R', 5]
+mobs[2] = [2, 'rabid rat', 'A rabid black rat', 3, 0, 90, true, 'ɍ', 3, { poisoned: true }]
 
 function Mob(id, name, desc, atk, def, rarity, aggro, symbol, effects) {
   this.id = id
@@ -30,8 +31,6 @@ const moveMobs = () => {
     let move = Math.random()*4
 
     if (move >= 0 && move < 1) { // west
-      mobCanAttack(tile.mob)
-
       if (!isBlocked(tile.id, -1)) {
         tile.mob.currentTile = tile.mob.currentTile-1
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
@@ -39,8 +38,6 @@ const moveMobs = () => {
         resetTileEl(tile, -1)
       }
     } else if (move >= 1 && move < 2) { // east
-      mobCanAttack(tile.mob)
-
       if (!isBlocked(tile.id, 1)) {
         tile.mob.currentTile = tile.mob.currentTile+1
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
@@ -48,8 +45,6 @@ const moveMobs = () => {
         resetTileEl(tile, +1)
       }
     } else if (move >= 2 && move < 3) { // north
-      mobCanAttack(tile.mob)
-
       if (!isBlocked(tile.id, -14)) {
         tile.mob.currentTile = tile.mob.currentTile-14
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
@@ -57,8 +52,6 @@ const moveMobs = () => {
         resetTileEl(tile, -14)
       }
     } else if (move >= 3 && move < 4) { // south
-      mobCanAttack(tile.mob)
-
       if (!isBlocked(tile.id, 14)) {
         tile.mob.currentTile = tile.mob.currentTile+14
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
@@ -83,26 +76,37 @@ const isBlocked =(tileId, offset)=> {
   }
 }
 
-const mobCanAttack =(mob)=> {
-  // mob is about to move, let's fisrt see if it can attack the player
+const mobsAttack =()=> {
+  let tiles = dungeon.floors[player.currentFloor].tiles
   let dirs = [-1, 1, -14, 14]
 
+  // loop through every possible direction from the player
   for (let i = 0; i < dirs.length; i++) {
-    if (player.currentTile === mob.currentTile+dirs[i]) {
-      console.log ('Player can be attacked in direction ', dirs[i])
-
-      console.log(player.stats.hp, mob.atk)
-      player.stats.hp -= mob.atk
-      
-      console.log('Mob attacked. Player HP is now ', player.stats.hp)
-
-      if (player.stats.hp < 1) {
-        alert('Game over!')
-      }
-
-      return
+    let adjTile = tiles[player.currentTile+dirs[i]]
+    // if that tile exists AND there is a mob AND it is aggro...
+    if (adjTile && adjTile.mob && adjTile.mob.aggro) {
+      console.log('Aggro mob nearby')
+      console.log(adjTile.mob)
+      attackPlayer(adjTile.mob)
     }
   }
+}
+
+const attackPlayer =(mob)=> {
+  let playerTotalDef = player.stats.hp + player.stats.def
+  
+  if (mob.atk > playerTotalDef) {
+    killPlayer()
+  } else if (mob.atk > player.stats.def) {
+    player.stats.hp -= (mob.atk - player.stats.def)
+    player.stats.def = 0
+    alert.innerHTML = `${mob.name} hits for ${mob.atk}! Armor destroyed. Player health reduced to ${player.stats.hp}`
+  } else {
+    player.stats.def -= mob.atk
+    alert.innerHTML = `${mob.name} hits for ${mob.atk}! Armor absorbed the damage. Armor reduced to ${player.stats.def}`
+  }
+
+  renderStats()
 }
 
 // Reset a specific tile after a mob movement
@@ -116,4 +120,4 @@ const resetTileEl =(tile, offset)=> {
 
 const mobBlocking =(dir)=> dungeon.floors[player.currentFloor].tiles[player.currentTile + dir].mob
 
-export { mobs, moveMobs, mobBlocking }
+export { mobs, moveMobs, mobsAttack, mobBlocking }

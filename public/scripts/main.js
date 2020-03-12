@@ -15,3 +15,5 @@ const startGame =()=> {
 }
 
 startGame()
+
+export { startGame }
