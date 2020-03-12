@@ -18,9 +18,10 @@ let items = []
 items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 75, { poisonResist: true, swimming: true } ]
 items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'map', 50, { revealMap: true } ]
 items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 40, { hp: 5 } ]
-items[3] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 40, { atk: 3 } ]
-items[4] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75, { hp: 100 } ]
-items[5] = [ 'Leather armor', 'Provides 3 defense points', 'armor', 40, { def: 3 }]
+items[3] = [ 'Tincture', 'Cures poison', 'poition', 70, { poisoned: false } ],
+items[4] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 40, { atk: 3 } ]
+items[5] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75, { hp: 100 } ]
+items[6] = [ 'Leather armor', 'Provides 3 defense points', 'armor', 40, { def: 3 }]
 
 // Object variables
 const dungeon = {
@@ -45,10 +46,11 @@ const player = {
       abolished: 0
   },
   status: {
-      poisoned: false,
-      poisonResist: false,
-      swimming: false,
-      revealMap: false
+      poisoned: false, // TODO: take poison damage (rabid rats?)
+      poisonResist: false, // TODO: negate poison damage (rabid rats?)
+      swimming: false, // TODO: walk through water tiles
+      revealMap: false,
+      phasing: false, // TODO: walk through room walls
   },
   person: {
       armor: null,
