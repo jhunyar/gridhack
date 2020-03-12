@@ -35,6 +35,7 @@ const moveMobs = () => {
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile+1].mob = null
         resetTileEl(tile, -1)
+        mobAttack(tiles[tile.id-1].mob, tiles[tile.id-1].mob.currentTile)
       }
     } else if (move >= 1 && move < 2) { // east
       if (!isBlocked(tile.id, 1)) {
@@ -42,6 +43,7 @@ const moveMobs = () => {
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile-1].mob = null
         resetTileEl(tile, +1)
+        mobAttack(tiles[tile.id+1].mob, tiles[tile.id+1].mob.currentTile)
       }
     } else if (move >= 2 && move < 3) { // north
       if (!isBlocked(tile.id, -14)) {
@@ -49,6 +51,7 @@ const moveMobs = () => {
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile+14].mob = null
         resetTileEl(tile, -14)
+        mobAttack(tiles[tile.id-14].mob, tiles[tile.id-14].mob.currentTile)
       }
     } else if (move >= 3 && move < 4) { // south
       if (!isBlocked(tile.id, 14)) {
@@ -56,6 +59,7 @@ const moveMobs = () => {
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile-14].mob = null
         resetTileEl(tile, 14)
+        mobAttack(tiles[tile.id+14].mob, tiles[tile.id+14].mob.currentTile)
       }
     }
   })
@@ -72,6 +76,27 @@ const isBlocked =(tileId, offset)=> {
 
   if (!tiles[tileId] || wall.includes(tileId+offset) || tiles[tileId+offset].mob != null || player.currentTile === tileId+offset) {
     return true
+  }
+}
+
+const mobAttack =(mob, tile)=> {
+  // mob has moved, let's see if it can attack the player
+  let tiles = dungeon.floors[player.currentFloor].tiles
+  let dirs = [-1, 1, -14, 14]
+
+  for (let i = 0; i < dirs.length; i++) {
+    if (player.currentTile === tile+dirs[i]) {
+      console.log ('Player can be attacked in direction ', dirs[i])
+
+      console.log(player.stats.hp, mob.atk)
+      player.stats.hp -= mob.atk
+      
+      console.log('Mob attacked. Player HP is now ', player.stats.hp)
+
+      if (player.stats.hp < 1) {
+        alert('Game over!')
+      }
+    }
   }
 }
 
