@@ -83,7 +83,7 @@ const isBlocked =(tileId, offset)=> {
   }
 }
 
-const mobCanAttack =(mob, tile)=> {
+const mobCanAttack =(mob)=> {
   // mob is about to move, let's fisrt see if it can attack the player
   let dirs = [-1, 1, -14, 14]
 
