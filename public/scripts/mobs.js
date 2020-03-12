@@ -30,36 +30,40 @@ const moveMobs = () => {
     let move = Math.random()*4
 
     if (move >= 0 && move < 1) { // west
+      mobCanAttack(tile.mob)
+
       if (!isBlocked(tile.id, -1)) {
         tile.mob.currentTile = tile.mob.currentTile-1
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile+1].mob = null
         resetTileEl(tile, -1)
-        mobAttack(tiles[tile.id-1].mob, tiles[tile.id-1].mob.currentTile)
       }
     } else if (move >= 1 && move < 2) { // east
+      mobCanAttack(tile.mob)
+
       if (!isBlocked(tile.id, 1)) {
         tile.mob.currentTile = tile.mob.currentTile+1
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile-1].mob = null
         resetTileEl(tile, +1)
-        mobAttack(tiles[tile.id+1].mob, tiles[tile.id+1].mob.currentTile)
       }
     } else if (move >= 2 && move < 3) { // north
+      mobCanAttack(tile.mob)
+
       if (!isBlocked(tile.id, -14)) {
         tile.mob.currentTile = tile.mob.currentTile-14
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile+14].mob = null
         resetTileEl(tile, -14)
-        mobAttack(tiles[tile.id-14].mob, tiles[tile.id-14].mob.currentTile)
       }
     } else if (move >= 3 && move < 4) { // south
+      mobCanAttack(tile.mob)
+
       if (!isBlocked(tile.id, 14)) {
         tile.mob.currentTile = tile.mob.currentTile+14
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
         tiles[tile.mob.currentTile-14].mob = null
         resetTileEl(tile, 14)
-        mobAttack(tiles[tile.id+14].mob, tiles[tile.id+14].mob.currentTile)
       }
     }
   })
@@ -79,13 +83,12 @@ const isBlocked =(tileId, offset)=> {
   }
 }
 
-const mobAttack =(mob, tile)=> {
-  // mob has moved, let's see if it can attack the player
-  let tiles = dungeon.floors[player.currentFloor].tiles
+const mobCanAttack =(mob, tile)=> {
+  // mob is about to move, let's fisrt see if it can attack the player
   let dirs = [-1, 1, -14, 14]
 
   for (let i = 0; i < dirs.length; i++) {
-    if (player.currentTile === tile+dirs[i]) {
+    if (player.currentTile === mob.currentTile+dirs[i]) {
       console.log ('Player can be attacked in direction ', dirs[i])
 
       console.log(player.stats.hp, mob.atk)
@@ -96,6 +99,8 @@ const mobAttack =(mob, tile)=> {
       if (player.stats.hp < 1) {
         alert('Game over!')
       }
+
+      return
     }
   }
 }
