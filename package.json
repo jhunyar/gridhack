@@ -1,0 +1,23 @@
+{
+  "name": "gridhack",
+  "version": "0.2.0",
+  "description": "A NodeJS powered roguelike prototype",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --experimental-modules app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/rptr/gridhack.git"
+  },
+  "author": "James Hunyar, Nicholas Motyl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/rptr/gridhack/issues"
+  },
+  "homepage": "https://gitlab.com/rptr/gridhack#README",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
