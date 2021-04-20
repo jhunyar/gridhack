@@ -78,7 +78,7 @@ const isBlocked =(tileId, offset)=> {
 
 const mobsAttack =()=> {
   let tiles = dungeon.floors[player.currentFloor].tiles
-  let dirs = [-1, 1, -27, -28, -29, 27, 28, 29]
+  let dirs = [-1, 1, -28, 28]
 
   // loop through every possible direction from the player
   for (let i = 0; i < dirs.length; i++) {
