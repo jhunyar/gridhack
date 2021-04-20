@@ -1,6 +1,6 @@
 import { alert, northWall, eastWall, southWall, westWall, tileInfoDesc } from './constants.js'
 import { dungeon, player } from './builder.js'
-import { buildInventory, clearAlerts, describeTile, renderCurrentTile, renderFloor, renderItems, renderMob,
+import { buildInventory, clearAlerts, describeTile, renderCurrentTile, renderFloor, renderMob,
          renderStats, resetFloorEls, setActive, setVisible, tileArray } from './renderer.js'
 import { moveMobs, mobBlocking, mobsAttack } from './mobs.js'
 import { soundsAttack } from './sounds.js'
