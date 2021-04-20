@@ -45,18 +45,18 @@ const moveMobs = () => {
         resetTileEl(tile, +1)
       }
     } else if (move >= 2 && move < 3) { // north
-      if (!isBlocked(tile.id, -14)) {
-        tile.mob.currentTile = tile.mob.currentTile-14
+      if (!isBlocked(tile.id, -28)) {
+        tile.mob.currentTile = tile.mob.currentTile-28
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
-        tiles[tile.mob.currentTile+14].mob = null
-        resetTileEl(tile, -14)
+        tiles[tile.mob.currentTile+28].mob = null
+        resetTileEl(tile, -28)
       }
     } else if (move >= 3 && move < 4) { // south
-      if (!isBlocked(tile.id, 14)) {
-        tile.mob.currentTile = tile.mob.currentTile+14
+      if (!isBlocked(tile.id, 28)) {
+        tile.mob.currentTile = tile.mob.currentTile+28
         tiles[tile.mob.currentTile].mob = JSON.parse(JSON.stringify(tile.mob))
-        tiles[tile.mob.currentTile-14].mob = null
-        resetTileEl(tile, 14)
+        tiles[tile.mob.currentTile-28].mob = null
+        resetTileEl(tile, 28)
       }
     }
   })
@@ -68,8 +68,8 @@ const isBlocked =(tileId, offset)=> {
 
   if (offset === -1) { wall = westWall }
     else if (offset === 1) { wall = eastWall }
-    else if (offset === -14) { wall = northWall }
-    else if (offset === 14) { wall = southWall }
+    else if (offset === -28) { wall = northWall }
+    else if (offset === 28) { wall = southWall }
 
   if (!tiles[tileId] || wall.includes(tileId+offset) || tiles[tileId+offset].mob != null || player.currentTile === tileId+offset) {
     return true
@@ -78,7 +78,7 @@ const isBlocked =(tileId, offset)=> {
 
 const mobsAttack =()=> {
   let tiles = dungeon.floors[player.currentFloor].tiles
-  let dirs = [-1, 1, -14, 14]
+  let dirs = [-1, 1, -27, -28, -29, 27, 28, 29]
 
   // loop through every possible direction from the player
   for (let i = 0; i < dirs.length; i++) {

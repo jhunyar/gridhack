@@ -10,10 +10,14 @@ const playerActionEvents =()=> {
     // main movement and action listener
     document.addEventListener('keydown', function(e) {
         const current = tileArray[player.currentTile]
+        const nw = tileArray[player.currentTile-29]
+        const ne = tileArray[player.currentTile-27]
+        const se = tileArray[player.currentTile+29]
+        const sw = tileArray[player.currentTile+27]
         const west = tileArray[player.currentTile-1]
         const east = tileArray[player.currentTile+1]
-        const north = tileArray[player.currentTile-14]
-        const south = tileArray[player.currentTile+14]
+        const north = tileArray[player.currentTile-28]
+        const south = tileArray[player.currentTile+28]
 
         let moveWest = e.keyCode == '37'
         let moveNorth = e.keyCode == '38'
@@ -26,16 +30,25 @@ const playerActionEvents =()=> {
         let drop = e.keyCode == '68'
         let use = e.keyCode == '85'
 
+        let moveS = e.code == 'Numpad2'
+        let moveSE = e.code == 'Numpad3'
+        let moveE = e.code == 'Numpad6'
+        let moveNE = e.code == 'Numpad9'
+        let moveN = e.code == 'Numpad8'
+        let moveNW = e.code == 'Numpad7'
+        let moveW = e.code == 'Numpad4'
+        let moveSW = e.code == 'Numpad1'
+
         let postAttack = false
 
-        if (moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get || drop || use) {
+        if (moveNE || moveNW || moveSE || moveSW || moveWest || moveW || moveNorth || moveN || moveEast || moveE || moveSouth || moveS || moveDown || moveUp || look || get || drop || use) {
 
             // prevent default action of ctrl and shift keys to avoid error
             if (e.ctrlKey) return false
             if (e.shiftKey) return false
 
             // conditional movement rules to determine which tile we need to set as active and which we need to clear
-            if (moveWest) {
+            if (moveW || moveWest) {
                 if (westWall.includes(player.currentTile-1)) {
                     alert.innerHTML = ' You can\'t go that way!'
                     setVisible()
@@ -54,7 +67,83 @@ const playerActionEvents =()=> {
                         player.currentTile = player.currentTile-1
                     }
                 }
-            } else if (moveEast) {
+            } else if (moveNW) {
+                if (northWall.includes(player.currentTile-29) || westWall.includes(player.currentTile-29)) {
+                    alert.innerHTML = ' You can\'t go that way!'
+                    setVisible()
+                    return false
+                } else {
+                    if (mobBlocking(-29)) {
+                        let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
+                        soundAttack.play()
+                        attackMob(-29)
+                        renderMob(player.currentTile-29)
+                        postAttack = true
+                    } else {
+                        mobsAttack()
+                        current.id = ''
+                        nw.id = 'active'
+                        player.currentTile = player.currentTile-29
+                    }
+                }
+            } else if (moveNE) {
+                if (northWall.includes(player.currentTile-27) || eastWall.includes(player.currentTile-27)) {
+                    alert.innerHTML = ' You can\'t go that way!'
+                    setVisible()
+                    return false
+                } else {
+                    if (mobBlocking(-27)) {
+                        let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
+                        soundAttack.play()
+                        attackMob(-27)
+                        renderMob(player.currentTile-27)
+                        postAttack = true
+                    } else {
+                        mobsAttack()
+                        current.id = ''
+                        ne.id = 'active'
+                        player.currentTile = player.currentTile-27
+                    }
+                }
+            } else if (moveSW) {
+                if (southWall.includes(player.currentTile+27) || westWall.includes(player.currentTile+27)) {
+                    alert.innerHTML = ' You can\'t go that way!'
+                    setVisible()
+                    return false
+                } else {
+                    if (mobBlocking(27)) {
+                        let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
+                        soundAttack.play()
+                        attackMob(27)
+                        renderMob(player.currentTile+27)
+                        postAttack = true
+                    } else {
+                        mobsAttack()
+                        current.id = ''
+                        sw.id = 'active'
+                        player.currentTile = player.currentTile+27
+                    }
+                }
+            } else if (moveSE) {
+                if (southWall.includes(player.currentTile+29) || eastWall.includes(player.currentTile+29) ) {
+                    alert.innerHTML = ' You can\'t go that way!'
+                    setVisible()
+                    return false
+                } else {
+                    if (mobBlocking(29)) {
+                        let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
+                        soundAttack.play()
+                        attackMob(29)
+                        renderMob(player.currentTile+29)
+                        postAttack = true
+                    } else {
+                        mobsAttack()
+                        current.id = ''
+                        se.id = 'active'
+                        player.currentTile = player.currentTile+29
+                    }
+                }
+            } else if (moveE || moveEast) {
                 if (eastWall.includes(player.currentTile+1)) {
                     alert.innerHTML = ' You can\'t go that way!'
                     setVisible()
@@ -74,42 +163,42 @@ const playerActionEvents =()=> {
                         player.currentTile = player.currentTile+1
                     }
                 }
-            } else if (moveNorth) {
-                if (northWall.includes(player.currentTile-14)) {
+            } else if (moveN || moveNorth) {
+                if (northWall.includes(player.currentTile-28)) {
                     alert.innerHTML = ' You can\'t go that way!'
                     setVisible()
                     return false
                 } else {
-                    if (mobBlocking(-14)) {
+                    if (mobBlocking(-28)) {
                         let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
                         soundAttack.play()
-                        attackMob(-14)
-                        renderMob(player.currentTile-14)
+                        attackMob(-28)
+                        renderMob(player.currentTile-28)
                         postAttack = true
                     } else {
                         mobsAttack()
                         current.id = ''
                         north.id = 'active'
-                        player.currentTile = player.currentTile-14
+                        player.currentTile = player.currentTile-28
                     }
                 }
-            } else if (moveSouth) {
-                if (southWall.includes(player.currentTile+14)) {
+            } else if (moveS || moveSouth) {
+                if (southWall.includes(player.currentTile+28)) {
                     alert.innerHTML = ' You can\'t go that way!'
                     setVisible()
                     return false
                 } else {
-                    if (mobBlocking(14)) {
+                    if (mobBlocking(28)) {
                         let soundAttack = new Audio(soundsAttack[Math.floor(Math.random() * 3)])
                         soundAttack.play()
-                        attackMob(14)
-                        renderMob(player.currentTile+14)
+                        attackMob(28)
+                        renderMob(player.currentTile+28)
                         postAttack = true
                     } else {
                         mobsAttack()
                         current.id = ''
                         south.id = 'active'
-                        player.currentTile = player.currentTile+14
+                        player.currentTile = player.currentTile+28
                     }
                 }
             }
@@ -151,6 +240,10 @@ const playerActionEvents =()=> {
             // Let the user know if there is a staircase
             if (tile.stairDown) {
                 tileInfoDesc.innerHTML += ' You see a staircase leading down.'
+            }
+
+            if (tile.stairUp) {
+                tileInfoDesc.innerHTML += ' You see a staircase leading up.'
             }
 
             if (look) {

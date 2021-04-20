@@ -3,7 +3,7 @@ import { mobs } from './mobs.js'
 let rooms = []
 
 const describeRooms =()=> {
-  let tileCount = 196
+  let tileCount = 784 // 196
   for (let i = 0; i < tileCount; i++) {
       rooms.push([ 'Title', `Description of room ${i}`, 'Earth'])
   }
@@ -109,7 +109,7 @@ const buildFloors =()=> {
 }
 
 const buildTiles =()=> {
-  let tileCount = 196
+  let tileCount = 784 // 196
   let tiles = []
   for (let i = 0; i < tileCount; i++) {
 
