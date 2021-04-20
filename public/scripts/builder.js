@@ -18,7 +18,7 @@ let items = []
 items[0] = [ 'Breath recycler', 'Provides breathable air for a human or any similar creature who wears the device.', 'armor', 75, { poisonResist: true, swimming: true } ]
 items[1] = [ 'Floor map', 'Reveals all tiles on the current floor', 'map', 50, { revealMap: true } ]
 items[2] = [ 'Healing potion', 'Heals user 5 HP', 'potion', 40, { hp: 5 } ]
-items[3] = [ 'Tincture', 'Cures poison', 'poition', 70, { poisoned: false } ],
+items[3] = [ 'Tincture', 'Cures poison', 'potion', 70, { poisoned: false } ],
 items[4] = [ 'Wooden practice sword', 'Hits for 3 HP', 'weapon', 40, { atk: 3 } ]
 items[5] = [ 'Spectral chalice', 'Heals user to full HP and removes all afflictions', 'potion', 75, { hp: 100 } ]
 items[6] = [ 'Leather armor', 'Provides 3 defense points', 'armor', 40, { def: 3 }]
@@ -87,7 +87,7 @@ function Tile(id, name, desc, floor, item, mob, mapped) {
 
 const buildFloors =()=> {
   for (let i = 0; i < dungeon.depth; i++) {
-      let floor = new Floor(i, buildTiles())
+      let floor = new Floor(i, buildTiles(i))
   
       dungeon.floors.push(floor)
 
@@ -108,12 +108,12 @@ const buildFloors =()=> {
   }
 }
 
-const buildTiles =()=> {
+const buildTiles =(floorNum)=> {
   let tileCount = 784 // 196
   let tiles = []
   for (let i = 0; i < tileCount; i++) {
 
-      let item = placeItems()
+      let item = placeItems(floorNum)
       let mob = placeMobs()
       if (mob !== null) {
           mob.currentTile = i
@@ -126,13 +126,13 @@ const buildTiles =()=> {
   return tiles
 }
 
-const placeItems =()=> {
+const placeItems =(floorNum)=> {
   let currentItem = items[Math.floor(Math.random() * Math.floor(items.length))]
-
   let item = {
       name: currentItem[0],
       description: currentItem[1],
       type: currentItem[2],
+      floor: floorNum,
       rarity: currentItem[3],
       affects: currentItem[4],
       chance: Math.floor(Math.random() * Math.floor(currentItem[3]))

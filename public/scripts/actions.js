@@ -1,6 +1,6 @@
 import { alert, northWall, eastWall, southWall, westWall, tileInfoDesc } from './constants.js'
 import { dungeon, player } from './builder.js'
-import { buildInventory, clearAlerts, describeTile, renderCurrentTile, renderFloor, renderMob,
+import { buildInventory, clearAlerts, describeTile, renderCurrentTile, renderFloor, renderItems, renderMob,
          renderStats, resetFloorEls, setActive, setVisible, tileArray } from './renderer.js'
 import { moveMobs, mobBlocking, mobsAttack } from './mobs.js'
 import { soundsAttack } from './sounds.js'
@@ -206,6 +206,16 @@ const playerActionEvents =()=> {
             if (moveDown) {
                 if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
                     player.currentFloor += 1
+                    // poof all maps, they won't work on later floors
+                    if (player.inventory.items.some(i => i.type === 'map')) {
+                        let filtered = player.inventory.items.filter(function(obj) { 
+                            return obj.type !== 'map'
+                        })
+
+                        player.inventory.items = filtered
+                        buildInventory()
+                        alert.innerHTML = 'The old maps in your inventory vanish'
+                    }
                     renderFloor()
                 } else {
                     alert.innerHTML = 'There\'s no staircase here'
@@ -286,13 +296,17 @@ const playerActionEvents =()=> {
     })
 }
 
-// get an item
 const getItem =()=> {
   let item = dungeon.floors[player.currentFloor].tiles[player.currentTile].item
-
+  console.log(item)
   if (item !== null && player.inventory.items.length < player.inventory.capacity) {
       player.inventory.items.push(item)
-      alert.innerHTML = `${item.name} added to inventory.`
+      if (item.type === 'map') {
+        alert.innerHTML = `Map of floor ${item.floor} added to inventory.`
+      } else {
+        alert.innerHTML = `${item.name} added to inventory.`
+      }
+
       dungeon.floors[player.currentFloor].tiles[player.currentTile].item = null
       tileArray[dungeon.floors[player.currentFloor].tiles[player.currentTile].id].innerHTML = ''
       renderCurrentTile()
@@ -479,7 +493,7 @@ const addItemEffects =(slot)=> {
       player.stats.hp += item.affects.hp
   } else if (item.type === 'weapon') {
       player.stats.atk = item.affects.atk
-  } else if (item.type === 'map') {
+  } else if (item.type === 'map' && dungeon.floors[player.currentFloor] === item.floor) {
       let tileEls = room.querySelectorAll('.hidden')
 
       for (let tileEl of tileEls) {
