@@ -19,36 +19,46 @@ const playerActionEvents =()=> {
         const north = tileArray[player.currentTile-28]
         const south = tileArray[player.currentTile+28]
 
-        let moveWest = e.keyCode == '37'
-        let moveNorth = e.keyCode == '38'
-        let moveEast = e.keyCode == '39'
-        let moveSouth = e.keyCode == '40'
-        let moveDown = e.keyCode == '34'
-        let moveUp = e.keyCode == '33'
-        let look = e.keyCode == '76'
-        let get = e.keyCode == '71'
-        let drop = e.keyCode == '68'
-        let use = e.keyCode == '85'
+        let moveWest, moveNorth, moveEast, moveSouth
 
-        let moveS = e.code == 'Numpad2'
-        let moveSE = e.code == 'Numpad3'
-        let moveE = e.code == 'Numpad6'
-        let moveNE = e.code == 'Numpad9'
-        let moveN = e.code == 'Numpad8'
-        let moveNW = e.code == 'Numpad7'
-        let moveW = e.code == 'Numpad4'
-        let moveSW = e.code == 'Numpad1'
+        if (player.prefs.controls === 'wasd') {
+            moveWest = e.code === 'KeyA'
+            moveNorth = e.code === 'KeyW'
+            moveEast = e.code === 'KeyD'
+            moveSouth = e.code === 'KeyS'
+        } else if (player.prefs.controls === 'arrows') {
+            moveWest = e.code === 'ArrowLeft'
+            moveNorth = e.code === 'ArrowUp'
+            moveEast = e.code === 'ArrowRight'
+            moveSouth = e.code === 'ArrowDown'
+        } else if (player.prefs.controls === 'numpad') {
+            moveSouth = e.code === 'Numpad2'
+            moveEast = e.code === 'Numpad6'
+            moveNorth = e.code === 'Numpad8'
+            moveWest = e.code === 'Numpad4'
+        }
+
+        let moveNE = e.code === 'Numpad9'
+        let moveSE = e.code === 'Numpad3'
+        let moveSW = e.code === 'Numpad1'
+        let moveNW = e.code === 'Numpad7'
+        let moveDown = e.code === 'PageDown'
+        let moveUp = e.code === 'PageUp'
+        let look = e.code === 'KeyL'
+        let get = e.code === 'Period'
+        let drop = e.code === 'Comma'
+        let use = e.code === 'KeyU'
 
         let postAttack = false
 
-        if (moveNE || moveNW || moveSE || moveSW || moveWest || moveW || moveNorth || moveN || moveEast || moveE || moveSouth || moveS || moveDown || moveUp || look || get || drop || use) {
+        if (moveNE || moveNW || moveSE || moveSW || moveWest || moveNorth || moveEast || moveSouth || moveDown || moveUp || look || get || drop || use) {
 
             // prevent default action of ctrl and shift keys to avoid error
             if (e.ctrlKey) return false
             if (e.shiftKey) return false
 
             // conditional movement rules to determine which tile we need to set as active and which we need to clear
-            if (moveW || moveWest) {
+            if (moveWest) {
                 if (westWall.includes(player.currentTile-1)) {
                     alert.innerHTML = ' You can\'t go that way!'
                     setVisible()
@@ -143,7 +153,7 @@ const playerActionEvents =()=> {
                         player.currentTile = player.currentTile+29
                     }
                 }
-            } else if (moveE || moveEast) {
+            } else if (moveEast) {
                 if (eastWall.includes(player.currentTile+1)) {
                     alert.innerHTML = ' You can\'t go that way!'
                     setVisible()
@@ -163,7 +173,7 @@ const playerActionEvents =()=> {
                         player.currentTile = player.currentTile+1
                     }
                 }
-            } else if (moveN || moveNorth) {
+            } else if (moveNorth) {
                 if (northWall.includes(player.currentTile-28)) {
                     alert.innerHTML = ' You can\'t go that way!'
                     setVisible()
@@ -182,7 +192,7 @@ const playerActionEvents =()=> {
                         player.currentTile = player.currentTile-28
                     }
                 }
-            } else if (moveS || moveSouth) {
+            } else if (moveSouth) {
                 if (southWall.includes(player.currentTile+28)) {
                     alert.innerHTML = ' You can\'t go that way!'
                     setVisible()
@@ -206,16 +216,7 @@ const playerActionEvents =()=> {
             if (moveDown) {
                 if (dungeon.floors[player.currentFloor].tiles[player.currentTile].stairDown) {
                     player.currentFloor += 1
-                    // poof all maps, they won't work on later floors
-                    if (player.inventory.items.some(i => i.type === 'map')) {
-                        let filtered = player.inventory.items.filter(function(obj) { 
-                            return obj.type !== 'map'
-                        })
-
-                        player.inventory.items = filtered
-                        buildInventory()
-                        alert.innerHTML = 'The old maps in your inventory vanish'
-                    }
+                    removeMaps()
                     renderFloor()
                 } else {
                     alert.innerHTML = 'There\'s no staircase here'
@@ -493,7 +494,7 @@ const addItemEffects =(slot)=> {
       player.stats.hp += item.affects.hp
   } else if (item.type === 'weapon') {
       player.stats.atk = item.affects.atk
-  } else if (item.type === 'map' && dungeon.floors[player.currentFloor] === item.floor) {
+  } else if (item.type === 'map') {
       let tileEls = room.querySelectorAll('.hidden')
 
       for (let tileEl of tileEls) {
@@ -511,6 +512,17 @@ const moveItem =(slot)=> {
 
 const removeItem =(slot)=> {
   player.inventory.items.splice(slot, 1)
+}
+
+const removeMaps = ()=> {
+    if (player.inventory.items.some(i => i.type === 'map')) {
+        let filtered = player.inventory.items.filter(function(obj) { 
+            return obj.type !== 'map'
+        })
+        player.inventory.items = filtered
+        buildInventory()
+        alert.innerHTML = 'The old maps in your inventory vanish'
+    }
 }
 
 const attackMob =(dir)=> {

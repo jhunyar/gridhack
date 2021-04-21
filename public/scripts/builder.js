@@ -61,6 +61,9 @@ const player = {
       amulet: null,
       aura: null,
       curse: null
+  },
+  prefs: {
+    controls: 'wasd'
   }
 }
 
