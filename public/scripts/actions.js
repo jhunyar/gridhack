@@ -219,6 +219,7 @@ const playerActionEvents =()=> {
                     removeMaps()
                     renderFloor()
                 } else {
+                    postAttack = true
                     alert.innerHTML = 'There\'s no staircase here'
                 }
             }
@@ -230,6 +231,7 @@ const playerActionEvents =()=> {
                     player.currentFloor -= 1
                     renderFloor()
                 } else {
+                    postAttack = true
                     alert.innerHTML = 'There\'s no staircase here'
                 }
             }

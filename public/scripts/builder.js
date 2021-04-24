@@ -63,7 +63,7 @@ const player = {
       curse: null
   },
   prefs: {
-    controls: 'wasd'
+    controls: 'arrows'
   }
 }
 
